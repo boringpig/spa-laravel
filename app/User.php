@@ -18,7 +18,6 @@ class User extends Model implements
 {
     use Authenticatable, Authorizable, CanResetPassword, Notifiable;
 
-    public $timestamps = false;
     /**
      * The attributes that are mass assignable.
      *
