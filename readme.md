@@ -28,7 +28,12 @@ cd docker
 docker-compose up -d
 ```
 
-## 步驟三 編輯.env
+## 步驟三 進入container
+```
+docker exec -it --user 1000 kiosk_container bash
+```
+
+## 步驟四 編輯.env
 ```
 DB_CONNECTION=mongo
 DB_HOST=xxxx
