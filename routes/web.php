@@ -13,7 +13,8 @@
 
 Route::get('/', ['uses' => 'HomeController@index', 'as' => 'home']);
 
-
 Route::get('/users', function() {
     return \App\User::get();
 });
+
+Auth::routes();
