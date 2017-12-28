@@ -1,14 +1,12 @@
 version: '2'
 services:
-  web:
+  kiosk:
     build: ./
     ports:
       - "81:80"
     volumes:
       - "../:/var/www/html/"
       # - "./data/:/var/log/"
-      # - "./etc/php:/etc/php/7.1/apache2"
-      # - "./etc/apache2:/etc/apache2/sites-available"
     container_name: kiosk_container
     links:
       - "mongo:mongo"

@@ -5,12 +5,14 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 LANGUAGE=C.UTF-8
 WORKDIR /var/www/html
 
-RUN apt-get update
+# 更新容器版本
+RUN apt-get update && \
+    apt-get upgrade -y
 
 # 安裝必要程式
 RUN apt-get install -y curl git vim nano wget sudo apt-transport-https
 
-# install php and mongo apt-repository
+# 安裝 php and mongo apt-repository
 RUN apt-get install -qqy software-properties-common && \
     add-apt-repository -y ppa:ondrej/php && \
     sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5 && \
@@ -19,11 +21,10 @@ RUN apt-get install -qqy software-properties-common && \
 
 # 安裝 apache2
 RUN apt-get install -y apache2
-RUN sed -i '/DocumentRoot/cDocumentRoot /var/www/html/public' /etc/apache2/sites-available/000-default.conf && \
-    sed -i '/DocumentRoot/a<Directory /var/www/html>\n\tAllowOverride All\n</Directory>' /etc/apache2/sites-available/000-default.conf
-# COPY app.local.conf /etc/apache2/sites-available/app.local.conf => 解決用sed的用法
+COPY etc/000-default.conf /etc/apache2/sites-available/000-default.conf
 RUN a2enmod rewrite
-RUN useradd 1000
+RUN usermod -u 1000 www-data
+RUN chown -Rf www-data.www-data /var/www/html/
 # 安裝 php
 RUN apt-get install -y php7.1 libapache2-mod-php7.1 php7.1-cli php7.1-dev php7.1-pgsql php7.1-gd \
     php-apcu php7.1-curl php7.1-mcrypt php7.1-imap php7.1-readline php-xdebug php-common \
