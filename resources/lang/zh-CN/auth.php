@@ -26,5 +26,6 @@ return [
     'please_repeat_enter_password' => '请重复输入密码',
     'register_button'       => '注册',
     'reset_button'          => '重设',
-    'back_to_login_page'    => '返回登入页面'
+    'back_to_login_page'    => '返回登入页面',
+    'send_button'           => '寄出',
 ];
