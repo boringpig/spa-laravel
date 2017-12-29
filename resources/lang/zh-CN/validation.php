@@ -118,7 +118,7 @@ return [
 
     'attributes'           => [
         'name'                  => '名称',
-        'username'              => '用户名',
+        'username'              => '帐号',
         'email'                 => '邮箱',
         'first_name'            => '名',
         'last_name'             => '姓',

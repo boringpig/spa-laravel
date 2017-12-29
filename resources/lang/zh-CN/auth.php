@@ -13,7 +13,8 @@ return [
     'failed'                => '用户名或密码错误。',
     'throttle'              => '您的尝试登录次数过多，请 :seconds 秒后再试。',
     'system_name'           => 'KIOSK后台管理系统',
-    'forgot_name'           => '忘记密码',
+    'forgot_password_name'  => '忘记密码',
+    'reset_password_name'   => '重设密码',    
     'register_name'         => '前往注册',
     'other_login_name'      => '其他方式登入',
     'remember_name'         => '记住我',
@@ -28,4 +29,5 @@ return [
     'reset_button'          => '重设',
     'back_to_login_page'    => '返回登入页面',
     'send_button'           => '寄出',
+    'logout_button'         => '登出',
 ];

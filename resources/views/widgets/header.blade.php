@@ -278,36 +278,29 @@
 
                 <li class="light-blue dropdown-modal">
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                        <img class="nav-user-photo" src="assets/images/avatars/user.jpg" alt="Jason's Photo" />
-                        <span class="user-info">
-                            <small>Welcome,</small>
-                            Jason
+                        <img class="nav-user-photo" src="{{ asset('uploads/avatar/default.jpg') }}" alt="{{ Auth::user()->name }}" style="border-radius:50%"/>
+                        <span>
+                            {{ Auth::user()->name }}
                         </span>
 
                         <i class="ace-icon fa fa-caret-down"></i>
                     </a>
 
                     <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-                        <li>
-                            <a href="#">
-                                <i class="ace-icon fa fa-cog"></i>
-                                Settings
-                            </a>
-                        </li>
 
                         <li>
-                            <a href="profile.html">
+                            <a href="#">
                                 <i class="ace-icon fa fa-user"></i>
-                                Profile
+                                @lang('pageTitle.person_account')
                             </a>
                         </li>
 
                         <li class="divider"></li>
 
                         <li>
-                            <a href="#">
+                            <a href="#" id="logout">
                                 <i class="ace-icon fa fa-power-off"></i>
-                                Logout
+                                @lang('auth.logout_button')
                             </a>
                         </li>
                     </ul>
@@ -316,3 +309,4 @@
         </div>
     </div><!-- /.navbar-container -->
 </div>
+

@@ -7,6 +7,7 @@
 		<meta name="description" content="" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 		@include('widgets.style')
+		@yield('style')
 	</head>
 
 	<body class="skin-1">
@@ -97,5 +98,31 @@
 		</div><!-- /.main-container -->
 
 		@include('widgets.script')
+		@yield('script')
+		<script>
+			@if(Session::has('success'))
+				$.gritter.add({
+					title: "{{ Session::get('success') }}",
+					class_name: "gritter-success",
+					sticky: false,
+					time: 1000,
+				});	
+			@endif
+
+			$('#logout').click(function(event) {
+				event.preventDefault();
+				$.ajax({
+					type:'POST',
+					url:'/logout',
+					data: {"_token": "{{ csrf_token() }}"},
+					success: function (data, textStatus, jqXHR) {
+						location.href = '/login';
+					},
+					error:  function (jqXHR, textStatus, errorThrown) {
+						//
+					}
+				});
+			});
+		</script>
 	</body>
 </html>

@@ -11,35 +11,65 @@
 
                 <div class="space-6"></div>
 
-                <form>
+                <form action="/register" method="post">
+                    {{ csrf_field() }}
                     <fieldset>
-                        <label class="block clearfix">
-                            <span class="block input-icon input-icon-right">
-                                <input type="email" class="form-control" placeholder="@lang('auth.please_enter_email')" />
-                                <i class="ace-icon fa fa-envelope"></i>
-                            </span>
-                        </label>
+                        <div class="form-group {{ $errors->has('email')? ' has-error' : '' }}">
+                            <label class="block clearfix">
+                                <span class="block input-icon input-icon-right">
+                                    <input type="email" class="form-control" name="email" value="" placeholder="@lang('auth.please_enter_email')" />
+                                    @if($errors->has('email'))
+                                        <i class="ace-icon fa fa-times-circle"></i>
+                                    @else
+                                        <i class="ace-icon fa fa-envelope"></i>
+                                    @endif
+                                </span>
+                                @if($errors->has('email'))
+                                    <strong class="text-danger">{{ $errors->first('email') }}</strong>
+                                @endif
+                            </label>
+                        </div>
 
-                        <label class="block clearfix">
-                            <span class="block input-icon input-icon-right">
-                                <input type="text" class="form-control" placeholder="@lang('auth.please_enter_account')" />
-                                <i class="ace-icon fa fa-user"></i>
-                            </span>
-                        </label>
+                        <div class="form-group {{ $errors->has('username')? ' has-error' : '' }}">
+                            <label class="block clearfix">
+                                <span class="block input-icon input-icon-right">
+                                    <input type="text" class="form-control" name="username" value="" placeholder="@lang('auth.please_enter_account')" />
+                                    @if($errors->has('username'))
+                                        <i class="ace-icon fa fa-times-circle"></i>
+                                    @else
+                                        <i class="ace-icon fa fa-user"></i>
+                                    @endif
+                                </span>
+                                @if($errors->has('username'))
+                                    <strong class="text-danger">{{ $errors->first('username') }}</strong>
+                                @endif
+                            </label>
+                        </div>
 
-                        <label class="block clearfix">
-                            <span class="block input-icon input-icon-right">
-                                <input type="password" class="form-control" placeholder="@lang('auth.please_enter_password')" />
-                                <i class="ace-icon fa fa-lock"></i>
-                            </span>
-                        </label>
+                        <div class="form-group {{ $errors->has('password')? ' has-error' : '' }}">
+                            <label class="block clearfix">
+                                <span class="block input-icon input-icon-right">
+                                    <input type="password" class="form-control" name="password" value="" placeholder="@lang('auth.please_enter_password')" />
+                                    @if($errors->has('password'))
+                                        <i class="ace-icon fa fa-times-circle"></i>
+                                    @else
+                                        <i class="ace-icon fa fa-lock"></i>
+                                    @endif
+                                </span>
+                                @if($errors->has('password'))
+                                    <strong class="text-danger">{{ $errors->first('password') }}</strong>
+                                @endif
+                            </label>
+                        </div>
 
-                        <label class="block clearfix">
-                            <span class="block input-icon input-icon-right">
-                                <input type="password" class="form-control" placeholder="@lang('auth.please_repeat_enter_password')" />
-                                <i class="ace-icon fa fa-retweet"></i>
-                            </span>
-                        </label>
+                        <div class="form-group">
+                            <label class="block clearfix">
+                                <span class="block input-icon input-icon-right">
+                                    <input type="password" class="form-control" name="password_confirmation" value="" placeholder="@lang('auth.please_repeat_enter_password')" />
+                                    <i class="ace-icon fa fa-retweet"></i>
+                                </span>
+                            </label>
+                        </div>
 
                         <div class="space-24"></div>
 
@@ -49,7 +79,7 @@
                                 <span class="bigger-110">@lang('auth.reset_button')</span>
                             </button>
 
-                            <button type="button" class="width-65 pull-right btn btn-sm btn-success">
+                            <button type="submit" class="width-65 pull-right btn btn-sm btn-success">
                                 <span class="bigger-110">@lang('auth.register_button')</span>
 
                                 <i class="ace-icon fa fa-arrow-right icon-on-right"></i>

@@ -29,3 +29,4 @@
 <script src="{{ asset('assets/js/ace.min.js') }}"></script>
 
 <!-- inline scripts related to this page -->
+<script src="{{ asset('assets/js/jquery.gritter.min.js') }}"></script>

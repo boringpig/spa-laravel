@@ -22,7 +22,7 @@
 			<link rel="stylesheet" href="assets/css/ace-part2.min.css" />
 		<![endif]-->
 		<link rel="stylesheet" href="{{ asset('assets/css/ace-rtl.min.css') }}" />
-
+		<link rel="stylesheet" href="{{ asset('assets/css/jquery.gritter.min.css') }}" />
 		<!--[if lte IE 9]>
 		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
 		<![endif]-->
@@ -73,6 +73,19 @@
 <![endif]-->
 		<script type="text/javascript">
 			if('ontouchstart' in document.documentElement) document.write("<script src='/assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+
+		<script src="{{ asset('assets/js/jquery.gritter.min.js') }}"></script>
+
+		<script>
+			@if(Session::has('status'))
+				$.gritter.add({
+					title: "{{ Session::get('status') }}",
+					class_name: "gritter-success gritter-center",
+					sticky: true,
+					time: 1500,
+				});	
+			@endif
 		</script>
 
 	</body>

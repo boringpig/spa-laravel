@@ -21,3 +21,4 @@
 <![endif]-->
 
 <!-- inline styles related to this page -->
+<link rel="stylesheet" href="{{ asset('assets/css/jquery.gritter.min.css') }}" />

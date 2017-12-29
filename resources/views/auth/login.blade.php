@@ -11,31 +11,50 @@
 
                 <div class="space-6"></div>
 
-                <form>
+                <form action="/login" method="post">
+                    {{ csrf_field() }}
                     <fieldset>
-                        <label class="block clearfix">
-                            <span class="block input-icon input-icon-right">
-                                <input type="text" class="form-control" placeholder="@lang('auth.please_enter_account')" />
-                                <i class="ace-icon fa fa-user"></i>
-                            </span>
-                        </label>
-
-                        <label class="block clearfix">
-                            <span class="block input-icon input-icon-right">
-                                <input type="password" class="form-control" placeholder="@lang('auth.please_enter_password')" />
-                                <i class="ace-icon fa fa-lock"></i>
-                            </span>
-                        </label>
+                        <div class="form-group {{ $errors->has('username')? ' has-error' : '' }}">
+                            <label class="block clearfix">
+                                <span class="block input-icon input-icon-right">
+                                    <input type="text" class="form-control" id="username" name="username" value="" placeholder="@lang('auth.please_enter_account')" />
+                                    @if($errors->has('username'))
+                                        <i class="ace-icon fa fa-times-circle"></i>
+                                    @else
+                                        <i class="ace-icon fa fa-user"></i>
+                                    @endif
+                                </span>
+                                @if($errors->has('username'))
+                                    <strong class="text-danger">{{ $errors->first('username') }}</strong>
+                                @endif
+                            </label>
+                        </div>
+                        
+                        <div class="form-group {{ $errors->has('password')? ' has-error' : '' }}">
+                            <label class="block clearfix">
+                                <span class="block input-icon input-icon-right">
+                                    <input type="password" class="form-control" name="password" value="" placeholder="@lang('auth.please_enter_password')" />
+                                    @if($errors->has('password'))
+                                        <i class="ace-icon fa fa-times-circle"></i>
+                                    @else
+                                        <i class="ace-icon fa fa-lock"></i>
+                                    @endif
+                                </span>
+                                @if($errors->has('password'))
+                                    <strong class="text-danger">{{ $errors->first('password') }}</strong>
+                                @endif
+                            </label>
+                        </div>
 
                         <div class="space"></div>
 
                         <div class="clearfix">
                             <label class="inline">
-                                <input type="checkbox" class="ace" />
+                                <input type="checkbox" class="ace" name="remember"/>
                                 <span class="lbl"> @lang('auth.remember_name')</span>
                             </label>
 
-                            <button type="button" class="width-35 pull-right btn btn-sm btn-primary">
+                            <button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
                                 <i class="ace-icon fa fa-key"></i>
                                 <span class="bigger-110"> @lang('auth.login_button')</span>
                             </button>
@@ -66,7 +85,7 @@
                 <div>
                     <a href="{{ route('password.request') }}" data-target="#forgot-box" class="forgot-password-link">
                         <i class="ace-icon fa fa-arrow-left"></i>
-                        @lang('auth.forgot_name')
+                        @lang('auth.forgot_password_name')
                     </a>
                 </div>
 

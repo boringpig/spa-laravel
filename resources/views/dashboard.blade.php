@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('breadcrumb')
-    <li>
-        <i class="ace-icon fa fa-home home-icon"></i>
-        <a href="{{ route('home') }}">@lang('pageTitle.dashboard')</a>
-    </li>
+<li>
+    <i class="ace-icon fa fa-home home-icon"></i>
+    <a href="{{ route('home') }}">@lang('pageTitle.dashboard')</a>
+</li>
 @endsection
 
 @section('content')

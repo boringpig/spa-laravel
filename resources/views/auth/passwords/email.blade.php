@@ -6,22 +6,32 @@
             <div class="widget-main">
                 <h4 class="header red lighter bigger">
                     <i class="ace-icon fa fa-key"></i>
-                    @lang('auth.forgot_name')
+                    @lang('auth.forgot_password_name')
                 </h4>
 
                 <div class="space-6"></div>
                 
-                <form>
+                <form action="/password/email" method="post">
+                    {{ csrf_field() }}
                     <fieldset>
-                        <label class="block clearfix">
-                            <span class="block input-icon input-icon-right">
-                                <input type="email" class="form-control" placeholder="@lang('auth.please_enter_email')" />
-                                <i class="ace-icon fa fa-envelope"></i>
-                            </span>
-                        </label>
+                        <div class="form-group {{ $errors->has('email')? ' has-error' : '' }}">
+                            <label class="block clearfix">
+                                <span class="block input-icon input-icon-right">
+                                    <input type="email" class="form-control" name="email" value="" placeholder="@lang('auth.please_enter_email')" />
+                                    @if($errors->has('email'))
+                                        <i class="ace-icon fa fa-times-circle"></i>
+                                    @else
+                                        <i class="ace-icon fa fa-envelope"></i>
+                                    @endif
+                                </span>
+                            </label>
+                            @if($errors->has('email'))
+                                <strong class="text-danger">{{ $errors->first('email') }}</strong>
+                            @endif
+                        </div>
 
                         <div class="clearfix">
-                            <button type="button" class="width-35 pull-right btn btn-sm btn-danger">
+                            <button type="submit" class="width-35 pull-right btn btn-sm btn-danger">
                                 <i class="ace-icon fa fa-lightbulb-o"></i>
                                 <span class="bigger-110">@lang('auth.send_button')</span>
                             </button>
