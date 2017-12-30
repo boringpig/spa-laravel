@@ -10,7 +10,7 @@
 <!-- basic scripts -->
 
 <!--[if !IE]> -->
-<script src="assets/js/jquery-2.1.4.min.js"></script>
+<script src="{{ asset('assets/js/jquery-2.1.4.min.js') }}"></script>
 
 <!-- <![endif]-->
 

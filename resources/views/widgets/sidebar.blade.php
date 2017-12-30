@@ -7,19 +7,19 @@
 	<b class="arrow"></b>
 </li>
 
-<li class="">
-	<a href="#" class="dropdown-toggle">
+<li class="{{ (\Request::segment(1) == 'user-manage')? 'open' : '' }}">
+	<a href="" class="dropdown-toggle">
 		<i class="menu-icon fa fa-user"></i>
-		<span class="menu-text"> 使用者管理 </span>
+		<span class="menu-text"> @lang('pageTitle.users_manage') </span>
 		<b class="arrow fa fa-angle-down"></b>
 	</a>
 
 	<b class="arrow"></b>
 	<ul class="submenu">
-		<li class="">
-			<a href="#">
+		<li class="{{ (\Request::segment(2) == 'users')? 'active' : '' }}">
+			<a href="{{ route('users') }}">
 				<i class="menu-icon fa fa-caret-right"></i>
-				使用者資料
+				@lang('pageTitle.users_page')
 			</a>
 
 			<b class="arrow"></b>

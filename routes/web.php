@@ -11,5 +11,6 @@
 |
 */
 
-Route::get('/', ['uses' => 'HomeController@index', 'as' => 'home']);
 Auth::routes();
+Route::get('/', ['uses' => 'HomeController@index', 'as' => 'home']);
+Route::get('/user-manage/users', ['uses' => 'UsersController@home', 'as' => 'users']);

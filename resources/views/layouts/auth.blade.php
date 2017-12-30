@@ -44,7 +44,7 @@
 							<div class="center">
 								<h1>
 									<i class="ace-icon fa fa-leaf green"></i>
-									<span class="white" id="id-text2">@lang('auth.system_name')</span>
+									<span class="white" id="id-text2">@lang('pageTitle.system')</span>
 								</h1>
 								<h4 class="light-blue" id="id-company-text">&copy; YouBike</h4>
 							</div>
