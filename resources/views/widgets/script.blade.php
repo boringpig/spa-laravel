@@ -30,3 +30,8 @@
 
 <!-- inline scripts related to this page -->
 <script src="{{ asset('assets/js/jquery.gritter.min.js') }}"></script>
+
+<!-- page specific plugin scripts -->
+<script src="{{ asset('assets/js/bootstrap-datepicker.min.js') }}"></script>
+<script src="{{ asset('assets/js/jquery.jqGrid.min.js') }}"></script>
+<script src="{{ asset('assets/js/grid.locale-en.js') }}"></script>

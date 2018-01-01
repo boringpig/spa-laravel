@@ -7,6 +7,10 @@
 <!-- text fonts -->
 <link rel="stylesheet" href="{{ asset('assets/css/fonts.googleapis.com.css') }}" />
 
+<link rel="stylesheet" href="{{ asset('assets/css/jquery-ui.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('assets/css/bootstrap-datepicker3.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('assets/css/ui.jqgrid.min.css') }}" />
+
 <!-- ace styles -->
 <link rel="stylesheet" href="{{ asset('assets/css/ace.min.css') }}" class="ace-main-stylesheet" id="main-ace-style" />
 
@@ -22,3 +26,4 @@
 
 <!-- inline styles related to this page -->
 <link rel="stylesheet" href="{{ asset('assets/css/jquery.gritter.min.css') }}" />
+
