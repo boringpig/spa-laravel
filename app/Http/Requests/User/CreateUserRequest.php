@@ -30,4 +30,12 @@ class CreateUserRequest extends FormRequest
             'name'      => 'required|string|max:20',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.required' => '姓名 不能为空。',
+            'name.max' => '姓名 最多为 20 个字符。',
+        ];
+    }
 }

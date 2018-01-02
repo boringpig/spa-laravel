@@ -62,7 +62,6 @@ class UsersController extends Controller
                 'status'    => $request->has('status')? (int) $request->status : 0,
                 'phone'     => $request->phone,
             ];
-            dd($args);
             $user = $this->userRepository->create($args);
             if(is_null($user)) {
                 throw new \Exception(Lang::get('message.store_fail'));

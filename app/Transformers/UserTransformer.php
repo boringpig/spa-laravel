@@ -21,6 +21,7 @@ class UserTransformer
     private function format(User $user)
     {
         return [
+            'id'           => $user->_id,
             'username'      => $user->username,
             'name'          => $user->name,
             'email'         => $user->email,

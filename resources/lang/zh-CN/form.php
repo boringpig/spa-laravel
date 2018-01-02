@@ -18,4 +18,7 @@ return [
     'status'                    => '状态',
     'column_validation_error'   => '栏位验证错误',
     'sure'                      => '确定',
+    'created_success'           => '新增成功',
+    'are_you_sure_back'         => '确定是否返回',
+    'cancel'                    => '取消',
 ];

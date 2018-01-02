@@ -38,4 +38,4 @@
 
 <script src="{{ asset('assets/js/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.ui.touch-punch.min.js') }}"></script>
-<script src="{{ asset('js/commen.js') }}"></script>
+<script src="{{ asset('js/common.js') }}"></script>

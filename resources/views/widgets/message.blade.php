@@ -7,6 +7,13 @@
     @lang('message.no_data')
 </div>
 
-<div id="validation-dialog" class="hide">
+<div id="error-dialog" class="hide">
 
-</div><!-- #validation-dialog -->
+</div><!-- #error-dialog -->
+
+<div id="success-dialog" class="hide">
+    <p class="bigger-110 bolder center grey">
+        <i class="ace-icon fa fa-hand-o-right blue bigger-120"></i>
+        @lang('form.are_you_sure_back')?
+    </p>
+</div><!-- #success-dialog -->

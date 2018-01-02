@@ -99,25 +99,26 @@
 			height: 300,
 			colNames: ['状态', '帐号', '姓名', '信箱', '电话号码', '修改时间', ''],
 			colModel: [
-				{ name: 'status', index: 'status', formatter: statusrenderer, align: 'center', width: 40, editable: true, edittype: "checkbox", editoptions: { value: "啟用:禁用" }, unformat: aceSwitch },
-				{ name: 'username', index: 'username', align: 'center', width: 90, editable: true },
-				{ name: 'name', index: 'name', align: 'center', width: 90, editable: true, editoptions: { size: "20", maxlength: "30" } },
-				{ name: 'email', index: 'email', align: 'center', width: 110, editable: true },
-				{ name: 'phone', index: 'phone', align: 'center', width: 90, editable: true },
-				{ name: 'updated_at', index: 'updated_at', align: 'center', width: 90, editable: true, sorttype: "date", unformat: pickDate },
+				{ name: 'status', index: 'status', align: 'center', width: 40, formatter: statusrenderer},
+				{ name: 'username', index: 'username', align: 'center', width: 90},
+				{ name: 'name', index: 'name', align: 'center', width: 90},
+				{ name: 'email', index: 'email', align: 'center', width: 110},
+				{ name: 'phone', index: 'phone', align: 'center', width: 90},
+				{ name: 'updated_at', index: 'updated_at', align: 'center', width: 90, sorttype: "date"},
+				{ name: 'id', index: 'id', align: 'center', width: 80, formatter: actionrenderer}
 				//{name:'ship',index:'ship', width:90, editable: true,edittype:"select",editoptions:{value:"FE:FedEx;IN:InTime;TN:TNT;AR:ARAMEX"}},
 				//{name:'note',index:'note', width:150, sortable:false,editable: true,edittype:"textarea", editoptions:{rows:"2",cols:"10"}},
-				{
-					name: 'myac', index: '', width: 80, fixed: true, sortable: false, resize: false,
-					formatter: 'actions',
-					formatoptions: {
-						keys: true,
-						//delbutton: false,//disable delete button
+				// {
+				// 	name: 'myac', index: '', width: 80, fixed: true, sortable: false, resize: false,
+				// 	formatter: 'actions',
+				// 	formatoptions: {
+				// 		keys: true,
+				// 		//delbutton: false,//disable delete button
 
-						delOptions: { recreateForm: true, beforeShowForm: beforeDeleteCallback },
-						//editformbutton:true, editOptions:{recreateForm: true, beforeShowForm:beforeEditCallback}
-					}
-				}
+				// 		delOptions: { recreateForm: true, beforeShowForm: beforeDeleteCallback },
+				// 		//editformbutton:true, editOptions:{recreateForm: true, beforeShowForm:beforeEditCallback}
+				// 	}
+				// }
 			],
 
 			viewrecords: true,  // 觀看筆數
@@ -392,6 +393,10 @@
 		} else if (value == '啟用') {
 			return '<span class="label label-success">' + value + '</span>';
 		}
+	}
+	function actionrenderer(value) {
+		console.log(value);
+		return '<a></a>'
 	}
 </script>
 @endsection
