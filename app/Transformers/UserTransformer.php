@@ -21,12 +21,13 @@ class UserTransformer
     private function format(User $user)
     {
         return [
-            'name' => $user->name,
-            'email' => $user->email,
-            'phone' => $user->phone,
-            'status' => ($user->status == 1)? '啟用' : '禁用',
-            'updated_at' => $user->updated_at->toDateTimeString(),
-            'created_at' => $user->created_at->toDateTimeString(),
+            'username'      => $user->username,
+            'name'          => $user->name,
+            'email'         => $user->email,
+            'phone'         => $user->phone,
+            'password'      => $user->password,
+            'status'        => ($user->status == 1)? '啟用' : '禁用',
+            'updated_at'    => $user->updated_at->toDateTimeString(),
         ];
     }
 }

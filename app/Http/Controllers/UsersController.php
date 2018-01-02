@@ -31,7 +31,9 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+        return view('users.create', [
+            'page_title' => Lang::get('pageTitle.users_manage')
+        ]);
     }
 
     /**

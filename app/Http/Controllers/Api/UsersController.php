@@ -27,10 +27,14 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(UserTransformer $transformer)
+    public function index(Request $request, UserTransformer $transformer)
     {
         try {
-            $users = $this->userRepository->getAll();
+            if(! empty($request->all())) {
+                $users = $this->userRepository->getByArgs($request->all());
+            } else {
+                $users = $this->userRepository->getAll();
+            }
             if(count($users) == 0) {
                 throw new \Exception(Lang::get('message.no_data'));
             }
@@ -55,9 +59,10 @@ class UsersController extends Controller
                 'name'      => $request->name,
                 'email'     => $request->email,
                 'password'  => bcrypt($request->password),
-                'status'    => 0,
+                'status'    => $request->has('status')? (int) $request->status : 0,
                 'phone'     => $request->phone,
             ];
+            dd($args);
             $user = $this->userRepository->create($args);
             if(is_null($user)) {
                 throw new \Exception(Lang::get('message.store_fail'));
