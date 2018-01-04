@@ -32,10 +32,9 @@
 <script src="{{ asset('assets/js/jquery.gritter.min.js') }}"></script>
 
 <!-- page specific plugin scripts -->
-<script src="{{ asset('assets/js/bootstrap-datepicker.min.js') }}"></script>
-<script src="{{ asset('assets/js/jquery.jqGrid.min.js') }}"></script>
-<script src="{{ asset('assets/js/grid.locale-cn.js') }}"></script>
-
 <script src="{{ asset('assets/js/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.ui.touch-punch.min.js') }}"></script>
 <script src="{{ asset('js/common.js') }}"></script>
+<script src="{{ asset('assets/js/moment.min.js') }}"></script>
+<script src="{{ asset('assets/js/bootstrap-datetimepicker.min.js') }}"></script>
+

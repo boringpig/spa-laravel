@@ -3,6 +3,8 @@
 namespace App\Repositories;
 
 use App\User;
+use Carbon\Carbon;
+use DB;
 
 class UserRepository 
 {
@@ -38,8 +40,13 @@ class UserRepository
             $condition['username'] = ['$eq' => $args['username']]; 
         }
 
+        if(array_key_exists('updated_at', $args) && !empty($args['updated_at'])) {
+            $condition['updated_at'] = ['$gte' => new \MongoDB\BSON\UTCDateTime(strtotime("{$args['updated_at']} 00:00:00") * 1000),
+                                        '$lte' => new \MongoDB\BSON\UTCDateTime(strtotime("{$args['updated_at']} 23:59:59") * 1000)];
+        }
+
         $query = $this->model->whereRaw($condition)->orderBy('created_at','desc');
-        
+
         return is_null($perPage)? $query->get() : $query->paginate($perPage);
     }
     
@@ -64,9 +71,12 @@ class UserRepository
      */
     public function update($id, $args)
     {
-        return $this->model->where('id', $id)->update($args);
+        return $this->model->where('_id', $id)->update($args);
     }
 
+    /**
+     * 刪除特定的使用者
+     */
     public function delete($id)
     {
         return $this->model->destroy($id);

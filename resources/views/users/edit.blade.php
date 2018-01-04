@@ -6,7 +6,7 @@
     @lang('pageTitle.users_manage')
 </li>
 <li>
-    <a href="{{ route('users') }}">@lang('pageTitle.users_page')</a>
+    <a href="{{ route('users.index') }}">@lang('pageTitle.users_page')</a>
 </li>
 @endsection
 
@@ -16,61 +16,103 @@
             @lang('pageTitle.users_page')
             <small>
                 <i class="ace-icon fa fa-angle-double-right"></i>
-                @lang('form.create')
+                @lang('form.edit')
             </small>
         </h1>
     </div><!-- /.page-header -->
     <div class="row">
         <div class="col-xs-12">
-            <form id="create_form" class="form-horizontal" role="form" method="post">
-                @include('users.partials.form')
+            <form id="edit_form" class="form-horizontal" role="form" action="{{ route('users.update', ['id' => $user['id']]) }}" method="post">
+                {{ csrf_field() }}
+                {{ method_field('PATCH') }}
+                <input type="hidden" name="id" value="{{ $user['id'] }}">
+                @include('users.partials.form', ['user' => $user])
             </form>
         </div>
     </div>
+    <div class="modal fade" id="changePasswordModal"  tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">@lang('form.change_password')</h4>
+                </div>
+                <form class="form-horizontal" role="form" id="changePassword_form">
+                    <div class="modal-body">
+                        <input type="hidden" id="user_id" name="user_id" value="{{ $user['id'] }}">
+                        <div class="form-group">
+                            <label for="username" class="col-xs-offset-1 col-xs-2 control-label no-padding-right"><strong>@lang('form.username'):</strong></label>
+                            <div class="col-xs-6">
+                                <h4 style="margin-top:7px;">{{ $user['username'] }}</h4>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>  
+                        <div class="form-group">
+                            <label for="password" class="col-xs-offset-1 col-xs-2 control-label no-padding-right"><strong> @lang('form.password'):</strong></label>
+                            <div class="col-xs-6">
+                                <input type="password" id="password" name="password" class="width-100">
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="space-5"></div>
+                        <div class="form-group">
+                            <label for="password" class="col-xs-offset-1 col-xs-2 control-label no-padding-right"><strong> @lang('form.repeat_password'):</strong></label>
+                            <div class="col-xs-6">
+                                <input type="password" id="password-confirmation" name="password-confirmation" class="width-100">
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="space-5"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">@lang('form.close')</button>
+                        <button type="submit" class="btn btn-primary">@lang('form.change_password')</button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 @endsection
 
 @section('script')
 <script>
-    $(function() {
-        $('#create_form').submit(function(event) {
-            event.preventDefault();
-            form_data = {
-                'username': $('#username').val(),
-                'password': $('#password').val(),
-                'name': $('#name').val(),
-                'email': $('#email').val(),
-                'phone': $('#phone').val(),
-                'status': $('#status').val(),
-                '_token': "{{ csrf_token() }}",
-            };
-            $.ajax({
-                type:'POST',
-                url:'/api/users',
-                data: form_data,
-                success: function (data, textStatus, jqXHR) {
-                    if(jqXHR.status == 200) {
-                        var title = "@lang('form.created_success')";
-                        var sure_button = "@lang('form.sure')";
-                        var cancel_button = "@lang('form.cancel')";
-                        var redirectUrl = "/user-manage/users";
-                        showSuccessDialog(title,sure_button,cancel_button,redirectUrl);
-                    }
-                },
-                error:  function (jqXHR, textStatus, errorThrown) {
-                    //資料驗證失敗
-			        if(jqXHR.status == 422) {
-                        var errors = jqXHR.responseJSON.errors;
-                        var msg = '';
-                        $.each(errors, function(key,val) {
-                            msg += '<li><strong class="text-danger">' + val + '</strong></li>';
-                        });
-                        var title = "@lang('form.column_validation_error')";
-                        var sure_button = "@lang('form.sure')";
-                        showErrorDialog(msg,title,sure_button);
-                    }
-                }
-            });
-        });
+    $('#status').click(function() {
+        if($(this).prop('checked')) {
+            $(this).val(1);
+        } else {
+            $(this).val(0);
+        }
     });
+
+    // 修改密码
+    $('#changePassword_form').submit(function(event) {
+        event.preventDefault();
+        var id = $(this).find('input[name="user_id"]').val();
+        var form_data = {
+            'password': $(this).find('input[name="password"]').val(),
+            'password_confirmation': $(this).find('input[name="password-confirmation"]').val(),
+            '_token': "{{ csrf_token() }}",
+        };
+        $.ajax({
+            type: 'POST',
+            url: `/user-manage/users/change-password/${id}`,
+            data: form_data,
+            success: function (data, textStatus, jqXHR) {
+                successMessage("@lang('message.change_password_success')");
+                $('#changePasswordModal').modal('hide');
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if(jqXHR.status == 422) {
+                    var msg = '';
+                    $.each(jqXHR.responseJSON.errors, function(key, value) {
+                        msg += `<li>${value}</li>`;
+                    });
+                    errorMessage(msg);
+                }else if(jqXHR.status == 500) {
+                    errorMessage(jqXHR.responseJSON.errors);
+                }
+            }
+        });
+    })
 </script>
 @endsection

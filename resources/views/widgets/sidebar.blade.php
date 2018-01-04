@@ -17,7 +17,7 @@
 	<b class="arrow"></b>
 	<ul class="submenu">
 		<li class="{{ (\Request::segment(2) == 'users')? 'active' : '' }}">
-			<a href="{{ route('users') }}">
+			<a href="{{ route('users.index') }}">
 				<i class="menu-icon fa fa-caret-right"></i>
 				@lang('pageTitle.users_page')
 			</a>

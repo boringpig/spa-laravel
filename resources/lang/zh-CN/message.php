@@ -1,10 +1,15 @@
 <?php
 
 return [
-    'login_success'     => '登入成功',
-    'register_success'  => '注册成功',
-    'no_data'           => '查无资料',
-    'store_fail'        => '建立资料失败',
-    'update_fail'       => '更新资料失败',
-    'search_result'     => '搜寻结果',
+    'login_success'             => '登入成功',
+    'register_success'          => '注册成功',
+    'no_data'                   => '查无资料',
+    'store_fail'                => '建立资料失败',
+    'update_fail'               => '更新资料失败',
+    'delete_fail'               => '删除资料失败',                          
+    'delete_success'            => '删除资料成功',                          
+    'change_password_success'   => '修改密码成功',                          
+    'change_password_fail'      => '修改密码失败',                          
+    'search_result'             => '搜寻结果',
+    'are_you_sure_delete_user'  => '确定要删除此帐号吗？',
 ];

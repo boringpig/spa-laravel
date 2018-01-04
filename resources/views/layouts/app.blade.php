@@ -68,15 +68,6 @@
                         <ul class="breadcrumb">
                             @yield('breadcrumb')
                         </ul><!-- /.breadcrumb -->
-
-                        <div class="nav-search" id="nav-search">
-                            <form class="form-search">
-                                <span class="input-icon">
-                                    <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
-                                    <i class="ace-icon fa fa-search nav-search-icon"></i>
-                                </span>
-                            </form>
-                        </div><!-- /.nav-search -->
                     </div>
                     <div class="page-content">
 						@include('widgets.message')
@@ -101,6 +92,7 @@
 		@include('widgets.script')
 		@yield('script')
 		<script>
+			$('[data-toggle="tooltip"]').tooltip()
 			$.widget("ui.dialog", $.extend({}, $.ui.dialog.prototype, {
 				_title: function(title) {
 					var $title = this.options.title || '&nbsp;'
@@ -114,7 +106,16 @@
 					title: "{{ Session::get('success') }}",
 					class_name: "gritter-success",
 					sticky: false,
-					time: 1000,
+					time: 2000,
+				});	
+			@endif
+
+			@if(Session::has('error'))
+				$.gritter.add({
+					title: "{{ Session::get('error') }}",
+					class_name: "gritter-error",
+					sticky: false,
+					time: 2000,
 				});	
 			@endif
 
