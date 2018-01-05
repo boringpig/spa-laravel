@@ -91,7 +91,7 @@
     <div class="col-md-offset-3 col-md-9">
         <button class="btn btn-primary btn-sm" type="submit">
             <i class="ace-icon fa fa-check bigger-110"></i>
-            @lang('form.save_change')
+            {{ $submit_button }}
         </button>
         @if(!empty($user))
             <button class="btn btn-warning btn-sm" type="button" data-toggle="modal" data-target="#changePasswordModal">

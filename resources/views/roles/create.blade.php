@@ -6,14 +6,14 @@
     @lang('pageTitle.users_manage')
 </li>
 <li>
-    <a href="{{ route('users.index') }}">@lang('pageTitle.users_page')</a>
+    <a href="{{ route('roles.index') }}">@lang('pageTitle.roles_page')</a>
 </li>
 @endsection
 
 @section('content')
     <div class="page-header">
         <h1>
-            @lang('pageTitle.users_page')
+            @lang('pageTitle.roles_page')
             <small>
                 <i class="ace-icon fa fa-angle-double-right"></i>
                 @lang('form.create')
@@ -21,23 +21,21 @@
         </h1>
     </div><!-- /.page-header -->
     <div class="row">
-        <div class="col-xs-12">
-            <form id="create_form" class="form-horizontal" role="form" action="{{ route('users.store') }}" method="post">
+        <div class="col-xs-10">
+            <form id="create_form" class="form-horizontal" role="form" action="{{ route('roles.store') }}" method="post">
                 {{ csrf_field() }}
-                @include('users.partials.form', ['submit_button' => Lang::get('form.submit_create')])
+                @include('roles.partials.form', ['submit_button' => Lang::get('form.submit_create'),'data' => $data, 'menu_list' => $menu_list, 'button_list' => $button_list])
             </form>
         </div>
     </div>
 @endsection
 
 @section('script')
+<script src="{{ asset('web/js/roles.js') }}"></script>
 <script>
-    $('#status').click(function() {
-        if($(this).prop('checked')) {
-            $(this).val(1);
-        } else {
-            $(this).val(0);
-        }
+    $(function() {
+        selectAllUsers();
+        selectAllRoles();
     });
 </script>
 @endsection

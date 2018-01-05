@@ -12,4 +12,5 @@ return [
     'change_password_fail'      => '修改密码失败',                          
     'search_result'             => '搜寻结果',
     'are_you_sure_delete_user'  => '确定要删除此帐号吗？',
+    'are_you_sure_delete_role'  => '确定要删除此角色吗？',
 ];

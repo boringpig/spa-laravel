@@ -24,7 +24,7 @@ class User extends Model implements
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'username', 'status', 'phone'
+        'name', 'email', 'password', 'username', 'status', 'phone','role_id'
     ];
 
     /**
@@ -35,4 +35,9 @@ class User extends Model implements
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function role()
+    {
+        return $this->belongsTo('App\Role', 'role_id');
+    }
 }

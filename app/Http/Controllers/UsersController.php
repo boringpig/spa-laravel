@@ -29,7 +29,7 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(UserTransformer $transformer)
+    public function index()
     {
         $users = $this->userRepository->getAll(config('website.perPage'));
         $users = (count($users) > 0)? $this->userTransformer->transform($users)->setPath("/".Route::current()->uri()) : [];
@@ -90,13 +90,14 @@ class UsersController extends Controller
         $user = $this->userRepository->findOneById($id);
 
         if(is_null($user)) {
-            Session::flash('error', 'form.no_data');
+            Session::flash('error', Lang::get('form.no_data'));
             return redirect()->back();
         }
 
         $user = $this->userTransformer->transform($user);
 
         return view('users.edit', [
+            'page_title' => Lang::get('pageTitle.users_manage'),
             'user' => $user
         ]);
     }
@@ -113,7 +114,7 @@ class UsersController extends Controller
         $user = $this->userRepository->findOneById($id);
 
         if(is_null($user)) {
-            Session::flash('error', 'form.no_data');
+            Session::flash('error', Lang::get('form.no_data'));
             return redirect()->back();
         }
         // 啟用/禁用 是用checkbox有選擇才有回傳值，反之沒有
@@ -175,7 +176,7 @@ class UsersController extends Controller
         }
     }
 
-    public function search(Request $request, UserTransformer $transformer)
+    public function search(Request $request)
     {
         $users = $this->userRepository->getByArgs($request->all(),config('website.perPage'));
         $users = (count($users) > 0)? $this->userTransformer->transform($users)->appends($request->all())->setPath("/{$request->path()}") : [];

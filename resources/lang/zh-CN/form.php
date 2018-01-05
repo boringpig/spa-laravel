@@ -34,4 +34,11 @@ return [
     'change_password'           => '修改密码',
     'close'                     => '关闭',
     'save_change'               => '保存更改',
+    'submit_create'             => '建立送出',
+    'menu'                      => '選單',
+    'auth_button'               => '按鈕權限',
+    'select_all'                => '全选',
+    'role_name'                 => '角色名称',
+    'role_permission'           => '角色权限',
+    'using_username'            => '使用中的帐号',
 ];

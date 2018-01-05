@@ -24,8 +24,8 @@
 
 			<b class="arrow"></b>
 		</li>
-		<li class="">
-			<a href="#">
+		<li class="{{ (\Request::segment(2) == 'roles')? 'active' : '' }}">
+			<a href="{{ route('roles.index') }}">
 				<i class="menu-icon fa fa-caret-right"></i>
 				角色資料
 			</a>

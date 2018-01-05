@@ -18,4 +18,6 @@ Route::group(['prefix' => 'user-manage'], function() {
     Route::post('users/change-password/{id}', ['uses' => 'UsersController@changePassword','as' => 'users.change-password']);
     Route::get('users/search', ['uses' => 'UsersController@search','as' => 'users.search']);
     Route::resource('users', 'UsersController')->except('show');
+    Route::get('roles/search', ['uses' => 'RolesController@search','as' => 'roles.search']);
+    Route::resource('roles', 'RolesController');
 });

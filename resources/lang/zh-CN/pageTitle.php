@@ -8,4 +8,5 @@ return [
     'system'            => 'KIOSK后台管理系统',
     'users_manage'      => '使用者管理',
     'users_page'        => '使用者资料',
+    'roles_page'        => '角色资料',
 ];
