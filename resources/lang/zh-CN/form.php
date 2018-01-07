@@ -41,4 +41,5 @@ return [
     'role_name'                 => '角色名称',
     'role_permission'           => '角色权限',
     'using_username'            => '使用中的帐号',
+    'back'                      => '返回',
 ];

@@ -20,6 +20,7 @@ class UsersController extends Controller
     public function __construct(UserRepository $userRepository, UserTransformer $userTransformer)
     {
         $this->middleware('auth');
+        $this->middleware('role.auth');
         $this->userRepository = $userRepository;
         $this->userTransformer = $userTransformer;
     }
