@@ -12,4 +12,15 @@ class Role extends Model
     {
         return $this->hasMany('App\User', 'role_id', '_id');
     }
+
+    protected static function boot() {
+        parent::boot();
+
+        static::deleting(function($role) {
+            $role->users->each(function($user) {
+                $user->role_id = "";
+                $user->save();
+            });
+        });
+    }
 }

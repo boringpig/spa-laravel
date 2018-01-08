@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="{{ asset('assets/font-awesome/4.5.0/css/font-awesome.min.css') }}" />
 
 <!-- page specific plugin styles -->
+<link rel="stylesheet" href="{{ asset('assets/css/chosen.min.css') }}" />
 
 <!-- text fonts -->
 <link rel="stylesheet" href="{{ asset('assets/css/fonts.googleapis.com.css') }}" />

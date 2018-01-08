@@ -74,7 +74,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="3" class="text-center">@lang('form.no_data')</td>
+                            <td colspan="4" class="text-center">@lang('form.no_data')</td>
                         </tr>
                     @endforelse
                 </tbody>

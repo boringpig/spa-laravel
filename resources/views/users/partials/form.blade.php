@@ -60,6 +60,32 @@
     @endif
 </div>
 <div class="space-4"></div>
+<div class="form-group {{ $errors->has('role_id')? ' has-error' : '' }}">
+    <label for="role_id" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right"> <span class="text-danger">*</span> @lang('form.role_permission') </label>
+    <div class="col-xs-3">
+        <span class="block input-icon input-icon-right">
+            @if(!empty($roles))
+                <select class="chosen-select width-100" id="role_id" name="role_id" data-placeholder="@lang('form.choose_one_a_role')">
+                    <option value="">  </option>
+                    @foreach($roles as $key => $value)
+                        @if(!empty($user['role_id']) && $key == $user['role_id'])
+                            <option value="{{ $key }}" selected>{{ $value }}</option>
+                        @else
+                            <option value="{{ $key }}">{{ $value }}</option>
+                        @endif
+                    @endforeach
+                </select>
+            @endif
+            @if($errors->has('role_id'))
+                <i class="ace-icon fa fa-times-circle"></i>
+            @endif
+        </span>
+    </div>
+    @if($errors->has('role_id'))
+        <div class="help-block col-xs-12 col-sm-reset inline">{{ $errors->first('role_id') }}</div>
+    @endif
+</div>
+<div class="space-4"></div>
 <div class="form-group {{ $errors->has('phone')? ' has-error' : '' }}">
     <label for="phone" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right"> @lang('form.phone') </label>
     <div class="col-xs-3">

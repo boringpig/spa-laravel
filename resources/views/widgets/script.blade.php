@@ -23,7 +23,7 @@
 <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
 
 <!-- page specific plugin scripts -->
-
+<script src="{{ asset('assets/js/chosen.jquery.min.js') }}"></script>
 <!-- ace scripts -->
 <script src="{{ asset('assets/js/ace-elements.min.js') }}"></script>
 <script src="{{ asset('assets/js/ace.min.js') }}"></script>

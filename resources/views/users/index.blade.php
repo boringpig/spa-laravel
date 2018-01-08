@@ -35,6 +35,21 @@
                         <input type="text" class="form-control" placeholder="@lang('form.username')" id="username" name="username" value="{{ old('username') }}">
                     </div>
                     <div class="col-xs-3">
+                        @lang('form.role_name')：
+                        @if(!empty($roles))
+                            <select class="chosen-select width-100" id="role_id" name="role_id" data-placeholder="@lang('form.choose_one_a_role')">
+                                <option value="">  </option>
+                                @foreach($roles as $key => $value)
+                                    @if(!empty(old('role_id')) && ($key === old('role_id')))
+                                        <option value="{{ $key }}" selected>{{ $value }}</option>
+                                    @else
+                                        <option value="{{ $key }}">{{ $value }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        @endif
+                    </div>
+                    <div class="col-xs-3">
                         @lang('form.updated_at')：
                         <div class="input-group">
                             <input id="updated_at" name="updated_at" type="text" class="form-control" placeholder="@lang('form.updated_at')" value="{{ old('updated_at') }}">
@@ -43,7 +58,10 @@
                             </span>
                         </div>
                     </div>
-                    <div class="col-xs-3" style="text-align:right;margin-top: 22px;">
+                    
+                </div>
+                <div class="row">
+                    <div class="col-xs-12" style="text-align:right;margin-top: 22px;">
                         <button type="submit" class="btn btn-white btn-default btn-bold">
                             <i class="fa fa-fw fa-search"></i>@lang('form.search')
                         </button>
@@ -61,6 +79,7 @@
                         <th class="center">@lang('form.status')</th>
                         <th class="center">@lang('form.username')</th>
                         <th class="center">@lang('form.name')</th>
+                        <th class="center">@lang('form.role_name')</th>
                         <th class="center">@lang('form.email')</th>
                         <th class="center">@lang('form.phone')</th>
                         <th class="center">@lang('form.updated_at')</th>
@@ -79,6 +98,7 @@
                             </td>
                             <td class="center">{{ $user['username'] }}</td>
                             <td class="center">{{ $user['name'] }}</td>
+                            <td class="center">{{ $user['role_name'] }}</td>
                             <td class="center">{{ $user['email'] }}</td>
                             <td class="center">{{ $user['phone'] }}</td>
                             <td class="center">{{ $user['updated_at'] }}</td>

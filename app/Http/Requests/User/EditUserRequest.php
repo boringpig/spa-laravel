@@ -28,6 +28,7 @@ class EditUserRequest extends FormRequest
 			'username'  => 'required|string|max:20|unique:users',
             'email'     => 'required|string|email|max:255|unique:users',
             'name'      => 'required|string|max:20',
+            'role_id'   => 'required|string',
         ];
         
 		$user = User::find($_REQUEST['id']);
@@ -39,5 +40,15 @@ class EditUserRequest extends FormRequest
         }
         
         return $rules;
+    }
+
+    public function attributes()
+    {
+        return [
+            'username'      => '帐号',
+            'name'          => '姓名',
+            'email'         => '信箱',
+            'role_id'       => '角色权限',
+        ];
     }
 }

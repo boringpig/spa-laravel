@@ -38,6 +38,10 @@ class UserRepository
             $condition['username'] = ['$eq' => $args['username']]; 
         }
 
+        if(array_key_exists('role_id', $args) && !empty($args['role_id'])) {
+            $condition['role_id'] = ['$eq' => $args['role_id']];
+        }
+
         if(array_key_exists('updated_at', $args) && !empty($args['updated_at'])) {
             $condition['updated_at'] = ['$gte' => new \MongoDB\BSON\UTCDateTime(strtotime("{$args['updated_at']} 00:00:00") * 1000),
                                         '$lte' => new \MongoDB\BSON\UTCDateTime(strtotime("{$args['updated_at']} 23:59:59") * 1000)];

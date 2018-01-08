@@ -101,6 +101,9 @@
 					else title.text($title);
 				}
 			}));
+			$('.chosen-select').chosen({
+				allow_single_deselect:true
+			}); 
 			@if(Session::has('success'))
 				$.gritter.add({
 					title: "{{ Session::get('success') }}",

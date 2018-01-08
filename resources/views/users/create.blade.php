@@ -24,7 +24,7 @@
         <div class="col-xs-12">
             <form id="create_form" class="form-horizontal" role="form" action="{{ route('users.store') }}" method="post">
                 {{ csrf_field() }}
-                @include('users.partials.form', ['submit_button' => Lang::get('form.submit_create')])
+                @include('users.partials.form', ['roles' => $roles, 'submit_button' => Lang::get('form.submit_create')])
             </form>
         </div>
     </div>

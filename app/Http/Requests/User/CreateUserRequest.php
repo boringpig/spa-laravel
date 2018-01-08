@@ -28,14 +28,17 @@ class CreateUserRequest extends FormRequest
             'email'     => 'required|string|email|max:255|unique:users',
             'password'  => 'required|string|min:6|',
             'name'      => 'required|string|max:20',
+            'role_id'   => 'required|string',
         ];
     }
 
-    public function messages()
+    public function attributes()
     {
         return [
-            'name.required' => '姓名 不能为空。',
-            'name.max' => '姓名 最多为 20 个字符。',
+            'username'      => '帐号',
+            'name'          => '姓名',
+            'email'         => '信箱',
+            'role_id'       => '角色权限',
         ];
     }
 }

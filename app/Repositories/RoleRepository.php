@@ -75,4 +75,12 @@ class RoleRepository
     {
         return $this->model->destroy($id);
     }
+
+    /**
+     * 回傳角色名稱陣列 
+     */
+    public function getPluckNameArray()
+    {
+        return $this->model->get()->pluck('name','id')->toArray();
+    }
 }

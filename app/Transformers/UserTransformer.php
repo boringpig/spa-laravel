@@ -34,6 +34,8 @@ class UserTransformer
             'phone'         => $user->phone,
             'password'      => $user->password,
             'status'        => $user->status,
+            'role_id'       => $user->role_id,
+            'role_name'     => empty($user->role->name)? "" : $user->role->name, 
             'updated_at'    => $user->updated_at->toDateTimeString(),
         ];
     }

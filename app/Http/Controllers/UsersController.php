@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\UserRepository;
+use App\Repositories\RoleRepository;
 use App\Transformers\UserTransformer;
 use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\EditUserRequest;
@@ -15,13 +16,17 @@ use Illuminate\Support\Facades\Route;
 class UsersController extends Controller
 {
     protected $userRepository;
+    protected $roleRepository;
     protected $userTransformer;
 
-    public function __construct(UserRepository $userRepository, UserTransformer $userTransformer)
-    {
+    public function __construct(UserRepository $userRepository,
+                                RoleRepository $roleRepository, 
+                                UserTransformer $userTransformer
+    ) {
         $this->middleware('auth');
         $this->middleware('role.auth');
         $this->userRepository = $userRepository;
+        $this->roleRepository = $roleRepository;
         $this->userTransformer = $userTransformer;
     }
 
@@ -36,6 +41,7 @@ class UsersController extends Controller
         $users = (count($users) > 0)? $this->userTransformer->transform($users)->setPath("/".Route::current()->uri()) : [];
         return view('users.index', [
             'page_title' => Lang::get('pageTitle.users_manage'),
+            'roles'      => $this->roleRepository->getPluckNameArray(),
             'users'      => $users,
         ]);
     }
@@ -46,9 +52,10 @@ class UsersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    {   
         return view('users.create', [
-            'page_title' => Lang::get('pageTitle.users_manage')
+            'page_title' => Lang::get('pageTitle.users_manage'),
+            'roles'      => $this->roleRepository->getPluckNameArray(),
         ]);
     }
 
@@ -67,6 +74,7 @@ class UsersController extends Controller
             'password'  => bcrypt($request->password),
             'status'    => $request->has('status')? (int) $request->status : 0,
             'phone'     => $request->phone,
+            'role_id'   => $request->role_id,
         ];
 
         $user = $this->userRepository->create($args);
@@ -98,8 +106,9 @@ class UsersController extends Controller
         $user = $this->userTransformer->transform($user);
 
         return view('users.edit', [
-            'page_title' => Lang::get('pageTitle.users_manage'),
-            'user' => $user
+            'page_title'    => Lang::get('pageTitle.users_manage'),
+            'roles'         => $this->roleRepository->getPluckNameArray(),
+            'user'          => $user,
         ]);
     }
 
@@ -126,6 +135,7 @@ class UsersController extends Controller
             'email'     => $request->email,
             'status'    => ($user->status != $status)? $status : $user->status,
             'phone'     => $request->phone,
+            'role_id'   => $request->role_id,
         ];
         if($this->userRepository->update($id, $args)) {
             Session::flash('success', Lang::get('form.updated_success'));
@@ -184,6 +194,7 @@ class UsersController extends Controller
         $request->flash();
         return view('users.index', [
             'page_title' => Lang::get('pageTitle.users_manage'),
+            'roles'      => $this->roleRepository->getPluckNameArray(),
             'users'      => $users,
         ]);
     }

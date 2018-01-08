@@ -16,8 +16,9 @@ class RolesController extends Controller
     protected $roleRepository;
     protected $roleTransformer;
 
-    public function __construct(RoleRepository $roleRepository, RoleTransformer $roleTransformer)
-    {
+    public function __construct(RoleRepository $roleRepository, 
+                                RoleTransformer $roleTransformer
+    ) {
         $this->middleware('auth');
         $this->roleRepository = $roleRepository;
         $this->roleTransformer = $roleTransformer;
@@ -65,6 +66,7 @@ class RolesController extends Controller
             'name'          => $request->name,
             'permission'    => $request->permission,
         ];
+
         $role = $this->roleRepository->create($args);
 
         if(is_null($role)) {
@@ -91,6 +93,7 @@ class RolesController extends Controller
             return redirect()->back();
         }
         $role = $this->roleTransformer->transform($role);
+        
         return view('roles.edit', [
             'page_title'    => Lang::get('pageTitle.users_manage'),
             'menu_list'     => config('menu'),
