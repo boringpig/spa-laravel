@@ -35,12 +35,16 @@
                         </div>
                     </div>
                     <div class="col-xs-6" style="text-align:right;margin-top: 22px;">
-                        <button type="submit" class="btn btn-white btn-default btn-bold">
-                            <i class="fa fa-fw fa-search"></i>@lang('form.search')
-                        </button>
-                        <a href="{{ route('roles.create') }}" class="btn btn-white btn-success btn-bold">
-                            <i class="fa fa-fw fa-plus"></i>@lang('form.create')</button>
-                        </a>
+                        @if(in_array('search', $role_button))
+                            <button type="submit" class="btn btn-white btn-default btn-bold">
+                                <i class="fa fa-fw fa-search"></i>@lang('form.search')
+                            </button>
+                        @endif
+                        @if(in_array('store', $role_button))
+                            <a href="{{ route('roles.create') }}" class="btn btn-white btn-success btn-bold">
+                                <i class="fa fa-fw fa-plus"></i>@lang('form.create')</button>
+                            </a>
+                        @endif
                     </div>
                 </div>
             </form>
@@ -63,12 +67,16 @@
                             <td class="text-center">{{ $role['updated_at'] }}</td>
                             <td>
                                 <div class="hidden-sm hidden-xs btn-group">
-                                    <a href="{{ route('roles.edit', ['id' => $role['id']]) }}" class="btn btn-xs btn-info" data-toggle="tooltip" data-placement="bottom" title="@lang('form.edit')">
-                                        <i class="ace-icon fa fa-pencil bigger-120"></i>
-                                    </a>
-                                    <button type="button" onclick="deleteRole(this)" data-toggle="tooltip" data-placement="bottom" title="@lang('form.delete')" data-id="{{ $role['id'] }}" data-name="{{ $role['name'] }}" class="btn btn-xs btn-danger">
-                                        <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                                    </button>
+                                    @if(in_array('update', $role_button))
+                                        <a href="{{ route('roles.edit', ['id' => $role['id']]) }}" class="btn btn-xs btn-info" data-toggle="tooltip" data-placement="bottom" title="@lang('form.edit')">
+                                            <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                        </a>
+                                    @endif
+                                    @if(in_array('destroy', $role_button))
+                                        <button type="button" onclick="deleteRole(this)" data-toggle="tooltip" data-placement="bottom" title="@lang('form.delete')" data-id="{{ $role['id'] }}" data-name="{{ $role['name'] }}" class="btn btn-xs btn-danger">
+                                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                        </button>
+                                    @endif
                                 </div>
                             </td>
                         </tr>

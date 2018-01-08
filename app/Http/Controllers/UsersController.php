@@ -23,8 +23,7 @@ class UsersController extends Controller
                                 RoleRepository $roleRepository, 
                                 UserTransformer $userTransformer
     ) {
-        $this->middleware('auth');
-        $this->middleware('role.auth');
+        $this->middleware(['auth','role.auth']);
         $this->userRepository = $userRepository;
         $this->roleRepository = $roleRepository;
         $this->userTransformer = $userTransformer;

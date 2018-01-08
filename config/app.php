@@ -168,6 +168,11 @@ return [
          * Package Service Providers...
          */
 
+        /**
+         * System Provider...
+         */
+        App\Providers\ComposerServiceProvider::class,
+
         /*
          * Application Service Providers...
          */

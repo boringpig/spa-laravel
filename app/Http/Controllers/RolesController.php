@@ -19,7 +19,7 @@ class RolesController extends Controller
     public function __construct(RoleRepository $roleRepository, 
                                 RoleTransformer $roleTransformer
     ) {
-        $this->middleware('auth');
+        $this->middleware(['auth','role.auth']);
         $this->roleRepository = $roleRepository;
         $this->roleTransformer = $roleTransformer;
     }
@@ -93,7 +93,7 @@ class RolesController extends Controller
             return redirect()->back();
         }
         $role = $this->roleTransformer->transform($role);
-        
+
         return view('roles.edit', [
             'page_title'    => Lang::get('pageTitle.users_manage'),
             'menu_list'     => config('menu'),

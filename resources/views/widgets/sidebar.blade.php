@@ -7,6 +7,7 @@
 	<b class="arrow"></b>
 </li>
 
+@if(in_array('users', $role_menu) || in_array('roles', $role_menu))
 <li class="{{ (\Request::segment(1) == 'user-manage')? 'open' : '' }}">
 	<a href="" class="dropdown-toggle">
 		<i class="menu-icon fa fa-user"></i>
@@ -16,6 +17,7 @@
 
 	<b class="arrow"></b>
 	<ul class="submenu">
+		@if(in_array('users', $role_menu))
 		<li class="{{ (\Request::segment(2) == 'users')? 'active' : '' }}">
 			<a href="{{ route('users.index') }}">
 				<i class="menu-icon fa fa-caret-right"></i>
@@ -24,6 +26,8 @@
 
 			<b class="arrow"></b>
 		</li>
+		@endif
+		@if(in_array('roles', $role_menu))
 		<li class="{{ (\Request::segment(2) == 'roles')? 'active' : '' }}">
 			<a href="{{ route('roles.index') }}">
 				<i class="menu-icon fa fa-caret-right"></i>
@@ -32,9 +36,10 @@
 
 			<b class="arrow"></b>
 		</li>
+		@endif
 	</ul>
 </li>
-
+@endif
 <li class="">
 	<a href="#" class="dropdown-toggle">
 		<i class="menu-icon fa fa-picture-o"></i>
