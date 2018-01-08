@@ -13,6 +13,7 @@ return [
     'search_result'                     => '搜寻结果',
     'are_you_sure_delete_user'          => '确定要删除此帐号吗？',
     'are_you_sure_delete_role'          => '确定要删除此角色吗？',
+    'are_you_sure_delete_article'       => '确定要删除此文章吗？',
     'the_account_no_authority'          => '此帐号無权限',
     'the_page_is_forbidden_to_enter'    => '该页面禁止进入',
 ];

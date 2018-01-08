@@ -80,8 +80,9 @@
 	</ul>
 </li>
 
-<li class="">
-	<a href="#" class="dropdown-toggle">
+@if(in_array('articles', $role_menu))
+<li class="{{ (\Request::segment(1) == 'article-manage')? 'open' : '' }}">
+	<a href="" class="dropdown-toggle">
 		<i class="menu-icon fa fa-book"></i>
 		<span class="menu-text"> 文章管理 </span>
 		<b class="arrow fa fa-angle-down"></b>
@@ -89,17 +90,19 @@
 
 	<b class="arrow"></b>
 	<ul class="submenu">
-		<li class="">
-			<a href="#" >
+		@if(in_array('articles', $role_menu))
+		<li class="{{ (\Request::segment(2) == 'articles')? 'active' : '' }}">
+			<a href="{{ route('articles.index') }}" >
 				<i class="menu-icon fa fa-caret-right"></i>
 				文章資料
 			</a>
 
 			<b class="arrow"></b>
 		</li>
+		@endif
 	</ul>
 </li>
-
+@endif
 <li class="">
 	<a href="#" class="dropdown-toggle">
 		<i class="menu-icon fa fa-cogs"></i>

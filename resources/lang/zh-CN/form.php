@@ -42,5 +42,9 @@ return [
     'role_permission'           => '角色权限',
     'using_username'            => '使用中的帐号',
     'back'                      => '返回',
-    'choose_one_a_role'         => '选择一个角色'
+    'choose_one_a_role'         => '选择一个角色',
+    'choose_one_language'       => '选择一个语系',
+    'language'                  => '语系',
+    'title'                     => '标题',
+    'content'                   => '内容',
 ];

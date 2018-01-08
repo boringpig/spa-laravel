@@ -18,3 +18,13 @@ function selectAllRoles() {
         }
     });
 }
+// 文章資料權限全選
+function selectAllArticles() {
+    $('#articles_selectAll').click(function() {
+        if($('#articles_selectAll').prop("checked")) {
+            $("input[id='articles_permission[]']").prop('checked', true);
+        } else {
+            $("input[id='articles_permission[]']").prop('checked', false);
+        }
+    });
+}

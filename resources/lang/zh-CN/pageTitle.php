@@ -9,4 +9,6 @@ return [
     'users_manage'      => '使用者管理',
     'users_page'        => '使用者资料',
     'roles_page'        => '角色资料',
+    'articles_manage'   => '文章管理',
+    'articles_page'     => '文章资料',
 ];

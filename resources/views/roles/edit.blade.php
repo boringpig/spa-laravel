@@ -38,6 +38,7 @@
     $(function() {
         selectAllUsers();
         selectAllRoles();
+        selectAllArticles();
     });
 </script>
 @endsection
