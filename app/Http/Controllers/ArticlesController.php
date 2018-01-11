@@ -59,6 +59,12 @@ class ArticlesController extends Controller
      */
     public function store(CreateArticleRequest $request)
     {
+        // 檢查是否有相同的文章標題、語系
+        if($this->articleRepository->checkSameArticle($request->title, $request->language)) {
+            Session::flash('error', Lang::get('form.exists_same_lang_article_title'));            
+            return redirect()->back();
+        }
+
         $args = [
             'title'     => $request->title,
             'content'   => processContent($request->content),
@@ -68,7 +74,7 @@ class ArticlesController extends Controller
         $article = $this->articleRepository->create($args);
         
         if(is_null($article)) {
-            Sesssion::flash('error', Lang::get('form.created_fail'));            
+            Session::flash('error', Lang::get('form.created_fail'));            
             return redirect()->back();
         }
         
@@ -111,6 +117,15 @@ class ArticlesController extends Controller
 
         if(is_null($article)) {
             Session::flash('error', Lang::get('form.no_data'));
+            return redirect()->back();
+        }
+
+        // 檢查是否有相同的文章標題、語系，如果與本身文章相符就略過檢查
+        if( ($article->title != $request->title) 
+            && ($article->language != $request->language)
+            && $this->articleRepository->checkSameArticle($request->title, $request->language, $article)
+        ) {
+            Session::flash('error', Lang::get('form.exists_same_lang_article_title'));            
             return redirect()->back();
         }
         $args = [

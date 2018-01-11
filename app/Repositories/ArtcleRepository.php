@@ -77,4 +77,18 @@ class ArticleRepository
     {
         return $this->model->destroy($id);
     }
+
+    /**
+     * 檢查唯一的文章標題、語系
+     *
+     */
+    public function checkSameArticle($title, $language)
+    {
+        $condition = [
+            'title' => ['$eq' => $title],
+            'language' => ['$eq' => $language],
+        ];
+        
+        return $this->model->whereRaw($condition)->exists();
+    }
 }
