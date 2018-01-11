@@ -128,80 +128,11 @@
         content += "<h4> @lang('form.title')：" + $(button).data('title')+ "</h4>";
         content += "<h4> @lang('form.language')：" + $(button).data('language')+ "</h4>";
         var id = $(button).data('id');
-        $("#confirm-dialog").removeClass('hide').dialog({
-            resizable: false,
-            width: '320',
-            modal: true,
-            title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon fa fa-exclamation-triangle red'></i> @lang('message.are_you_sure_delete_article')</h4></div>",
-            title_html: true,
-            open: function () {
-                $("#confirm-dialog").html(content);
-            },
-            buttons: [
-                {
-                    html: "<i class='ace-icon fa fa-trash-o bigger-110'></i>&nbsp; @lang('form.delete')",
-                    "class": "btn btn-danger btn-minier",
-                    click: function () {
-                        $.ajax({
-                            type: 'DELETE',
-                            url: `/article-manage/articles/${id}`,
-                            data: {"_token": "{{ csrf_token() }}" },
-                            success: function (data, textStatus, jqXHR) {
-                                $("#confirm-dialog").removeClass('hide').dialog({
-                                    resizable: false,
-                                    width: '320',
-                                    modal: true,
-                                    title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon fa fa-check bigger-110 green'></i> @lang('message.delete_success')</h4></div>",
-                                    title_html: true,
-                                    open: function () {
-                                        $("#confirm-dialog").html(content);
-                                    },
-                                    buttons: [
-                                        {
-                                            html: "@lang('form.sure')",
-                                            "class": "btn btn-primary btn-minier",
-                                            click: function () {
-                                                location.href = "/article-manage/articles";
-                                                $(this).dialog("close");
-                                            }
-                                        }
-                                    ]
-                                });
-                            },
-                            error: function (jqXHR, textStatus, errorThrown) {
-                                $("#confirm-dialog").removeClass('hide').dialog({
-                                    resizable: false,
-                                    width: '320',
-                                    modal: true,
-                                    title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon fa fa-times bigger-110 red'></i> @lang('message.delete_fail')</h4></div>",
-                                    title_html: true,
-                                    open: function () {
-                                        $("#confirm-dialog").html("<h4 class='center'>"+ jqXHR.responseJSON.RetMsg + "</h4>");
-                                    },
-                                    buttons: [
-                                        {
-                                            html: "@lang('form.sure')",
-                                            "class": "btn btn-primary btn-minier",
-                                            click: function () {
-                                                $(this).dialog("close");
-                                            }
-                                        }
-                                    ]
-                                });
-                            }
-                        });
-                        $(this).dialog("close");
-                    }
-                },
-                {
-                    html: "<i class='ace-icon fa fa-times bigger-110'></i>&nbsp; @lang('form.cancel')",
-                    "class": "btn btn-minier",
-                    click: function () { 
-                        $(this).dialog("close");
-                    }
-                }
-            ]
-        });
+        var url = `/article-manage/articles/${id}`;
+        var title = "@lang('message.are_you_sure_delete_article')";
+        var redirect = "/article-manage/articles";
+        var csrf_token = "{{ csrf_token() }}";
+        deleteData(content,title,url,csrf_token,redirect)
 	};
 </script>
 @endsection

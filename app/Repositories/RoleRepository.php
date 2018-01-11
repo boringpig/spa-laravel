@@ -4,13 +4,12 @@ namespace App\Repositories;
 
 use App\Role;
 
-class RoleRepository 
+class RoleRepository extends Repository
 {
-    protected $model;
 
-    public function __construct(Role $role)
+    public function model()
     {
-        $this->model = $role;
+        return app(Role::class);
     }
 
     /**
@@ -18,7 +17,7 @@ class RoleRepository
      */
     public function getAll($perPage = null)
     {
-        $query = $this->model->with('users')->orderBy('created_at','desc');
+        $query = $this->model()->with('users')->orderBy('created_at','desc');
 
         return is_null($perPage)? $query->get() : $query->paginate($perPage);
     }
@@ -39,48 +38,16 @@ class RoleRepository
                                         '$lte' => new \MongoDB\BSON\UTCDateTime(strtotime("{$args['updated_at']} 23:59:59") * 1000)];
         }
         
-        $query = $this->model->whereRaw($condition)->orderBy('created_at','desc');
+        $query = $this->model()->whereRaw($condition)->orderBy('created_at','desc');
 
         return is_null($perPage)? $query->get() : $query->paginate($perPage);
     }
     
     /**
-     * 回傳單一使用者
-     */
-    public function findOneById($id)
-    {
-        return $this->model->find($id);
-    }
-
-    /**
-     * 建立新的使用者並回傳該物件 
-     */
-    public function create($args)
-    {
-        return $this->model->create($args);
-    }
-
-    /**
-     * 儲存修改後的使用者並回傳該物件
-     */
-    public function update($id, $args)
-    {
-        return $this->model->where('_id', $id)->update($args);
-    }
-
-    /**
-     * 刪除特定的使用者
-     */
-    public function delete($id)
-    {
-        return $this->model->destroy($id);
-    }
-
-    /**
      * 回傳角色名稱陣列 
      */
     public function getPluckNameArray()
     {
-        return $this->model->get()->pluck('name','id')->toArray();
+        return $this->model()->get()->pluck('name','id')->toArray();
     }
 }

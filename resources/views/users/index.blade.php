@@ -160,80 +160,11 @@
         content += "<h4> @lang('form.name')：" + $(button).data('name')+ "</h4>";
         content += "<h4> @lang('form.email')：" + $(button).data('email')+ "</h4>";
         var id = $(button).data('id');
-        $("#confirm-dialog").removeClass('hide').dialog({
-            resizable: false,
-            width: '320',
-            modal: true,
-            title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon fa fa-exclamation-triangle red'></i> @lang('message.are_you_sure_delete_user')</h4></div>",
-            title_html: true,
-            open: function () {
-                $("#confirm-dialog").html(content);
-            },
-            buttons: [
-                {
-                    html: "<i class='ace-icon fa fa-trash-o bigger-110'></i>&nbsp; @lang('form.delete')",
-                    "class": "btn btn-danger btn-minier",
-                    click: function () {
-                        $.ajax({
-                            type: 'DELETE',
-                            url: `/user-manage/users/${id}`,
-                            data: {"_token": "{{ csrf_token() }}" },
-                            success: function (data, textStatus, jqXHR) {
-                                $("#confirm-dialog").removeClass('hide').dialog({
-                                    resizable: false,
-                                    width: '320',
-                                    modal: true,
-                                    title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon fa fa-check bigger-110 green'></i> @lang('message.delete_success')</h4></div>",
-                                    title_html: true,
-                                    open: function () {
-                                        $("#confirm-dialog").html(content);
-                                    },
-                                    buttons: [
-                                        {
-                                            html: "@lang('form.sure')",
-                                            "class": "btn btn-primary btn-minier",
-                                            click: function () {
-                                                location.href = "/user-manage/users";
-                                                $(this).dialog("close");
-                                            }
-                                        }
-                                    ]
-                                });
-                            },
-                            error: function (jqXHR, textStatus, errorThrown) {
-                                $("#confirm-dialog").removeClass('hide').dialog({
-                                    resizable: false,
-                                    width: '320',
-                                    modal: true,
-                                    title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon fa fa-times bigger-110 red'></i> @lang('message.delete_fail')</h4></div>",
-                                    title_html: true,
-                                    open: function () {
-                                        $("#confirm-dialog").html("<h4 class='center'>"+ jqXHR.responseJSON.RetMsg + "</h4>");
-                                    },
-                                    buttons: [
-                                        {
-                                            html: "@lang('form.sure')",
-                                            "class": "btn btn-primary btn-minier",
-                                            click: function () {
-                                                $(this).dialog("close");
-                                            }
-                                        }
-                                    ]
-                                });
-                            }
-                        });
-                        $(this).dialog("close");
-                    }
-                },
-                {
-                    html: "<i class='ace-icon fa fa-times bigger-110'></i>&nbsp; @lang('form.cancel')",
-                    "class": "btn btn-minier",
-                    click: function () { 
-                        $(this).dialog("close");
-                    }
-                }
-            ]
-        });
+        var url = `/user-manage/users/${id}`;
+        var title = "@lang('message.are_you_sure_delete_user')";
+        var redirect = "/user-manage/users";
+        var csrf_token = "{{ csrf_token() }}";
+        deleteData(content,title,url,csrf_token,redirect)
 	};
 </script>
 @endsection
