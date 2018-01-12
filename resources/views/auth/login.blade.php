@@ -64,38 +64,7 @@
                     </fieldset>
                 </form>
 
-                <div class="social-or-login center">
-                    <span class="bigger-110">@lang('auth.other_login_name')</span>
-                </div>
-
-                <div class="space-6"></div>
-
-                <div class="social-login center">
-                    <a class="btn btn-primary">
-                        <i class="ace-icon fa fa-facebook"></i>
-                    </a>
-
-                    <a class="btn btn-danger">
-                        <i class="ace-icon fa fa-google-plus"></i>
-                    </a>
-                </div>
             </div><!-- /.widget-main -->
-
-            <div class="toolbar clearfix">
-                <div>
-                    <a href="{{ route('password.request') }}" data-target="#forgot-box" class="forgot-password-link">
-                        <i class="ace-icon fa fa-arrow-left"></i>
-                        @lang('auth.forgot_password_name')
-                    </a>
-                </div>
-
-                <div>
-                    <a href="{{ route('register') }}" data-target="#signup-box" class="user-signup-link">
-                        @lang('auth.register_name')
-                        <i class="ace-icon fa fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
         </div><!-- /.widget-body -->
     </div><!-- /.login-box -->
 @endsection
