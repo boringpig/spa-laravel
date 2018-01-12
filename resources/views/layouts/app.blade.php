@@ -8,6 +8,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 		@include('widgets.style')
 		@yield('style')
+		<!-- ace styles -->
+		<link rel="stylesheet" href="{{ asset('assets/css/ace.min.css') }}" class="ace-main-stylesheet" id="main-ace-style" />
+		<link rel="stylesheet" href="{{ asset('assets/css/ace-skins.min.css') }}" />
+		<link rel="stylesheet" href="{{ asset('assets/css/ace-rtl.min.css') }}" />
 	</head>
 
 	<body class="skin-1">

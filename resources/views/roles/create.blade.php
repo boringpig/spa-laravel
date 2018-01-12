@@ -37,6 +37,7 @@
         selectAllUsers();
         selectAllRoles();
         selectAllArticles();
+        selectAllAdvertisements();
     });
 </script>
 @endsection

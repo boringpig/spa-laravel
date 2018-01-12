@@ -25,4 +25,11 @@ Route::group(['prefix' => 'user-manage'], function() {
 Route::group(['prefix' => 'article-manage'], function() {
     Route::get('articles/search', ['uses' => 'ArticlesController@search','as' => 'articles.search']);
     Route::resource('articles', 'ArticlesController');
+}); 
+
+Route::group(['prefix' => 'advertisement-manage'], function() {
+    Route::post('advertisements/change-file/{id}', ['uses' => 'AdvertisementsController@changeFile','as' => 'advertisements.change-file']);
+    Route::post('advertisements/change-status/{id}', ['uses' => 'AdvertisementsController@changeStatus','as' => 'advertisements.change-status']);
+    Route::get('advertisements/search', ['uses' => 'AdvertisementsController@search','as' => 'advertisements.search']);
+    Route::resource('advertisements', 'AdvertisementsController');
 });

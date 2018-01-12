@@ -7,4 +7,5 @@ return [
     'update'            => '修改',
     'destroy'           => '刪除',
     'change-password'   => '修改密碼',
+    'change-file'       => '修改图片/影音',
 ];

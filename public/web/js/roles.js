@@ -28,3 +28,13 @@ function selectAllArticles() {
         }
     });
 }
+// 廣告資料權限全選
+function selectAllAdvertisements() {
+    $('#advertisements_selectAll').click(function() {
+        if($('#advertisements_selectAll').prop("checked")) {
+            $("input[id='advertisements_permission[]']").prop('checked', true);
+        } else {
+            $("input[id='advertisements_permission[]']").prop('checked', false);
+        }
+    });
+}

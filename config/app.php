@@ -122,7 +122,7 @@ return [
     */
 
     'log' => env('APP_LOG', 'single'),
-
+    'log_max_files' => env('APP_LOG_FILE_QUANTITY', 30),
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
     /*
@@ -167,6 +167,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Arcanedev\LogViewer\LogViewerServiceProvider::class,
 
         /**
          * System Provider...

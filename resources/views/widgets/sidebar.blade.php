@@ -40,7 +40,9 @@
 	</ul>
 </li>
 @endif
-<li class="">
+
+@if(in_array('advertisements', $role_menu))
+<li class="{{ (\Request::segment(1) == 'advertisement-manage')? 'open' : '' }}">
 	<a href="#" class="dropdown-toggle">
 		<i class="menu-icon fa fa-picture-o"></i>
 		<span class="menu-text"> 廣告管理 </span>
@@ -49,8 +51,8 @@
 
 	<b class="arrow"></b>
 	<ul class="submenu">
-		<li class="">
-			<a href="#">
+		<li class="{{ (\Request::segment(2) == 'advertisements')? 'active' : '' }}">
+			<a href="{{ route('advertisements.index') }}">
 				<i class="menu-icon fa fa-caret-right"></i>
 				廣告資料
 			</a>
@@ -59,6 +61,7 @@
 		</li>
 	</ul>
 </li>
+@endif
 
 <li class="">
 	<a href="#" class="dropdown-toggle">

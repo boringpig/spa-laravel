@@ -1,0 +1,233 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Repositories\AdvertisementRepository;
+use App\Transformers\AdvertisementTransformer;
+use App\Http\Requests\Advertisement\CreateAdvertisementRequest;
+use App\Http\Requests\Advertisement\EditAdvertisementRequest;
+use App\Http\Requests\Advertisement\ChangeFileRequest;
+use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Route;
+
+class AdvertisementsController extends Controller
+{
+
+    protected $advertisementRepository;
+    protected $advertisementTransformer;
+
+    public function __construct(AdvertisementRepository $advertisementRepository,
+                                AdvertisementTransformer $advertisementTransformer
+    ) {
+        $this->middleware('auth');
+        $this->middleware('role.auth', ['except' => 'changeStatus']);
+        $this->advertisementRepository = $advertisementRepository;
+        $this->advertisementTransformer = $advertisementTransformer;
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $advertisements = $this->advertisementRepository->getAll(config('website.perPage'));
+        $advertisements = (count($advertisements) > 0)? $this->advertisementTransformer->transform($advertisements)->setPath("/".Route::current()->uri()) : [];
+        return view('advertisements.index', [
+            'page_title' => Lang::get('pageTitle.advertisements_manage'),
+            'advertisements'   => $advertisements,
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('advertisements.create', [
+            'page_title' => Lang::get('pageTitle.advertisements_manage'),
+        ]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(CreateAdvertisementRequest $request)
+    {
+        $args = [
+            'name'          => $request->name,
+            'sequence'      => $request->has('sequence')? $request->sequence : "",
+            'round_time'    => (int) $request->round_time,
+            'weeks'         => $request->weeks,
+            'broadcast_time'=> "{$request->broadcast_start_time}~{$request->broadcast_end_time}",
+            'publish_at'    => $request->publish_at,
+            'status'        => $request->has('status')? (int) $request->status : 0,
+        ];
+        // 上傳圖片/影片
+        if($request->hasFile('path')) {
+            $file = $request->path;
+            $file_name = time().uniqid().".".$file->getClientOriginalExtension();
+            $file_path = public_path()."/uploads/advertisement/";
+            $args['format'] = getFileInfo($file);
+            $args['path'] = "/uploads/advertisement/{$file_name}";
+            checkDirectoryExists($file_path);
+            $file->move($file_path, $file_name);            
+        }
+
+        $advertisement = $this->advertisementRepository->create($args);
+        if(is_null($advertisement)) {
+            Session::flash('error', Lang::get('form.created_fail'));            
+            return redirect()->back();
+        }
+        
+        Session::flash('success', Lang::get('form.created_success'));
+        return redirect()->route('advertisements.index');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $advertisement = $this->advertisementRepository->findOneById($id);
+
+        if(is_null($advertisement)) {
+            Session::flash('error', Lang::get('form.no_data'));
+            return redirect()->back();
+        }
+        
+        $advertisement = $this->advertisementTransformer->transform($advertisement);
+        return view('advertisements.edit', [
+            'page_title'    => Lang::get('pageTitle.advertisements_manage'),
+            'advertisement' => $advertisement,
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(EditAdvertisementRequest $request, $id)
+    {
+        $advertisement = $this->advertisementRepository->findOneById($id);
+
+        if(is_null($advertisement)) {
+            Session::flash('error', Lang::get('form.no_data'));
+            return redirect()->back();
+        }
+        // 啟用/禁用 是用checkbox有選擇才有回傳值，反之沒有
+        $status = $request->has('status')? 1 : 0;
+        $args = [
+            'name'          => $request->name,
+            'sequence'      => $request->input('sequence', null),
+            'round_time'    => (int) $request->round_time,
+            'weeks'         => $request->weeks,
+            'broadcast_time'=> "{$request->broadcast_start_time}~{$request->broadcast_end_time}",
+            'publish_at'    => new \MongoDB\BSON\UTCDateTime(strtotime("{$request->publish_at} 00:00:00") * 1000),
+            'status'        => ($advertisement->status != $status)? $status : $advertisement->status,
+        ];
+
+        if($this->advertisementRepository->update($id, $args)) {
+            Session::flash('success', Lang::get('form.updated_success'));
+            return redirect()->route('advertisements.index');
+        }
+
+        Session::flash('error', Lang::get('form.updated_fail'));
+        return redirect()->back();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        try {
+            $advertisement = $this->advertisementRepository->findOneById($id);
+            if(is_null($advertisement)) {
+                throw new \Exception(Lang::get('message.no_data'));
+            }
+            if(! $this->advertisementRepository->delete($id)) {
+                throw new \Exception(Lang::get('message.delete_fail'));
+            }
+            return response()->json($this->successOutput($advertisement), 200);
+        } catch (\Exception $e) {
+            return response()->json($this->errorOutput($e->getMessage()), 500);
+        }
+    }
+
+    public function search(Request $request)
+    {
+        $advertisements = $this->advertisementRepository->getByArgs($request->all(),config('website.perPage'));
+        $advertisements = (count($advertisements) > 0)? $this->advertisementTransformer->transform($advertisements)->appends($request->all())->setPath("/{$request->path()}") : [];
+        $request->flash();
+        return view('advertisements.index', [
+            'page_title'        => Lang::get('pageTitle.advertisements_manage'),
+            'advertisements'    => $advertisements,
+        ]);
+    }
+
+    public function changeFile(ChangeFileRequest $request, $id)
+    {
+        try {
+            $advertisement = $this->advertisementRepository->findOneById($id);
+            if(is_null($advertisement)) {
+                throw new \Exception(Lang::get('message.no_data'));
+            }
+            // 上傳圖片
+            $args = [];
+            if($request->hasFile('path')) {
+                $file = $request->path;
+                $file_name = time().uniqid().".".$file->getClientOriginalExtension();
+                $file_path = public_path()."/uploads/advertisement/";
+                $args['format'] = getFileInfo($file);
+                $args['path'] = "/uploads/advertisement/{$file_name}";
+                checkDirectoryExists($file_path);
+                $file->move($file_path, $file_name);            
+                // 刪除先前的圖片/影片
+                unlink(public_path($advertisement->path));
+            }
+            if(! $this->advertisementRepository->update($id, $args)) {
+                throw new \Exception(Lang::get('message.change_image_or_video_fail'));
+            } 
+            return response()->json($this->successOutput($advertisement), 200);
+        } catch (\Exception $e) {
+            return response()->json($this->errorOutput($e->getMessage()), 500);
+        }
+    }
+
+    public function changeStatus(Request $request, $id)
+    {
+        try {
+            $advertisement = $this->advertisementRepository->findOneById($id);
+            if(is_null($advertisement)) {
+                throw new \Exception(Lang::get('message.no_data'));
+            }
+            $args = [
+                'status' => (int) $request->status,
+            ];
+            if(! $this->advertisementRepository->update($id, $args)) {
+                throw new \Exception(Lang::get('message.change_status_fail'));
+            } 
+            return response()->json($this->successOutput($advertisement), 200);
+        } catch (\Exception $e) {
+            return response()->json($this->errorOutput($e->getMessage()), 500);
+        }
+    }
+}

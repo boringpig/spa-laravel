@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Validator;
+
 if (!function_exists('getLanguageList')) {
     function getLanguageList() 
     {
@@ -77,6 +79,46 @@ if (!function_exists('getImageName')) {
         return [
             $file_extension, $file
         ];
+    }
+}
+
+if (!function_exists('getFileInfo')) {
+    function getFileInfo($file) 
+    {
+        if($file instanceOf \Illuminate\Http\UploadedFile) {
+            list($width, $height) = getimagesize($file);
+            return [
+                'extension' => $file->getClientOriginalExtension(),
+                'mime_type' => $file->getClientMimeType(),
+                'size'      => formatSizeUnits($file->getClientSize()),
+                'width'     => "{$width} px",
+                'height'    => "{$height} px",
+            ];
+        }
+        return [];
+    }
+}
+
+if (!function_exists('formatSizeUnits')) {
+    function formatSizeUnits($size)
+    {	
+        // 1024的次方
+        $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+        $power = $size > 0 ? floor(log($size, 1024)) : 0;	
+        return number_format($size / pow(1024, $power), 2, '.', ',') . ' ' . $units[$power];
+    }
+}
+
+if (!function_exists('checkDateFormat')) {
+    function checkDateFormat($date)
+    {
+        $rules = ['date' => 'date_format: "Y-m-d"'];
+        $messages = ['date.date_format' => '日期格式错误，范例：Y-M-D'];
+        $validator = Validator::make(['date' => $date], $rules, $messages);
+        if($validator->fails()) {
+            return ['result' => false, 'error' => $validator->errors()->first('date')];
+        }
+        return ['result' => true];
     }
 }
 
