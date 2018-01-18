@@ -100,18 +100,7 @@
         </div><!-- /.col -->
     </div><!-- /.row -->
     @if($articles instanceof \Illuminate\Pagination\LengthAwarePaginator)
-        <div class="row">
-            <div class="col-xs-7">
-                <div style="text-align:right">
-                    {{ $articles->render() }}
-                </div>
-            </div>
-            <div class="col-xs-5">
-                <div style="text-align:right;margin-top:23px;">
-                    @lang('form.total_count')：{{ $articles->total() }} @lang('form.number')，@lang('form.sum') {{ $articles->lastPage() }} @lang('form.page')
-                </div>
-            </div>
-        </div>
+        @include('widgets.paginate', ['data' => $articles])
     @endif
 @endsection
 

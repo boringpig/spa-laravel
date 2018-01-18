@@ -38,7 +38,7 @@ class RoleRepository extends Repository
                                         '$lte' => new \MongoDB\BSON\UTCDateTime(strtotime("{$args['updated_at']} 23:59:59") * 1000)];
         }
         
-        $query = $this->model()->whereRaw($condition)->orderBy('created_at','desc');
+        $query = (count($condition) > 0)? $this->model()->whereRaw($condition)->orderBy('created_at','desc') : $this->model()->orderBy('created_at','desc');
 
         return is_null($perPage)? $query->get() : $query->paginate($perPage);
     }

@@ -13,4 +13,6 @@ return [
     'articles_page'             => '文章资料',
     'advertisements_manage'     => '广告管理',
     'advertisements_page'       => '广告资料',
+    'kiosks_manage'             => 'KIOSK管理',
+    'kiosks_page'               => 'KIOSK资料',
 ];

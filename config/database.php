@@ -86,6 +86,19 @@ return [
             'username' => env('DB_USERNAME'),
             'password' => env('DB_PASSWORD'),
         ],
+
+        'mongo_cps' => [
+            'driver'   => 'mongodb',
+            'host'     => env('CPS_HOST'),
+            'port'     => env('CPS_PORT'),
+            'username' => env('CPS_USERNAME'),
+            'password' => env('CPS_PASSWORD'),
+            'database' => env('CPS_DATABASE'),
+            'options'  => [
+                'socketTimeoutMS' => 9000000,
+                'db'              => 'admin'
+            ]
+        ],
     ],
 
     /*

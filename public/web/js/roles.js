@@ -38,3 +38,13 @@ function selectAllAdvertisements() {
         }
     });
 }
+// KIOSK資料權限全選
+function selectAllKiosks() {
+    $('#kiosks_selectAll').click(function() {
+        if($('#kiosks_selectAll').prop("checked")) {
+            $("input[id='kiosks_permission[]']").prop('checked', true);
+        } else {
+            $("input[id='kiosks_permission[]']").prop('checked', false);
+        }
+    });
+}

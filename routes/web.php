@@ -33,3 +33,11 @@ Route::group(['prefix' => 'advertisement-manage'], function() {
     Route::get('advertisements/search', ['uses' => 'AdvertisementsController@search','as' => 'advertisements.search']);
     Route::resource('advertisements', 'AdvertisementsController');
 });
+
+Route::group(['prefix' => 'kiosk-manage'], function() {
+    Route::get('kiosks/search', ['uses' => 'KiosksController@search','as' => 'kiosks.search']);
+    Route::post('kiosks/control-light/{station}', ['uses' => 'KiosksController@controlLight', 'as' => 'kiosks.control-light']);
+    Route::post('kiosks/control-fan/{station}', ['uses' => 'KiosksController@controlFan', 'as' => 'kiosks.control-fan']);
+    Route::post('kiosks/control-power/{station}', ['uses' => 'KiosksController@controlPower', 'as' => 'kiosks.control-power']);
+    Route::resource('kiosks', 'KiosksController')->only(['index','edit','update']);
+});

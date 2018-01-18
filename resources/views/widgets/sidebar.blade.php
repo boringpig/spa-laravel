@@ -63,7 +63,8 @@
 </li>
 @endif
 
-<li class="">
+@if(in_array('kiosks', $role_menu))
+<li class="{{ (\Request::segment(1) == 'kiosk-manage')? 'open' : '' }}">
 	<a href="#" class="dropdown-toggle">
 		<i class="menu-icon fa fa-desktop"></i>
 		<span class="menu-text"> KIOSK管理 </span>
@@ -72,16 +73,33 @@
 
 	<b class="arrow"></b>
 	<ul class="submenu">
+		<li class="{{ (\Request::segment(2) == 'kiosks')? 'active' : '' }}">
+			<a href="{{ route('kiosks.index') }}">
+				<i class="menu-icon fa fa-caret-right"></i>
+				KIOSK资料
+			</a>
+
+			<b class="arrow"></b>
+		</li>
 		<li class="">
 			<a href="#" >
 				<i class="menu-icon fa fa-caret-right"></i>
-				KIOSK資料
+				KIOSK闲置时间设定
+			</a>
+
+			<b class="arrow"></b>
+		</li>
+		<li class="">
+			<a href="#" >
+				<i class="menu-icon fa fa-caret-right"></i>
+				KIOSK地区群组
 			</a>
 
 			<b class="arrow"></b>
 		</li>
 	</ul>
 </li>
+@endif
 
 @if(in_array('articles', $role_menu))
 <li class="{{ (\Request::segment(1) == 'article-manage')? 'open' : '' }}">

@@ -20,8 +20,8 @@
 <script type="text/javascript">
     if('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
 </script>
+<script src="{{ asset('assets/js/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
-
 <!-- page specific plugin scripts -->
 <script src="{{ asset('assets/js/chosen.jquery.min.js') }}"></script>
 <!-- ace scripts -->
@@ -32,7 +32,6 @@
 <script src="{{ asset('assets/js/jquery.gritter.min.js') }}"></script>
 
 <!-- page specific plugin scripts -->
-<script src="{{ asset('assets/js/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.ui.touch-punch.min.js') }}"></script>
 <script src="{{ asset('js/common.js') }}"></script>
 <script src="{{ asset('assets/js/moment.min.js') }}"></script>

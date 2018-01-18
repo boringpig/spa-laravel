@@ -40,6 +40,7 @@
         selectAllRoles();
         selectAllArticles();
         selectAllAdvertisements();
+        selectAllKiosks();
     });
 </script>
 @endsection

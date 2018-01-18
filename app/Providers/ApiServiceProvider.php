@@ -3,9 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\View;
 
-class ComposerServiceProvider extends ServiceProvider
+class ApiServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -14,8 +13,7 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer('*', 'App\Http\ViewComposers\RolePermissionComposer');
-        View::composer('kiosks.index', 'App\Http\ViewComposers\SCityAreaComposer');
+        //
     }
 
     /**
@@ -25,6 +23,8 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        foreach (glob(app_path().'/Http/API/*.php') as $filename) {
+            require_once ($filename);
+        }
     }
 }

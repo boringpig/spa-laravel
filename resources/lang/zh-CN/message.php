@@ -27,4 +27,9 @@ return [
     'end_time'                          => '结束时间：:time',
     'error_message'                     => '错误讯息：:message',
     'total_time_spent'                  => ':success_message，总花费时间：:second 秒',
+    'working_normally'                  => '正常运作',
+    'connection_interrupted'            => '连线中断，:message',
+    'change_status_fail'                => '状态更改失败',
+    'change_status_success'             => '状态更改成功',
+    'unable_to_operate'                 => '无法进行操作',
 ];
