@@ -33,18 +33,24 @@
                 <tr>
                     <td class="center">{{ $menu_list[$menu] }}</td>
                     <td>
-                        <div class="checkbox-inline">
-                            <input type="checkbox" id="{{ $menu }}_selectAll" name="{{ $menu }}_selectAll">
-                            <label for="checkbox">@lang('form.select_all')</label>
+                        <div class="checkbox checkbox-inline" style="padding-left: 0px;margin-left:0px;">
+                            <label>
+                                <input type="checkbox" id="{{ $menu }}_selectAll" name="{{ $menu }}_selectAll" class="ace">
+                                <span class="lbl"> @lang('form.select_all')</span>
+                            </label>
+                            @foreach($button as $value)
+                                @if(array_key_exists($value, $button_list))
+                                <label>
+                                    @if(!empty($role['permission']) && in_array($menu.".".$value, $role['permission']))
+                                        <input type="checkbox" id="{{ $menu }}_permission[]" name="permission[]" value="{{ $menu.".".$value }}" class="ace" checked> 
+                                    @else
+                                        <input type="checkbox" id="{{ $menu }}_permission[]" name="permission[]" value="{{ $menu.".".$value }}" class="ace"> 
+                                    @endif
+                                    <span class="lbl"> {{ $button_list[$value] }}</span>
+                                </label>
+                                @endif
+                            @endforeach
                         </div>
-                        @foreach($button as $value) @if(array_key_exists($value, $button_list))
-                        <div class="checkbox-inline">
-                            @if(!empty($role['permission']) && in_array($menu.".".$value, $role['permission']))
-                            <input type="checkbox" id="{{ $menu }}_permission[]" name="permission[]" value="{{ $menu.".".$value }}" checked> @else
-                            <input type="checkbox" id="{{ $menu }}_permission[]" name="permission[]" value="{{ $menu.".".$value }}"> @endif
-                            <label for="{{ $menu }}_permission[]">{{ $button_list[$value] }}</label>
-                        </div>
-                        @endif @endforeach
                     </td>
                 </tr>
                 @empty

@@ -62,18 +62,22 @@
 <div class="space-4"></div>
 <div class="form-group {{ $errors->has('weeks')? ' has-error' : '' }}">
     <label for="weeks" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right"> <span class="text-danger">*</span> @lang('form.round_weeks') </label>
-    <div class="col-xs-5">
+    <div class="col-xs-9">
         <span class="block input-icon input-icon-right">
-            @foreach(config('weeks.cn') as $key => $value) 
-            <div class="checkbox-inline">
-                @if(!empty($advertisement['weeks']) && in_array($key, $advertisement['weeks']))
-                    <input type="checkbox" id="{{ $key }}_weeks[]" name="weeks[]" value="{{ $key }}" checked> 
-                @else
-                    <input type="checkbox" id="{{ $key }}_weeks[]" name="weeks[]" value="{{ $key }}"> 
-                @endif
-                <label for="{{ $key }}_weeks[]">{{ $value }}</label>
-            </div>
+            <div class="checkbox checkbox-inline" style="padding-left: 0px;margin-left:0px;">
+                @foreach(config('weeks.cn') as $key => $value) 
+                    <label>
+                        @if(!empty($advertisement['weeks']) && in_array($key, $advertisement['weeks']))
+                            <input type="checkbox" id="{{ $key }}_weeks[]" name="weeks[]" value="{{ $key }}" class="ace" checked> 
+                        @else
+                            <input type="checkbox" id="{{ $key }}_weeks[]" name="weeks[]" value="{{ $key }}" class="ace"> 
+                        @endif
+                        <span class="lbl"> {{ $value }}</span>
+                    </label>
             @endforeach
+                
+            </div>
+            
         </span>
     </div>
     @if($errors->has('weeks'))
