@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Advertisement;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Advertisement;
+use App\Entities\Advertisement;
 
 class EditAdvertisementRequest extends FormRequest
 {

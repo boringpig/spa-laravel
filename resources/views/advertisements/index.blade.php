@@ -3,7 +3,7 @@
 @section('breadcrumb')
 <li>
     <i class="ace-icon fa fa-book book-icon"></i>
-    @lang('pageTitle.advertisements_manage')
+    @lang('pageTitle.advertisement-manage')
 </li>
 <li>
     <a href="{{ route('advertisements.index') }}">@lang('pageTitle.advertisements_page')</a>

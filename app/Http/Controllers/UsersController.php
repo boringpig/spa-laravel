@@ -9,8 +9,6 @@ use App\Transformers\UserTransformer;
 use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\EditUserRequest;
 use App\Http\Requests\User\ChangePasswordRequest;
-use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Route;
 
 class UsersController extends Controller
@@ -39,7 +37,6 @@ class UsersController extends Controller
         $users = $this->userRepository->getAll(config('website.perPage'));
         $users = (count($users) > 0)? $this->userTransformer->transform($users)->setPath("/".Route::current()->uri()) : [];
         return view('users.index', [
-            'page_title' => Lang::get('pageTitle.users_manage'),
             'roles'      => $this->roleRepository->getPluckNameArray(),
             'users'      => $users,
         ]);
@@ -53,7 +50,6 @@ class UsersController extends Controller
     public function create()
     {   
         return view('users.create', [
-            'page_title' => Lang::get('pageTitle.users_manage'),
             'roles'      => $this->roleRepository->getPluckNameArray(),
         ]);
     }
@@ -79,11 +75,11 @@ class UsersController extends Controller
         $user = $this->userRepository->create($args);
         
         if(is_null($user)) {
-            Sesssion::flash('error', Lang::get('form.created_fail'));            
+            session()->flash('error', __('form.created_fail'));            
             return redirect()->back();
         }
         
-        Session::flash('success', Lang::get('form.created_success'));
+        session()->flash('success', __('form.created_success'));
         return redirect()->route('users.index');
     }
 
@@ -98,14 +94,13 @@ class UsersController extends Controller
         $user = $this->userRepository->findOneById($id);
 
         if(is_null($user)) {
-            Session::flash('error', Lang::get('form.no_data'));
+            session()->flash('error', __('form.no_data'));
             return redirect()->back();
         }
 
         $user = $this->userTransformer->transform($user);
 
         return view('users.edit', [
-            'page_title'    => Lang::get('pageTitle.users_manage'),
             'roles'         => $this->roleRepository->getPluckNameArray(),
             'user'          => $user,
         ]);
@@ -123,7 +118,7 @@ class UsersController extends Controller
         $user = $this->userRepository->findOneById($id);
 
         if(is_null($user)) {
-            Session::flash('error', Lang::get('form.no_data'));
+            session()->flash('error', __('form.no_data'));
             return redirect()->back();
         }
         // 啟用/禁用 是用checkbox有選擇才有回傳值，反之沒有
@@ -137,11 +132,11 @@ class UsersController extends Controller
             'role_id'   => $request->role_id,
         ];
         if($this->userRepository->update($id, $args)) {
-            Session::flash('success', Lang::get('form.updated_success'));
+            session()->flash('success', __('form.updated_success'));
             return redirect()->route('users.index');
         }
 
-        Session::flash('error', Lang::get('form.updated_fail'));
+        session()->flash('error', __('form.updated_fail'));
         return redirect()->back();
     }
 
@@ -156,10 +151,10 @@ class UsersController extends Controller
         try {
             $user = $this->userRepository->findOneById($id);
             if(is_null($user)) {
-                throw new \Exception(Lang::get('message.no_data'));
+                throw new \Exception(__('message.no_data'));
             }
             if(! $this->userRepository->delete($id)) {
-                throw new \Exception(Lang::get('message.delete_fail'));
+                throw new \Exception(__('message.delete_fail'));
             }
             return response()->json($this->successOutput($user), 200);
         } catch (\Exception $e) {
@@ -172,13 +167,13 @@ class UsersController extends Controller
         try {
             $user = $this->userRepository->findOneById($id);
             if(is_null($user)) {
-                throw new \Exception(Lang::get('message.no_data'));
+                throw new \Exception(__('message.no_data'));
             }
             $args = [
                 'password' => bcrypt($request->password),
             ];
             if(! $this->userRepository->update($id, $args)) {
-                throw new \Exception(Lang::get('message.change_password_fail'));
+                throw new \Exception(__('message.change_password_fail'));
             }        
             return response()->json($this->successOutput($user), 200);
         } catch (\Exception $e) {
@@ -192,7 +187,6 @@ class UsersController extends Controller
         $users = (count($users) > 0)? $this->userTransformer->transform($users)->appends($request->all())->setPath("/{$request->path()}") : [];
         $request->flash();
         return view('users.index', [
-            'page_title' => Lang::get('pageTitle.users_manage'),
             'roles'      => $this->roleRepository->getPluckNameArray(),
             'users'      => $users,
         ]);

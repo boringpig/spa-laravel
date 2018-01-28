@@ -7,8 +7,6 @@ use App\Repositories\ArticleRepository;
 use App\Transformers\ArticleTransformer;
 use App\Http\Requests\Article\CreateArticleRequest;
 use App\Http\Requests\Article\EditArticleRequest;
-use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Route;
 
 class ArticlesController extends Controller
@@ -34,7 +32,6 @@ class ArticlesController extends Controller
         $articles = $this->articleRepository->getAll(config('website.perPage'));
         $articles = (count($articles) > 0)? $this->articleTransformer->transform($articles)->setPath("/".Route::current()->uri()) : [];
         return view('articles.index', [
-            'page_title' => Lang::get('pageTitle.articles_manage'),
             'articles'   => $articles,
         ]);
     }
@@ -46,9 +43,7 @@ class ArticlesController extends Controller
      */
     public function create()
     {   
-        return view('articles.create', [
-            'page_title' => Lang::get('pageTitle.articles_manage'),
-        ]);
+        return view('articles.create');
     }
 
     /**
@@ -61,7 +56,7 @@ class ArticlesController extends Controller
     {
         // 檢查是否有相同的文章標題、語系
         if($this->articleRepository->checkSameArticle($request->title, $request->language)) {
-            Session::flash('error', Lang::get('form.exists_same_lang_article_title'));            
+            session()->flash('error', __('form.exists_same_lang_article_title'));            
             return redirect()->back();
         }
 
@@ -74,11 +69,11 @@ class ArticlesController extends Controller
         $article = $this->articleRepository->create($args);
         
         if(is_null($article)) {
-            Session::flash('error', Lang::get('form.created_fail'));            
+            session()->flash('error', __('form.created_fail'));            
             return redirect()->back();
         }
         
-        Session::flash('success', Lang::get('form.created_success'));
+        session()->flash('success', __('form.created_success'));
         return redirect()->route('articles.index');
     }
 
@@ -93,13 +88,12 @@ class ArticlesController extends Controller
         $article = $this->articleRepository->findOneById($id);
 
         if(is_null($article)) {
-            Session::flash('error', Lang::get('form.no_data'));
+            session()->flash('error', __('form.no_data'));
             return redirect()->back();
         }
 
         $article = $this->articleTransformer->transform($article);
         return view('articles.edit', [
-            'page_title'    => Lang::get('pageTitle.articles_manage'),
             'article'       => $article,
         ]);
     }
@@ -116,7 +110,7 @@ class ArticlesController extends Controller
         $article = $this->articleRepository->findOneById($id);
 
         if(is_null($article)) {
-            Session::flash('error', Lang::get('form.no_data'));
+            session()->flash('error', __('form.no_data'));
             return redirect()->back();
         }
 
@@ -125,7 +119,7 @@ class ArticlesController extends Controller
             && ($article->language != $request->language)
             && $this->articleRepository->checkSameArticle($request->title, $request->language, $article)
         ) {
-            Session::flash('error', Lang::get('form.exists_same_lang_article_title'));            
+            session()->flash('error', __('form.exists_same_lang_article_title'));            
             return redirect()->back();
         }
         $args = [
@@ -134,11 +128,11 @@ class ArticlesController extends Controller
             'language'  => $request->language,
         ];
         if($this->articleRepository->update($id, $args)) {
-            Session::flash('success', Lang::get('form.updated_success'));
+            session()->flash('success', __('form.updated_success'));
             return redirect()->route('articles.index');
         }
 
-        Session::flash('error', Lang::get('form.updated_fail'));
+        session()->flash('error', __('form.updated_fail'));
         return redirect()->back();
     }
 
@@ -153,10 +147,10 @@ class ArticlesController extends Controller
         try {
             $article = $this->articleRepository->findOneById($id);
             if(is_null($article)) {
-                throw new \Exception(Lang::get('message.no_data'));
+                throw new \Exception(__('message.no_data'));
             }
             if(! $this->articleRepository->delete($id)) {
-                throw new \Exception(Lang::get('message.delete_fail'));
+                throw new \Exception(__('message.delete_fail'));
             }
             return response()->json($this->successOutput($article), 200);
         } catch (\Exception $e) {
@@ -170,7 +164,6 @@ class ArticlesController extends Controller
         $articles = (count($articles) > 0)? $this->articleTransformer->transform($articles)->appends($request->all())->setPath("/{$request->path()}") : [];
         $request->flash();
         return view('articles.index', [
-            'page_title' => Lang::get('pageTitle.article_manage'),
             'articles'      => $articles,
         ]);
     }

@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Advertisement;
+use App\Entities\Advertisement;
 
 class AdvertisementRepository extends Repository
 {

@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Article;
+use App\Entities\Article;
 
 class ArticleRepository extends Repository
 {

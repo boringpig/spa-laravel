@@ -15,7 +15,7 @@
                 <h1 class="grey lighter smaller">
                     <span class="blue bigger-125">
                         <i class="ace-icon fa fa-sitemap"></i>
-                        503
+                        403
                     </span>
                     @lang('message.the_page_is_forbidden_to_enter')
                 </h1>
@@ -27,11 +27,6 @@
                 <div class="space"></div>
 
                 <div class="center">
-                    <a href="javascript:history.back()" class="btn btn-grey">
-                        <i class="ace-icon fa fa-arrow-left"></i>
-                        @lang('form.back')
-                    </a>
-
                     <a href="{{ route('home') }}" class="btn btn-primary">
                         <i class="ace-icon fa fa-tachometer"></i>
                         @lang('pageTitle.dashboard')

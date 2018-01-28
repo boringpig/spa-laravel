@@ -38,6 +38,6 @@ class User extends Model implements
 
     public function role()
     {
-        return $this->belongsTo('App\Role', 'role_id');
+        return $this->belongsTo('App\Entities\Role', 'role_id');
     }
 }

@@ -8,8 +8,6 @@ use App\Transformers\RoleTransformer;
 use App\Http\Requests\Role\CreateRoleRequest;
 use App\Http\Requests\Role\EditRoleRequest;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\Facades\Session;
 
 class RolesController extends Controller
 {
@@ -34,7 +32,6 @@ class RolesController extends Controller
         $roles = $this->roleRepository->getAll(config('website.perPage'));
         $roles = (count($roles) > 0)? $this->roleTransformer->transform($roles)->setPath("/".Route::current()->uri()) : [];
         return view('roles.index', [
-            'page_title' => Lang::get('pageTitle.users_manage'),
             'roles'      => $roles,
         ]);
     }
@@ -47,7 +44,6 @@ class RolesController extends Controller
     public function create()
     {
         return view('roles.create', [
-            'page_title'    => Lang::get('pageTitle.users_manage'),
             'menu_list'     => config('menu'),
             'button_list'   => config('button'),
             'data'          => $this->processPermissionList(),
@@ -70,11 +66,11 @@ class RolesController extends Controller
         $role = $this->roleRepository->create($args);
 
         if(is_null($role)) {
-            Session::flash('error', Lang::get('form.created_fail'));
+            session()->flash('error', __('form.created_fail'));
             return redirect()->back();
         }
 
-        Session::flash('success', Lang::get('form.created_success'));
+        session()->flash('success', __('form.created_success'));
         return redirect()->route('roles.index');
     }
 
@@ -89,13 +85,12 @@ class RolesController extends Controller
         $role = $this->roleRepository->findOneById($id);
 
         if(is_null($role)) {
-            Session::flash('error', Lang::get('form.no_data'));
+            session()->flash('error', __('form.no_data'));
             return redirect()->back();
         }
         $role = $this->roleTransformer->transform($role);
 
         return view('roles.edit', [
-            'page_title'    => Lang::get('pageTitle.users_manage'),
             'menu_list'     => config('menu'),
             'button_list'   => config('button'),
             'data'          => $this->processPermissionList(),
@@ -115,7 +110,7 @@ class RolesController extends Controller
         $role = $this->roleRepository->findOneById($id);
 
         if(is_null($role)) {
-            Session::flash('error', Lang::get('form.no_data'));
+            session()->flash('error', __('form.no_data'));
             return redirect()->back();
         }
         $args = [
@@ -123,11 +118,11 @@ class RolesController extends Controller
             'permission'    => $request->permission,
         ];
         if($this->roleRepository->update($id, $args)) {
-            Session::flash('success', Lang::get('form.updated_success'));
+            session()->flash('success', __('form.updated_success'));
             return redirect()->route('roles.index');
         }
 
-        Session::flash('error', Lang::get('form.updated_fail'));
+        session()->flash('error', __('form.updated_fail'));
         return redirect()->back();
     }
 
@@ -142,10 +137,10 @@ class RolesController extends Controller
         try {
             $role = $this->roleRepository->findOneById($id);
             if(is_null($role)) {
-                throw new \Exception(Lang::get('message.no_data'));
+                throw new \Exception(__('message.no_data'));
             }
             if(! $this->roleRepository->delete($id)) {
-                throw new \Exception(Lang::get('message.delete_fail'));
+                throw new \Exception(__('message.delete_fail'));
             }
             return response()->json($this->successOutput($role), 200);
         } catch (\Exception $e) {
@@ -159,7 +154,6 @@ class RolesController extends Controller
         $roles = (count($roles) > 0 )? $this->roleTransformer->transform($roles)->appends($request->all())->setPath("/{$request->path()}") : [];
         $request->flash();
         return view('roles.index', [
-            'page_title' => Lang::get('pageTitle.users_manage'),
             'roles' => $roles,
         ]);
     }

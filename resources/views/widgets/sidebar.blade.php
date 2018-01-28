@@ -11,7 +11,7 @@
 <li class="{{ (\Request::segment(1) == 'user-manage')? 'open' : '' }}">
 	<a href="" class="dropdown-toggle">
 		<i class="menu-icon fa fa-user"></i>
-		<span class="menu-text"> @lang('pageTitle.users_manage') </span>
+		<span class="menu-text"> @lang('pageTitle.user-manage') </span>
 		<b class="arrow fa fa-angle-down"></b>
 	</a>
 
@@ -31,7 +31,7 @@
 		<li class="{{ (\Request::segment(2) == 'roles')? 'active' : '' }}">
 			<a href="{{ route('roles.index') }}">
 				<i class="menu-icon fa fa-caret-right"></i>
-				角色資料
+				@lang('pageTitle.roles_page')
 			</a>
 
 			<b class="arrow"></b>
@@ -45,7 +45,7 @@
 <li class="{{ (\Request::segment(1) == 'advertisement-manage')? 'open' : '' }}">
 	<a href="#" class="dropdown-toggle">
 		<i class="menu-icon fa fa-picture-o"></i>
-		<span class="menu-text"> 廣告管理 </span>
+		<span class="menu-text"> @lang('pageTitle.advertisement-manage') </span>
 		<b class="arrow fa fa-angle-down"></b>
 	</a>
 
@@ -54,7 +54,7 @@
 		<li class="{{ (\Request::segment(2) == 'advertisements')? 'active' : '' }}">
 			<a href="{{ route('advertisements.index') }}">
 				<i class="menu-icon fa fa-caret-right"></i>
-				廣告資料
+				@lang('pageTitle.advertisements_page')
 			</a>
 
 			<b class="arrow"></b>
@@ -67,7 +67,7 @@
 <li class="{{ (\Request::segment(1) == 'kiosk-manage')? 'open' : '' }}">
 	<a href="#" class="dropdown-toggle">
 		<i class="menu-icon fa fa-desktop"></i>
-		<span class="menu-text"> KIOSK管理 </span>
+		<span class="menu-text"> @lang('pageTitle.kiosk-manage') </span>
 		<b class="arrow fa fa-angle-down"></b>
 	</a>
 
@@ -76,7 +76,7 @@
 		<li class="{{ (\Request::segment(2) == 'kiosks')? 'active' : '' }}">
 			<a href="{{ route('kiosks.index') }}">
 				<i class="menu-icon fa fa-caret-right"></i>
-				KIOSK资料
+				@lang('pageTitle.kiosks_page')
 			</a>
 
 			<b class="arrow"></b>
@@ -105,7 +105,7 @@
 <li class="{{ (\Request::segment(1) == 'article-manage')? 'open' : '' }}">
 	<a href="" class="dropdown-toggle">
 		<i class="menu-icon fa fa-book"></i>
-		<span class="menu-text"> 文章管理 </span>
+		<span class="menu-text"> @lang('pageTitle.article-manage') </span>
 		<b class="arrow fa fa-angle-down"></b>
 	</a>
 
@@ -115,7 +115,7 @@
 		<li class="{{ (\Request::segment(2) == 'articles')? 'active' : '' }}">
 			<a href="{{ route('articles.index') }}" >
 				<i class="menu-icon fa fa-caret-right"></i>
-				文章資料
+				@lang('pageTitle.articles_page')
 			</a>
 
 			<b class="arrow"></b>

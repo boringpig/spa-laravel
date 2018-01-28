@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Role;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Role;
+use App\Entities\Role;
 
 class EditRoleRequest extends FormRequest
 {

@@ -4,13 +4,13 @@ namespace App\Transformers;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
-use App\Advertisement;
+use App\Entities\Advertisement;
 
 class AdvertisementTransformer
 {
     public function transform($data)
     {
-        if ($data instanceOf \App\Advertisement) {
+        if ($data instanceOf \App\Entities\Advertisement) {
             return $this->format($data);
         } elseif ($data instanceof \Illuminate\Pagination\LengthAwarePaginator) {
             $collection = $data->getCollection()->map(function($advertisement) {

@@ -4,13 +4,13 @@ namespace App\Transformers;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
-use App\Article;
+use App\Entities\Article;
 
 class ArticleTransformer
 {
     public function transform($data)
     {
-        if ($data instanceOf \App\Article) {
+        if ($data instanceOf \App\Entities\Article) {
             return $this->format($data);
         } elseif ($data instanceof \Illuminate\Pagination\LengthAwarePaginator) {
             $collection = $data->getCollection()->map(function($article) {

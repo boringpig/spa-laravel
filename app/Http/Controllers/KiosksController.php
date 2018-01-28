@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\CPS\Repositories\StationRepository;
 use App\Transformers\StationTransformer;
-use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Route;
 use PLC;
 
@@ -19,8 +17,8 @@ class KiosksController extends Controller
         StationRepository $stationRepository,
         StationTransformer $stationTransformer
     ) {
-        // $this->middleware('auth');
-        // $this->middleware('role.auth', ['only' => 'index', 'edit', 'search']);
+        $this->middleware('auth');
+        $this->middleware('role.auth', ['only' => 'index', 'edit', 'search']);
         $this->stationRepository = $stationRepository;
         $this->stationTransformer = $stationTransformer;
     }
@@ -35,7 +33,6 @@ class KiosksController extends Controller
         $kiosks = $this->stationRepository->getAll(config('website.perPage'));
         $kiosks = (count($kiosks) > 0)? $this->stationTransformer->transform($kiosks)->setPath("/".Route::current()->uri()) : [];
         return view('kiosks.index', [
-            'page_title' => Lang::get('pageTitle.kiosks_manage'),
             'kiosks'     => $kiosks,
         ]);
     }
@@ -50,13 +47,13 @@ class KiosksController extends Controller
     {
         $kiosk = $this->stationRepository->findOneByStation($station);
         if(is_null($kiosk)) {
-            Session::flash('error', Lang::get('form.no_data'));
+            session()->flash('error', __('form.no_data'));
             return redirect()->back();
         }
         $kiosk = $this->stationTransformer->transform($kiosk);
         // 檢查是否斷線
         if(!$kiosk['connection_status']) {
-            Session::flash('error', __('message.connection_interrupted', ['message' => __('message.unable_to_operate')]));
+            session()->flash('error', __('message.connection_interrupted', ['message' => __('message.unable_to_operate')]));
             return redirect()->back();
         }
         $plc = new PLC($kiosk['station_ip']);
@@ -82,7 +79,6 @@ class KiosksController extends Controller
         $kiosk['exhaust_fan2'] = $plc->searchFanStatus('exhaust2');
         $kiosk['exhaust_fan3'] = $plc->searchFanStatus('exhaust3');
         return view('kiosks.edit', [
-            'page_title'    => Lang::get('pageTitle.kiosks_manage'),
             'kiosk'         => $kiosk,
         ]);
     }
@@ -93,7 +89,7 @@ class KiosksController extends Controller
         $kiosks = (count($kiosks) > 0)? $this->stationTransformer->transform($kiosks)->appends($request->all())->setPath("/".Route::current()->uri()) : [];
         $request->flash();
         return view('kiosks.index', [
-            'page_title' => Lang::get('pageTitle.kiosks_manage'),
+            'page_title' => __('pageTitle.kiosks_manage'),
             'kiosks'   => $kiosks,
         ]);
     }
@@ -103,7 +99,7 @@ class KiosksController extends Controller
         try {
             $kiosk = $this->stationRepository->findOneByStation($station);
             if(is_null($kiosk)) {
-                throw new \Exception(Lang::get('message.no_data'));
+                throw new \Exception(__('message.no_data'));
             }
             $start_time = empty($request->start_time)? '0000' : replaceTimeColon($request->start_time);
             $end_time = empty($request->end_time)? '2359' : replaceTimeColon($request->end_time);
@@ -114,7 +110,7 @@ class KiosksController extends Controller
             }
             $plc = new PLC($kiosk->s_ip);
             if(!$plc->controlStatus($cmd)) {
-                throw new \Exception(Lang::get('message.change_status_fail'));
+                throw new \Exception(__('message.change_status_fail'));
             }
             return response()->json(successOutput($kiosk), 200);
         } catch (\Exception $e) {
@@ -127,12 +123,12 @@ class KiosksController extends Controller
         try {
             $kiosk = $this->stationRepository->findOneByStation($station);
             if(is_null($kiosk)) {
-                throw new \Exception(Lang::get('message.no_data'));
+                throw new \Exception(__('message.no_data'));
             }
             $cmd = "30{$request->power_type}{$request->action_type}";
             $plc = new PLC($kiosk->s_ip);
             if(!$plc->controlStatus($cmd)) {
-                throw new \Exception(Lang::get('message.change_status_fail'));
+                throw new \Exception(__('message.change_status_fail'));
             }
             return response()->json(successOutput($kiosk), 200);
         } catch (\Exception $e) {
@@ -145,12 +141,12 @@ class KiosksController extends Controller
         try {
             $kiosk = $this->stationRepository->findOneByStation($station);
             if(is_null($kiosk)) {
-                throw new \Exception(Lang::get('message.no_data'));
+                throw new \Exception(__('message.no_data'));
             }
             $cmd = "40{$request->fan_type}{$request->launch_type}{$request->open_temperature}{$request->close_temperature}";
             $plc = new PLC($kiosk->s_ip);
             if(!$plc->controlStatus($cmd)) {
-                throw new \Exception(Lang::get('message.change_status_fail'));
+                throw new \Exception(__('message.change_status_fail'));
             }
             return response()->json(successOutput($kiosk), 200);
         } catch (\Exception $e) {

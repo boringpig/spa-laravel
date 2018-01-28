@@ -8,8 +8,6 @@ use App\Transformers\AdvertisementTransformer;
 use App\Http\Requests\Advertisement\CreateAdvertisementRequest;
 use App\Http\Requests\Advertisement\EditAdvertisementRequest;
 use App\Http\Requests\Advertisement\ChangeFileRequest;
-use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Route;
 
 class AdvertisementsController extends Controller
@@ -37,7 +35,6 @@ class AdvertisementsController extends Controller
         $advertisements = $this->advertisementRepository->getAll(config('website.perPage'));
         $advertisements = (count($advertisements) > 0)? $this->advertisementTransformer->transform($advertisements)->setPath("/".Route::current()->uri()) : [];
         return view('advertisements.index', [
-            'page_title' => Lang::get('pageTitle.advertisements_manage'),
             'advertisements'   => $advertisements,
         ]);
     }
@@ -49,9 +46,7 @@ class AdvertisementsController extends Controller
      */
     public function create()
     {
-        return view('advertisements.create', [
-            'page_title' => Lang::get('pageTitle.advertisements_manage'),
-        ]);
+        return view('advertisements.create');
     }
 
     /**
@@ -84,11 +79,11 @@ class AdvertisementsController extends Controller
 
         $advertisement = $this->advertisementRepository->create($args);
         if(is_null($advertisement)) {
-            Session::flash('error', Lang::get('form.created_fail'));            
+            session()->flash('error', __('form.created_fail'));
             return redirect()->back();
         }
         
-        Session::flash('success', Lang::get('form.created_success'));
+        session()->flash('success', __('form.created_success'));
         return redirect()->route('advertisements.index');
     }
 
@@ -103,13 +98,12 @@ class AdvertisementsController extends Controller
         $advertisement = $this->advertisementRepository->findOneById($id);
 
         if(is_null($advertisement)) {
-            Session::flash('error', Lang::get('form.no_data'));
+            session()->flash('error', __('form.no_data'));
             return redirect()->back();
         }
         
         $advertisement = $this->advertisementTransformer->transform($advertisement);
         return view('advertisements.edit', [
-            'page_title'    => Lang::get('pageTitle.advertisements_manage'),
             'advertisement' => $advertisement,
         ]);
     }
@@ -126,7 +120,7 @@ class AdvertisementsController extends Controller
         $advertisement = $this->advertisementRepository->findOneById($id);
 
         if(is_null($advertisement)) {
-            Session::flash('error', Lang::get('form.no_data'));
+            session()->flash('error', __('form.no_data'));
             return redirect()->back();
         }
         // 啟用/禁用 是用checkbox有選擇才有回傳值，反之沒有
@@ -142,11 +136,11 @@ class AdvertisementsController extends Controller
         ];
 
         if($this->advertisementRepository->update($id, $args)) {
-            Session::flash('success', Lang::get('form.updated_success'));
+            session()->flash('success', __('form.updated_success'));
             return redirect()->route('advertisements.index');
         }
 
-        Session::flash('error', Lang::get('form.updated_fail'));
+        session()->flash('error', __('form.updated_fail'));
         return redirect()->back();
     }
 
@@ -161,10 +155,10 @@ class AdvertisementsController extends Controller
         try {
             $advertisement = $this->advertisementRepository->findOneById($id);
             if(is_null($advertisement)) {
-                throw new \Exception(Lang::get('message.no_data'));
+                throw new \Exception(__('message.no_data'));
             }
             if(! $this->advertisementRepository->delete($id)) {
-                throw new \Exception(Lang::get('message.delete_fail'));
+                throw new \Exception(__('message.delete_fail'));
             }
             return response()->json($this->successOutput($advertisement), 200);
         } catch (\Exception $e) {
@@ -178,7 +172,6 @@ class AdvertisementsController extends Controller
         $advertisements = (count($advertisements) > 0)? $this->advertisementTransformer->transform($advertisements)->appends($request->all())->setPath("/{$request->path()}") : [];
         $request->flash();
         return view('advertisements.index', [
-            'page_title'        => Lang::get('pageTitle.advertisements_manage'),
             'advertisements'    => $advertisements,
         ]);
     }
@@ -188,7 +181,7 @@ class AdvertisementsController extends Controller
         try {
             $advertisement = $this->advertisementRepository->findOneById($id);
             if(is_null($advertisement)) {
-                throw new \Exception(Lang::get('message.no_data'));
+                throw new \Exception(__('message.no_data'));
             }
             // 上傳圖片
             $args = [];
@@ -204,7 +197,7 @@ class AdvertisementsController extends Controller
                 unlink(public_path($advertisement->path));
             }
             if(! $this->advertisementRepository->update($id, $args)) {
-                throw new \Exception(Lang::get('message.change_image_or_video_fail'));
+                throw new \Exception(__('message.change_image_or_video_fail'));
             } 
             return response()->json($this->successOutput($advertisement), 200);
         } catch (\Exception $e) {
@@ -217,13 +210,13 @@ class AdvertisementsController extends Controller
         try {
             $advertisement = $this->advertisementRepository->findOneById($id);
             if(is_null($advertisement)) {
-                throw new \Exception(Lang::get('message.no_data'));
+                throw new \Exception(__('message.no_data'));
             }
             $args = [
                 'status' => (int) $request->status,
             ];
             if(! $this->advertisementRepository->update($id, $args)) {
-                throw new \Exception(Lang::get('message.change_status_fail'));
+                throw new \Exception(__('message.change_status_fail'));
             } 
             return response()->json($this->successOutput($advertisement), 200);
         } catch (\Exception $e) {
