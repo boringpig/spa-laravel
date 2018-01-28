@@ -7,7 +7,7 @@
 @section('breadcrumb')
 <li>
     <i class="ace-icon fa fa-users users-icon"></i>
-    @lang('pageTitle.articles_manage')
+    @lang('pageTitle.article-manage')
 </li>
 <li>
     <a href="{{ route('articles.index') }}">@lang('pageTitle.articles_page')</a>

@@ -66,16 +66,16 @@
                             <td class="text-center">{{ empty($role['usernames'])? "" : implode('、', $role['usernames']) }}</td>
                             <td class="text-center">{{ $role['updated_at'] }}</td>
                             <td>
-                                <div class="hidden-sm hidden-xs btn-group">
+                                <div class="action-buttons">
                                     @if(in_array('update', $role_button))
-                                        <a href="{{ route('roles.edit', ['id' => $role['id']]) }}" class="btn btn-xs btn-info" data-toggle="tooltip" data-placement="bottom" title="@lang('form.edit')">
+                                        <a href="{{ route('roles.edit', ['id' => $role['id']]) }}" class="blue" data-toggle="tooltip" data-placement="bottom" title="@lang('form.edit')">
                                             <i class="ace-icon fa fa-pencil bigger-120"></i>
                                         </a>
                                     @endif
                                     @if(in_array('destroy', $role_button))
-                                        <button type="button" onclick="deleteRole(this)" data-toggle="tooltip" data-placement="bottom" title="@lang('form.delete')" data-id="{{ $role['id'] }}" data-name="{{ $role['name'] }}" class="btn btn-xs btn-danger">
+                                        <a href="" class="red" onclick="deleteRole(event,this)" data-toggle="tooltip" data-placement="bottom" title="@lang('form.delete')" data-id="{{ $role['id'] }}" data-name="{{ $role['name'] }}">
                                             <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                                        </button>
+                                        </a>
                                     @endif
                                 </div>
                             </td>
@@ -101,7 +101,8 @@
         format: 'YYYY-MM-DD',
     });
     // 刪除角色
-    function deleteRole(button) {
+    function deleteRole(event,button) {
+        event.preventDefault();
         var content = '';
         content += "<h4> @lang('form.name')：" + $(button).data('name')+ "</h4>";
         var id = $(button).data('id');

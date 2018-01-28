@@ -156,9 +156,9 @@ class UsersController extends Controller
             if(! $this->userRepository->delete($id)) {
                 throw new \Exception(__('message.delete_fail'));
             }
-            return response()->json($this->successOutput($user), 200);
+            return response()->json(successOutput($user), 200);
         } catch (\Exception $e) {
-            return response()->json($this->errorOutput($e->getMessage()), 500);
+            return response()->json(errorOutput($e->getMessage()), 500);
         }
     }
 
@@ -175,9 +175,9 @@ class UsersController extends Controller
             if(! $this->userRepository->update($id, $args)) {
                 throw new \Exception(__('message.change_password_fail'));
             }        
-            return response()->json($this->successOutput($user), 200);
+            return response()->json(successOutput($user), 200);
         } catch (\Exception $e) {
-            return response()->json($this->errorOutput($e->getMessage()), 500);
+            return response()->json(errorOutput($e->getMessage()), 500);
         }
     }
 

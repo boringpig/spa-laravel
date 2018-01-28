@@ -132,16 +132,16 @@
                             <td class="center">{{ $advertisement['publish_at'] }}</td>
                             <td class="center">{{ $advertisement['updated_at'] }}</td>
                             <td>
-                                <div class="hidden-sm hidden-xs btn-group">
+                                <div class="action-buttons">
                                     @if(in_array('update', $role_button))
-                                        <a href="{{ route('advertisements.edit', ['id' => $advertisement['id']]) }}" class="btn btn-xs btn-info" data-toggle="tooltip" data-placement="bottom" title="@lang('form.edit')">
+                                        <a href="{{ route('advertisements.edit', ['id' => $advertisement['id']]) }}" class="blue" data-toggle="tooltip" data-placement="bottom" title="@lang('form.edit')">
                                             <i class="ace-icon fa fa-pencil bigger-120"></i>
                                         </a>
                                     @endif
                                     @if(in_array('destroy', $role_button))
-                                        <button type="button" onclick="deleteAdvertisement(this)" data-toggle="tooltip" data-placement="bottom" title="@lang('form.delete')" data-id="{{ $advertisement['id'] }}" data-name="{{ $advertisement['name'] }}" class="btn btn-xs btn-danger">
+                                        <a href="" class="red" onclick="deleteAdvertisement(event,this)" data-toggle="tooltip" data-placement="bottom" title="@lang('form.delete')" data-id="{{ $advertisement['id'] }}" data-name="{{ $advertisement['name'] }}" >
                                             <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                                        </button>
+                                        </a>
                                     @endif
                                 </div>
                             </td>
@@ -194,7 +194,8 @@
     });
 
     // 刪除使用者
-    function deleteAdvertisement(button) {
+    function deleteAdvertisement(event,button) {
+        event.preventDefault();
         var content = '';
         content += "<h4> @lang('form.advertisement_name')：" + $(button).data('name') + "</h4>";
         var id = $(button).data('id');

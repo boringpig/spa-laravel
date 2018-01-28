@@ -76,14 +76,14 @@
                             <td class="center">{{ $article['title'] }}</td>
                             <td class="center">{{ $article['updated_at'] }}</td>
                             <td>
-                                <div class="hidden-sm hidden-xs btn-group">
+                                <div class="action-buttons">
                                     @if(in_array('update', $role_button))
-                                        <a href="{{ route('articles.edit', ['id' => $article['id']]) }}" class="btn btn-xs btn-info" data-toggle="tooltip" data-placement="bottom" title="@lang('form.edit')">
+                                        <a href="{{ route('articles.edit', ['id' => $article['id']]) }}" class="blue" data-toggle="tooltip" data-placement="bottom" title="@lang('form.edit')">
                                             <i class="ace-icon fa fa-pencil bigger-120"></i>
                                         </a>
                                     @endif
                                     @if(in_array('destroy', $role_button))
-                                        <button type="button" onclick="deleteArticle(this)" data-toggle="tooltip" data-placement="bottom" title="@lang('form.delete')" data-id="{{ $article['id'] }}" data-language="{{ $article['language_name'] }}" data-title="{{ $article['title'] }}" class="btn btn-xs btn-danger">
+                                        <a href="" class="red" onclick="deleteArticle(event,this)" data-toggle="tooltip" data-placement="bottom" title="@lang('form.delete')" data-id="{{ $article['id'] }}" data-language="{{ $article['language_name'] }}" data-title="{{ $article['title'] }}">
                                             <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                         </button>
                                     @endif
@@ -112,7 +112,8 @@
     });
 
 	// 刪除使用者
-    function deleteArticle(button) {
+    function deleteArticle(event,button) {
+        event.preventDefault();
         var content = '';
         content += "<h4> @lang('form.title')：" + $(button).data('title')+ "</h4>";
         content += "<h4> @lang('form.language')：" + $(button).data('language')+ "</h4>";

@@ -152,9 +152,9 @@ class ArticlesController extends Controller
             if(! $this->articleRepository->delete($id)) {
                 throw new \Exception(__('message.delete_fail'));
             }
-            return response()->json($this->successOutput($article), 200);
+            return response()->json(successOutput($article), 200);
         } catch (\Exception $e) {
-            return response()->json($this->errorOutput($e->getMessage()), 500);
+            return response()->json(errorOutput($e->getMessage()), 500);
         }
     }
 

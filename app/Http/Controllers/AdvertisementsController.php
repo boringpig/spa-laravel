@@ -160,9 +160,9 @@ class AdvertisementsController extends Controller
             if(! $this->advertisementRepository->delete($id)) {
                 throw new \Exception(__('message.delete_fail'));
             }
-            return response()->json($this->successOutput($advertisement), 200);
+            return response()->json(successOutput($advertisement), 200);
         } catch (\Exception $e) {
-            return response()->json($this->errorOutput($e->getMessage()), 500);
+            return response()->json(errorOutput($e->getMessage()), 500);
         }
     }
 
@@ -199,9 +199,9 @@ class AdvertisementsController extends Controller
             if(! $this->advertisementRepository->update($id, $args)) {
                 throw new \Exception(__('message.change_image_or_video_fail'));
             } 
-            return response()->json($this->successOutput($advertisement), 200);
+            return response()->json(successOutput($advertisement), 200);
         } catch (\Exception $e) {
-            return response()->json($this->errorOutput($e->getMessage()), 500);
+            return response()->json(errorOutput($e->getMessage()), 500);
         }
     }
 
@@ -218,9 +218,9 @@ class AdvertisementsController extends Controller
             if(! $this->advertisementRepository->update($id, $args)) {
                 throw new \Exception(__('message.change_status_fail'));
             } 
-            return response()->json($this->successOutput($advertisement), 200);
+            return response()->json(successOutput($advertisement), 200);
         } catch (\Exception $e) {
-            return response()->json($this->errorOutput($e->getMessage()), 500);
+            return response()->json(errorOutput($e->getMessage()), 500);
         }
     }
 }

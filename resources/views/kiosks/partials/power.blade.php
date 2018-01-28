@@ -40,8 +40,8 @@
 </div>
 <div class="form-group" style="display:none;">
     <div class="col-sm-4">
-        <button type="submit" class="btn btn-primary btn-sm" data-loading-text="<i class='fa fa-spinner fa-spin '></i> 处理中请稍后...">
-            <i class="ace-icon fa fa-check bigger-110"></i>@lang('form.submit')
+        <button type="submit" class="btn btn-white btn-info btn-bold" data-loading-text="<i class='fa fa-spinner fa-spin '></i> 处理中请稍后...">
+            <i class="ace-icon fa fa-floppy-o bigger-120 blue"></i>@lang('form.submit')
         </button>
     </div>
 </div>

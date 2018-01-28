@@ -3,7 +3,7 @@
 @section('breadcrumb')
 <li>
     <i class="ace-icon fa fa-users users-icon"></i>
-    @lang('pageTitle.users_manage')
+    @lang('pageTitle.user-manage')
 </li>
 <li>
     <a href="{{ route('roles.index') }}">@lang('pageTitle.roles_page')</a>

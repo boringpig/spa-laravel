@@ -140,17 +140,17 @@
 <div class="space-10"></div>
 <div class="clearfix ">
     <div class="col-md-offset-3 col-md-9">
-        <button class="btn btn-primary btn-sm" type="submit">
-            <i class="ace-icon fa fa-check bigger-110"></i>
+        <button type="submit" class="btn btn-white btn-info btn-bold">
+            <i class="ace-icon fa fa-floppy-o bigger-120 blue"></i>
             {{ $submit_button }}
         </button>
         @if(!empty($advertisement) && in_array('change-file', $role_button))
-            <button class="btn btn-warning btn-sm" type="button" data-toggle="modal" data-target="#changeFileModal">
+            <button class="btn btn-white btn-warning btn-bold" type="button" data-toggle="modal" data-target="#changeFileModal">
                 <i class="ace-icon fa fa-pencil bigger-110"></i>
                 @lang('form.change_image_or_video')
             </button>
         @endif
-        <a href="{{ route('advertisements.index') }}" class="btn btn-grey btn-sm">
+        <a href="{{ route('advertisements.index') }}" class="btn btn-white btn-grey btn-bold">
             <i class="ace-icon fa fa-undo bigger-110"></i>
             @lang('form.cancel_back')
         </a>

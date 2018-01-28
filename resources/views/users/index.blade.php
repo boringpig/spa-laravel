@@ -95,9 +95,9 @@
                         <tr>
                             <td class="center">
                                 @if($user['status'] == 1)
-                                    <span class="label label-sm label-success">@lang('form.enable')</span>
+                                    <span class="label label-success label-white middle">@lang('form.enable')</span>    
                                 @else
-                                    <span class="label label-sm label-danger">@lang('form.disable')</span>
+                                    <span class="label label-danger label-white middle">@lang('form.disable')</span>
                                 @endif
                             </td>
                             <td class="center">{{ $user['username'] }}</td>
@@ -107,16 +107,16 @@
                             <td class="center">{{ $user['phone'] }}</td>
                             <td class="center">{{ $user['updated_at'] }}</td>
                             <td>
-                                <div class="hidden-sm hidden-xs btn-group">
+                                <div class="action-buttons">
                                     @if(in_array('update', $role_button))
-                                        <a href="{{ route('users.edit', ['id' => $user['id']]) }}" class="btn btn-xs btn-info" data-toggle="tooltip" data-placement="bottom" title="@lang('form.edit')">
+                                        <a href="{{ route('users.edit', ['id' => $user['id']]) }}" class="blue" data-toggle="tooltip" data-placement="bottom" title="@lang('form.edit')">
                                             <i class="ace-icon fa fa-pencil bigger-120"></i>
                                         </a>
                                     @endif
                                     @if(in_array('destroy', $role_button))
-                                        <button type="button" onclick="deleteUser(this)" data-toggle="tooltip" data-placement="bottom" title="@lang('form.delete')" data-id="{{ $user['id'] }}" data-username="{{ $user['username'] }}" data-name="{{ $user['name'] }}" data-email="{{ $user['email'] }}" class="btn btn-xs btn-danger">
+                                        <a href="" class="red" onclick="deleteUser(event,this)" data-toggle="tooltip" data-placement="bottom" title="@lang('form.delete')" data-id="{{ $user['id'] }}" data-username="{{ $user['username'] }}" data-name="{{ $user['name'] }}" data-email="{{ $user['email'] }}">
                                             <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                                        </button>
+                                        </a>    
                                     @endif
                                 </div>
                             </td>
@@ -143,7 +143,8 @@
     });
 
 	// 刪除使用者
-    function deleteUser(button) {
+    function deleteUser(event,button) {
+        event.preventDefault();
         var content = '';
         content += "<h4> @lang('form.username')：" + $(button).data('username')+ "</h4>";
         content += "<h4> @lang('form.name')：" + $(button).data('name')+ "</h4>";

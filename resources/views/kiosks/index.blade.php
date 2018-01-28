@@ -85,17 +85,19 @@
                                 @endif
                             </td>
                             <td>
+                                <div class="action-buttons">
                                 @if(in_array('update', $role_button))
                                     @if($kiosk['connection_status'] === 0)
-                                        <a href="{{ route('kiosks.edit', ['station' => $kiosk['station_number']]) }}" class="btn btn-xs btn-info" data-toggle="tooltip" data-placement="bottom" title="@lang('form.edit')" onclick="return false;" disabled>
+                                        <a href="{{ route('kiosks.edit', ['station' => $kiosk['station_number']]) }}" class="blue" style="pointer-events: none;"data-toggle="tooltip" data-placement="bottom" title="@lang('form.edit')" onclick="return false;" disabled>
                                             <i class="ace-icon fa fa-pencil bigger-120"></i>
                                         </a>
                                     @else
-                                        <a href="{{ route('kiosks.edit', ['station' => $kiosk['station_number']]) }}" class="btn btn-xs btn-info" data-toggle="tooltip" data-placement="bottom" title="@lang('form.edit')">
+                                        <a href="{{ route('kiosks.edit', ['station' => $kiosk['station_number']]) }}" class="blue" data-toggle="tooltip" data-placement="bottom" title="@lang('form.edit')">
                                             <i class="ace-icon fa fa-pencil bigger-120"></i>
                                         </a>
                                     @endif
                                 @endif
+                                </div>
                             </td>
                         </tr>
                         

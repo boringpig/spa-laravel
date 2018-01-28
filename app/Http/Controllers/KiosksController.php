@@ -89,7 +89,6 @@ class KiosksController extends Controller
         $kiosks = (count($kiosks) > 0)? $this->stationTransformer->transform($kiosks)->appends($request->all())->setPath("/".Route::current()->uri()) : [];
         $request->flash();
         return view('kiosks.index', [
-            'page_title' => __('pageTitle.kiosks_manage'),
             'kiosks'   => $kiosks,
         ]);
     }

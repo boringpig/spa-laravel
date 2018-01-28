@@ -3,7 +3,7 @@
 @section('breadcrumb')
 <li>
     <i class="ace-icon fa fa-users users-icon"></i>
-    @lang('pageTitle.advertisements_manage')
+    @lang('pageTitle.advertisement-manage')
 </li>
 <li>
     <a href="{{ route('advertisements.index') }}">@lang('pageTitle.advertisements_page')</a>
@@ -70,8 +70,12 @@
                     </div>
                     <div class="space-5"></div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">@lang('form.close')</button>
-                        <button type="submit" class="btn btn-primary">@lang('form.change_image_or_video')</button>
+                        <button type="button" class="btn btn-white btn-grey btn-bold" data-dismiss="modal">
+                            <i class="ace-icon fa fa-undo bigger-110"></i>@lang('form.back')
+                        </button>
+                        <button type="submit" class="btn btn-white btn-info btn-bold">
+                            <i class="ace-icon fa fa-floppy-o bigger-120 blue"></i>@lang('form.change_image_or_video')
+                        </button>
                     </div>
                 </form>
             </div><!-- /.modal-content -->

@@ -3,7 +3,7 @@
 @section('breadcrumb')
 <li>
     <i class="ace-icon fa fa-users users-icon"></i>
-    @lang('pageTitle.kiosks_manage')
+    @lang('pageTitle.kiosk-manage')
 </li>
 <li>
     <a href="{{ route('kiosks.index') }}">@lang('pageTitle.kiosks_page')</a>

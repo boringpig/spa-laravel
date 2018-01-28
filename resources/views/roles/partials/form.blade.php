@@ -64,11 +64,11 @@
 </div>
 <div class="clearfix ">
     <div class="col-md-offset-3 col-md-9">
-        <button class="btn btn-primary btn-sm" type="submit">
-            <i class="ace-icon fa fa-check bigger-110"></i>
+        <button type="submit" class="btn btn-white btn-info btn-bold">
+            <i class="ace-icon fa fa-floppy-o bigger-120 blue"></i>
             {{ $submit_button }}
         </button>
-        <a href="{{ route('roles.index') }}" class="btn btn-grey btn-sm">
+        <a href="{{ route('roles.index') }}" class="btn btn-white btn-grey btn-bold">
             <i class="ace-icon fa fa-undo bigger-110"></i>
             @lang('form.cancel_back')
         </a>
