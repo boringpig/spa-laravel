@@ -117,4 +117,7 @@ return [
     'open_temperature'                  => '啟动温度',
     'close_temperature'                 => '关闭温度',
     'reset'                             => '重置',
+    'advertisement'                     => '广告',
+    'user'                              => '使用者',
+    'article'                           => '文章'
 ];

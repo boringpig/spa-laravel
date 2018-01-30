@@ -39,5 +39,6 @@ Route::group(['prefix' => 'kiosk-manage'], function() {
     Route::post('kiosks/control-light/{station}', ['uses' => 'KiosksController@controlLight', 'as' => 'kiosks.control-light']);
     Route::post('kiosks/control-fan/{station}', ['uses' => 'KiosksController@controlFan', 'as' => 'kiosks.control-fan']);
     Route::post('kiosks/control-power/{station}', ['uses' => 'KiosksController@controlPower', 'as' => 'kiosks.control-power']);
+    Route::get('kiosks/calculate-station', ['uses' => 'KiosksController@calculateStation', 'as' => 'kiosks.calculate-station']);
     Route::resource('kiosks', 'KiosksController')->only(['index','edit','update']);
 });

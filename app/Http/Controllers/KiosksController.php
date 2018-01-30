@@ -12,6 +12,7 @@ class KiosksController extends Controller
 {
     protected $stationRepository;
     protected $stationTransformer;
+    protected $sCityAreaRepository;
 
     public function __construct(
         StationRepository $stationRepository,
@@ -151,5 +152,22 @@ class KiosksController extends Controller
         } catch (\Exception $e) {
             return response()->json($this->errorOutput($e->getMessage()), 500);
         }
+    }
+
+    public function calculateStation()
+    {
+        $station_count = collect($this->stationRepository->getTotalCount());
+        $total_count = $station_count->sum('count');
+        $areas = getSCityAreaArray();
+        $data = $station_count->map(function($item,$key) use ($areas,$total_count) {
+            $colors = ["#68BC31","#FEE074","#2091CF"];
+            return [
+                'label' => array_get($areas, $item['area'], ""),
+                'data' => round($item['count']/$total_count*100,1),
+                'color' => array_get($colors,$key,"#AF4E96"),
+            ];
+        })->toArray();
+
+        return response()->json(successOutput($data), 200);
     }
 }

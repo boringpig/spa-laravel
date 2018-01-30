@@ -10,7 +10,7 @@
 @if(in_array('users', $role_menu) || in_array('roles', $role_menu))
 <li class="{{ (\Request::segment(1) == 'user-manage')? 'open' : '' }}">
 	<a href="" class="dropdown-toggle">
-		<i class="menu-icon fa fa-user"></i>
+		<i class="menu-icon fa fa-users"></i>
 		<span class="menu-text"> @lang('pageTitle.user-manage') </span>
 		<b class="arrow fa fa-angle-down"></b>
 	</a>

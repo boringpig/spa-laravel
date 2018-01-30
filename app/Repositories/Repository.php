@@ -17,6 +17,14 @@ abstract class Repository
     }
 
     /**
+     * 回傳所有使用者的數量
+     */
+    public function getAllTotal()
+    {
+        return $this->model()->count();
+    }
+
+    /**
      * 回傳單一使用者
      */
     public function findOneById($id)

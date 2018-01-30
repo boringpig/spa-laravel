@@ -38,4 +38,31 @@ class StationRepository
     {
         return $this->model()->where('s_no', $station)->first();
     }
+
+    public function getTotalCount()
+    {
+        $pipeline = [
+            [
+                '$match' => [
+                    's_no' => ['$regex' => new \MongoDB\BSON\Regex("^0101")],
+                    'area_id' => ['$exists' => true]
+                ]
+            ],
+            [
+                '$project' => [
+                    'area' => '$area_id',
+                ]
+            ],
+            [
+                '$group' => [
+                    '_id' => ['area' => '$area'],
+                    'area' => ['$first' => '$area'],
+                    'count' => ['$sum' => 1],
+                ]
+            ]
+        ];
+        return $this->model()->raw(function($collection) use ($pipeline) {
+            return $collection->aggregate($pipeline);
+        })->toArray();
+    }
 }
