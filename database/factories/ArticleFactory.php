@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Article::class, function (Faker $faker) {
+$factory->define(App\Entities\Article::class, function (Faker $faker) {
     $lang = ['zh-CN','zh-TW','en'];
 
     return [

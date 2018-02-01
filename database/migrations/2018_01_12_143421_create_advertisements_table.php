@@ -18,6 +18,7 @@ class CreateAdvertisementsTable extends Migration
             $collection->string('name')->unique();
             $collection->string('sequence')->unique();
             $collection->string('path');
+            $collection->string('broadcast_time');
             $collection->integer('round_time');
             $collection->boolean('status');
             $collection->json('weeks');

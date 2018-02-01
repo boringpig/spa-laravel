@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\User;
+use App\Entities\Role;
 
 class UsersTableSeeder extends Seeder
 {
@@ -30,6 +31,20 @@ class UsersTableSeeder extends Seeder
             'status' => 0,
         ];
 
+
+        $role = [
+            "name" => "role_manager", 
+            "permission" => [
+                "roles.search", 
+                "roles.index", 
+                "roles.store", 
+                "roles.update", 
+                "roles.destroy"
+            ]
+        ];
+        
+        $role = Role::create($role);
+        $user1['role_id'] = $role->_id;
         User::create($user1);
         User::create($user2);
     }
