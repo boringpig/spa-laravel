@@ -20,10 +20,11 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct(UserRepository $userRepository,
-                                ArticleRepository $articleRepository,
-                                AdvertisementRepository $advertisementRepository,
-                                StationRepository $stationRepository
+    public function __construct(
+        UserRepository $userRepository,
+        ArticleRepository $articleRepository,
+        AdvertisementRepository $advertisementRepository,
+        StationRepository $stationRepository
     ) {
         $this->middleware('auth');
         $this->userRepository = $userRepository;

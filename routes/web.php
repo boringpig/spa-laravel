@@ -42,3 +42,9 @@ Route::group(['prefix' => 'kiosk-manage'], function() {
     Route::get('kiosks/calculate-station', ['uses' => 'KiosksController@calculateStation', 'as' => 'kiosks.calculate-station']);
     Route::resource('kiosks', 'KiosksController')->only(['index','edit','update']);
 });
+
+
+Route::group(['prefix' => 'setting-manage'], function() {
+    Route::get('settings', ['uses' => 'SettingController@index', 'as' => 'settings.index']);
+    Route::post('settings', ['uses' => 'SettingController@store', 'as' => 'settings.store']);
+});

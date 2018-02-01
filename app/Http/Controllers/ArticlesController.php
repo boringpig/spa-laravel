@@ -14,8 +14,9 @@ class ArticlesController extends Controller
     protected $articleRepository;
     protected $articleTransformer;
 
-    public function __construct(ArticleRepository $articleRepository,
-                                ArticleTransformer $articleTransformer
+    public function __construct(
+        ArticleRepository $articleRepository,
+        ArticleTransformer $articleTransformer
     ) {
         $this->middleware(['auth','role.auth']);
         $this->articleRepository = $articleRepository;

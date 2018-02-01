@@ -42,12 +42,4 @@ class RoleRepository extends Repository
 
         return is_null($perPage)? $query->get() : $query->paginate($perPage);
     }
-    
-    /**
-     * 回傳角色名稱陣列 
-     */
-    public function getPluckNameArray()
-    {
-        return $this->model()->get()->pluck('name','id')->toArray();
-    }
 }

@@ -14,8 +14,9 @@ class RolesController extends Controller
     protected $roleRepository;
     protected $roleTransformer;
 
-    public function __construct(RoleRepository $roleRepository, 
-                                RoleTransformer $roleTransformer
+    public function __construct(
+        RoleRepository $roleRepository, 
+        RoleTransformer $roleTransformer
     ) {
         $this->middleware(['auth','role.auth']);
         $this->roleRepository = $roleRepository;

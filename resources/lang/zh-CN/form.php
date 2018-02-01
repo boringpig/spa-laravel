@@ -119,5 +119,13 @@ return [
     'reset'                             => '重置',
     'advertisement'                     => '广告',
     'user'                              => '使用者',
-    'article'                           => '文章'
+    'article'                           => '文章',
+    'customer_service_contact_data'     => '客服联络资讯',
+    'kiosk_freetime_setting'            => 'Kiosk闲置时间设定',
+    'customer_service_phone'            => '客服电话',
+    'customer_service_email'            => '客服信箱',
+    'freetime'                          => '闲置时间(秒)',
+    'enter_at_least_one_field'          => '至少输入一个栏位',
+    'setting_data_save_success'         => '系统资讯保存成功',
+    'setting_data_save_fail'            => '系统资讯保存失败',
 ];

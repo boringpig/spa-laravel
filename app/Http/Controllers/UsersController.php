@@ -17,9 +17,10 @@ class UsersController extends Controller
     protected $roleRepository;
     protected $userTransformer;
 
-    public function __construct(UserRepository $userRepository,
-                                RoleRepository $roleRepository, 
-                                UserTransformer $userTransformer
+    public function __construct(
+        UserRepository $userRepository,
+        RoleRepository $roleRepository, 
+        UserTransformer $userTransformer
     ) {
         $this->middleware(['auth','role.auth']);
         $this->userRepository = $userRepository;
@@ -37,7 +38,6 @@ class UsersController extends Controller
         $users = $this->userRepository->getAll(config('website.perPage'));
         $users = (count($users) > 0)? $this->userTransformer->transform($users)->setPath("/".Route::current()->uri()) : [];
         return view('users.index', [
-            'roles'      => $this->roleRepository->getPluckNameArray(),
             'users'      => $users,
         ]);
     }
@@ -49,9 +49,7 @@ class UsersController extends Controller
      */
     public function create()
     {   
-        return view('users.create', [
-            'roles'      => $this->roleRepository->getPluckNameArray(),
-        ]);
+        return view('users.create');
     }
 
     /**
@@ -101,7 +99,6 @@ class UsersController extends Controller
         $user = $this->userTransformer->transform($user);
 
         return view('users.edit', [
-            'roles'         => $this->roleRepository->getPluckNameArray(),
             'user'          => $user,
         ]);
     }
@@ -187,7 +184,6 @@ class UsersController extends Controller
         $users = (count($users) > 0)? $this->userTransformer->transform($users)->appends($request->all())->setPath("/{$request->path()}") : [];
         $request->flash();
         return view('users.index', [
-            'roles'      => $this->roleRepository->getPluckNameArray(),
             'users'      => $users,
         ]);
     }

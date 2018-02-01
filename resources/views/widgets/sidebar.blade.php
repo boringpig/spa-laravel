@@ -84,14 +84,6 @@
 		<li class="">
 			<a href="#" >
 				<i class="menu-icon fa fa-caret-right"></i>
-				KIOSK闲置时间设定
-			</a>
-
-			<b class="arrow"></b>
-		</li>
-		<li class="">
-			<a href="#" >
-				<i class="menu-icon fa fa-caret-right"></i>
 				KIOSK地区群组
 			</a>
 
@@ -124,10 +116,12 @@
 	</ul>
 </li>
 @endif
-<li class="">
+
+@if(in_array('settings', $role_menu))
+<li class="{{ (\Request::segment(1) == 'setting-manage')? 'open' : '' }}">
 	<a href="#" class="dropdown-toggle">
 		<i class="menu-icon fa fa-cogs"></i>
-		<span class="menu-text"> 系統管理 </span>
+		<span class="menu-text"> @lang('pageTitle.setting-manage') </span>
 		<b class="arrow fa fa-angle-down"></b>
 	</a>
 
@@ -141,13 +135,14 @@
 
 			<b class="arrow"></b>
 		</li>
-		<li class="">
-			<a href="#" >
+		<li class="{{ (\Request::segment(2) == 'settings')? 'active' : '' }}">
+			<a href="{{ route('settings.index') }}" >
 				<i class="menu-icon fa fa-caret-right"></i>
-				系統參數設定
+				@lang('pageTitle.settings_page')
 			</a>
 
 			<b class="arrow"></b>
 		</li>
 	</ul>
 </li>
+@endif

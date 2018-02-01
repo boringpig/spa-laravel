@@ -39,6 +39,7 @@
         selectAllArticles();
         selectAllAdvertisements();
         selectAllKiosks();
+        selectAllKiosks();
     });
 </script>
 @endsection

@@ -16,8 +16,9 @@ class AdvertisementsController extends Controller
     protected $advertisementRepository;
     protected $advertisementTransformer;
 
-    public function __construct(AdvertisementRepository $advertisementRepository,
-                                AdvertisementTransformer $advertisementTransformer
+    public function __construct(
+        AdvertisementRepository $advertisementRepository,
+        AdvertisementTransformer $advertisementTransformer
     ) {
         $this->middleware('auth');
         $this->middleware('role.auth', ['except' => 'changeStatus']);
