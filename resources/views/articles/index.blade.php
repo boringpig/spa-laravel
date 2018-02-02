@@ -65,6 +65,7 @@
                     <tr>
                         <th class="center">@lang('form.language')</th>
                         <th class="center">@lang('form.title')</th>
+                        <th class="center">@lang('form.broadcast_area')</th>
                         <th class="center">@lang('form.updated_at')</th>
                         <th class="center"></th>
                     </tr>
@@ -74,6 +75,15 @@
                         <tr>
                             <td class="center">{{ $article['language_name'] }}</td>
                             <td class="center">{{ $article['title'] }}</td>
+                            <td class="center">
+                                @php
+                                    $scitys = getSCityArray();
+                                @endphp
+                                @forelse($article['broadcast_area'] as $value)
+                                    <span class="label label-grey middle">{{ array_get($scitys, $value, "") }}</span>
+                                @empty
+                                @endforelse
+                            </td>
                             <td class="center">{{ $article['updated_at'] }}</td>
                             <td>
                                 <div class="action-buttons">

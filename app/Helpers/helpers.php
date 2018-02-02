@@ -137,11 +137,11 @@ if (!function_exists('errorOutput')) {
 }
 
 if (!function_exists('replaceTimeColon')) {
-    function replaceTimeColon($time)
+    function replaceTimeColon($time, $replace = false)
     {
-        $time = str_replace(':','',$time);
-        if(strLen($time) < 4) {
-            $time = str_pad($time,4,"0",STR_PAD_LEFT);
+        $time = str_pad($time, 5, "0", STR_PAD_LEFT);
+        if($replace) {
+            $time = str_replace(':', '', $time);
         }
         return $time;
     }

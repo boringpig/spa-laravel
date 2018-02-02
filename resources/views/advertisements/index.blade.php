@@ -83,11 +83,11 @@
                 <thead>
                     <tr>
                         <th class="center" width="5%">@lang('form.status')</th>
-                        <th class="center" width="5%">@lang('form.sequence')</th>
                         <th class="center" width="5%">@lang('form.preview_image')</th>
                         <th class="center" width="12%">@lang('form.advertisement_name')</th>
                         <th class="center" width="5%">@lang('form.round_time')</th>
-                        <th class="center" width="23%">@lang('form.round_weeks')</th>
+                        <th class="center" width="17%">@lang('form.round_weeks')</th>
+                        <th class="center" width="12%">@lang('form.broadcast_area')</th>
                         <th class="center" width="12%">@lang('form.broadcast_time')</th>
                         <th class="center" width="10%">@lang('form.publish_at')</th>
                         <th class="center" width="16%">@lang('form.updated_at')</th>
@@ -107,7 +107,6 @@
                                     <span class="lbl"></span>
                                 </label>
                             </td>
-                            <td class="center">{{ $advertisement['sequence'] }}</td>
                             <td class="center">
                                 <ul class="ace-thumbnails clearfix">
                                     <li>
@@ -128,6 +127,14 @@
                                     <span class="badge badge-success">{{ array_get(config('weeks'), "cn.{$value}", "") }}</span>
                                 @endforeach
                             </td>
+                            <td class="center">
+                                @php 
+                                    $scitys = getSCityArray();
+                                @endphp
+                                @foreach($advertisement['broadcast_area'] as $value)
+                                    <span class="label label-grey middle">{{ array_get($scitys, $value, "") }}</span>
+                                @endforeach
+                            </td>                            
                             <td class="center">{{ $advertisement['broadcast_time'] }}</td>
                             <td class="center">{{ $advertisement['publish_at'] }}</td>
                             <td class="center">{{ $advertisement['updated_at'] }}</td>

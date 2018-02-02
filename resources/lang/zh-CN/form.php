@@ -44,6 +44,7 @@ return [
     'back'                              => '返回',
     'choose_one_a_role'                 => '选择一个角色',
     'choose_one_language'               => '选择一个语系',
+    'choose_one_area'                   => '选择一个地区',
     'language'                          => '语系',
     'title'                             => '标题',
     'content'                           => '内容',
@@ -128,4 +129,5 @@ return [
     'enter_at_least_one_field'          => '至少输入一个栏位',
     'setting_data_save_success'         => '系统资讯保存成功',
     'setting_data_save_fail'            => '系统资讯保存失败',
+    'broadcast_area'                    => '播放地区',
 ];

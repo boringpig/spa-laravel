@@ -24,18 +24,20 @@ class CreateArticleRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'     => 'required|string',
-            'content'   => 'required|string',
-            'language'  => 'required|string|in:zh-CN,zh-TW,en',
+            'title'          => 'required|string',
+            'content'        => 'required|string',
+            'language'       => 'required|string|in:zh-CN,zh-TW,en',
+            'broadcast_area' => 'required|array',
         ];
     }
 
     public function attributes()
     {
         return [
-            'title'         => '标题',
-            'content'       => '内容',
-            'language'      => '语系',
+            'title'           => '标题',
+            'content'         => '内容',
+            'language'        => '语系',
+            'broadcast_area'  => '播放地区',
         ];
     }
 }

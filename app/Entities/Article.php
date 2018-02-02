@@ -6,5 +6,5 @@ use Jenssegers\Mongodb\Eloquent\Model;
 
 class Article extends Model
 {
-    protected $fillable = ['title', 'content', 'language'];
+    protected $fillable = ['title', 'content', 'language', 'broadcast_area'];
 }

@@ -9,5 +9,6 @@ $factory->define(App\Entities\Article::class, function (Faker $faker) {
         'title' => $faker->sentence(6),
         'content' => $faker->text(300),
         'language'  => $lang[mt_rand(0,2)],
+        "broadcast_area" => ["0102", "0104"],
     ];
 });

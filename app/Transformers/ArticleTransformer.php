@@ -8,6 +8,13 @@ use App\Entities\Article;
 
 class ArticleTransformer
 {
+    private $languages = [];
+
+    public function __construct()
+    {
+        $this->languages = getLanguageList();
+    }
+
     public function transform($data)
     {
         if ($data instanceOf \App\Entities\Article) {
@@ -26,13 +33,13 @@ class ArticleTransformer
 
     private function format(Article $article)
     {
-        $languages = getLanguageList();
         return [
             'id'            => $article->_id,
             'title'         => $article->title,
             'content'       => transformContentImageSrc($article->content),
+            'broadcast_area'=> empty($article->broadcast_area)? [] : $article->broadcast_area,
             'language'      => $article->language,
-            'language_name' => empty($languages[$article->language])? "" : $languages[$article->language],
+            'language_name' => empty($this->languages[$article->language])? "" : $this->languages[$article->language],
             'updated_at'    => $article->updated_at->toDateTimeString(),
         ];
     }

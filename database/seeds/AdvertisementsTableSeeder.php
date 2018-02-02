@@ -14,10 +14,10 @@ class AdvertisementsTableSeeder extends Seeder
     {
         $advertisement = [
             'name'          => '微笑表情包',
-            'sequence'      => "",
             'round_time'    => (int) 10,
             'weeks'         => ["1","2","3","4","5","6","7"],
-            'broadcast_time'=> "9:00~17:00",
+            "broadcast_area" => ["0102", "0104"],
+            'broadcast_time'=> "09:00~17:00",
             'publish_at'    => new \MongoDB\BSON\UTCDateTime(strtotime("now") * 1000),
             'status'        => 1,
             'format'        => [

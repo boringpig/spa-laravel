@@ -36,6 +36,9 @@
                     </div>
                     <div class="col-xs-3">
                         @lang('form.role_name')：
+                        @php 
+                            $roles = getRoleNameArray(); 
+                        @endphp
                         @if(!empty($roles))
                             <select class="chosen-select width-100" id="role_id" name="role_id" data-placeholder="@lang('form.choose_one_a_role')">
                                 <option value="">  </option>

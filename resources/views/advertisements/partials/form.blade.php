@@ -30,20 +30,6 @@
 </div>
 <div class="space-4"></div>
 @endif
-<div class="form-group {{ $errors->has('sequence')? ' has-error' : '' }}">
-    <label for="sequence" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right"> @lang('form.sequence') </label>
-    <div class="col-xs-3">
-        <span class="block input-icon input-icon-right">
-            <input type="number" id="sequence" name="sequence" class="width-100" min="0" value="{{ !empty($advertisement['sequence'])? $advertisement['sequence'] : old('sequence') }}">
-            @if($errors->has('sequence'))
-                <i class="ace-icon fa fa-times-circle"></i>
-            @endif
-        </span>
-    </div>
-    @if($errors->has('sequence'))
-        <div class="help-block col-xs-12 col-sm-reset inline">{{ $errors->first('sequence') }}</div>
-    @endif
-</div>
 <div class="space-4"></div>
 <div class="form-group {{ $errors->has('round_time')? ' has-error' : '' }}">
     <label for="round_time" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right"> <span class="text-danger">*</span> @lang('form.round_time') </label>
@@ -57,6 +43,27 @@
     </div>
     @if($errors->has('round_time'))
         <div class="help-block col-xs-12 col-sm-reset inline">{{ $errors->first('round_time') }}</div>
+    @endif
+</div>
+<div class="space-4"></div>
+<div class="form-group {{ $errors->has('broadcast_area')? ' has-error' : '' }}">
+    <label for="broadcast_area[]" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right"> <span class="text-danger">*</span> @lang('form.broadcast_area') </label>
+    <div class="col-xs-4">
+        <span class="block input-icon input-icon-right">
+            <select multiple="" class="chosen-select form-control" id="broadcast_area[]" name="broadcast_area[]" data-placeholder="@lang('form.choose_one_area')">
+                @forelse(getSCityArray() as $key => $value)
+                    @if(!empty($advertisement['broadcast_area']) && in_array($key,$advertisement['broadcast_area']))
+                        <option value="{{ $key }}" selected>{{ $value }}</option>
+                    @else
+                        <option value="{{ $key }}">{{ $value }}</option>
+                    @endif
+                @empty
+                @endforelse
+            </select>
+        </span>
+    </div>
+    @if($errors->has('broadcast_area'))
+        <div class="help-block col-xs-12 col-sm-reset inline">{{ $errors->first('broadcast_area') }}</div>
     @endif
 </div>
 <div class="space-4"></div>

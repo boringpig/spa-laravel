@@ -62,9 +62,10 @@ class ArticlesController extends Controller
         }
 
         $args = [
-            'title'     => $request->title,
-            'content'   => processContent($request->content),
-            'language'  => $request->language,
+            'title'          => $request->title,
+            'content'        => processContent($request->content),
+            'language'       => $request->language,
+            'broadcast_area' => $request->broadcast_area,
         ];
         
         $article = $this->articleRepository->create($args);
@@ -124,9 +125,10 @@ class ArticlesController extends Controller
             return redirect()->back();
         }
         $args = [
-            'title'     => $request->title,
-            'content'   => processContent($request->content),
-            'language'  => $request->language,
+            'title'          => $request->title,
+            'content'        => processContent($request->content),
+            'language'       => $request->language,
+            'broadcast_area' => $request->broadcast_area,
         ];
         if($this->articleRepository->update($id, $args)) {
             session()->flash('success', __('form.updated_success'));

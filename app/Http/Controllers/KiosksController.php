@@ -101,8 +101,8 @@ class KiosksController extends Controller
             if(is_null($kiosk)) {
                 throw new \Exception(__('message.no_data'));
             }
-            $start_time = empty($request->start_time)? '0000' : replaceTimeColon($request->start_time);
-            $end_time = empty($request->end_time)? '2359' : replaceTimeColon($request->end_time);
+            $start_time = empty($request->start_time)? '0000' : replaceTimeColon($request->start_time,true);
+            $end_time = empty($request->end_time)? '2359' : replaceTimeColon($request->end_time,true);
             if($request->action_type) {
                 $cmd = "10{$request->light_type}{$request->launch_type}{$request->action_type}{$start_time}{$end_time}";
             } else {

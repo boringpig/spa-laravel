@@ -36,6 +36,28 @@
         <div class="help-block col-xs-12 col-sm-reset inline">{{ $errors->first('language') }}</div>
     @endif
 </div>
+<div class="space-4"></div>
+<div class="form-group {{ $errors->has('broadcast_area')? ' has-error' : '' }}">
+    <label for="broadcast_area[]" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right"> <span class="text-danger">*</span> @lang('form.broadcast_area') </label>
+    <div class="col-xs-4">
+        <span class="block input-icon input-icon-right">
+            <select multiple="" class="chosen-select form-control" id="broadcast_area[]" name="broadcast_area[]" data-placeholder="@lang('form.choose_one_area')">
+                @forelse(getSCityArray() as $key => $value)
+                    @if(!empty($article['broadcast_area']) && in_array($key,$article['broadcast_area']))
+                        <option value="{{ $key }}" selected>{{ $value }}</option>
+                    @else
+                        <option value="{{ $key }}">{{ $value }}</option>
+                    @endif
+                @empty
+                @endforelse
+            </select>
+        </span>
+    </div>
+    @if($errors->has('broadcast_area'))
+        <div class="help-block col-xs-12 col-sm-reset inline">{{ $errors->first('broadcast_area') }}</div>
+    @endif
+</div>
+<div class="space-4"></div>
 <div class="form-group {{ $errors->has('content')? ' has-error' : '' }}">
     <label for="content" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right"> <span class="text-danger">*</span> @lang('form.content') </label>
     <div class="col-sm-9">

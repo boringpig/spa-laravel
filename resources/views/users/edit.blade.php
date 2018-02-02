@@ -26,7 +26,7 @@
                 {{ csrf_field() }}
                 {{ method_field('PATCH') }}
                 <input type="hidden" name="id" value="{{ $user['id'] }}">
-                @include('users.partials.form', ['user' => $user, 'roles' => $roles, 'submit_button' => Lang::get('form.save_change')])
+                @include('users.partials.form', ['user' => $user, 'submit_button' => Lang::get('form.save_change')])
             </form>
         </div>
     </div>

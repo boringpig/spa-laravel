@@ -16,8 +16,6 @@ class ComposerServiceProvider extends ServiceProvider
     {
         View::composer('*', 'App\Http\ViewComposers\RolePermissionComposer');
         View::composer('*', 'App\Http\ViewComposers\PageTitleComposer');
-        View::composer('kiosks.index', 'App\Http\ViewComposers\SCityAreaComposer');
-        View::composer('users.*', 'App\Http\ViewComposers\RoleNameComposer');
     }
 
     /**

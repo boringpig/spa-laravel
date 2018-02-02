@@ -64,6 +64,9 @@
     <label for="role_id" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right"> <span class="text-danger">*</span> @lang('form.role_permission') </label>
     <div class="col-xs-3">
         <span class="block input-icon input-icon-right">
+            @php 
+                $roles = getRoleNameArray(); 
+            @endphp
             @if(!empty($roles))
                 <select class="chosen-select width-100" id="role_id" name="role_id" data-placeholder="@lang('form.choose_one_a_role')">
                     <option value="">  </option>

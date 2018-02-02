@@ -60,10 +60,10 @@ class AdvertisementsController extends Controller
     {
         $args = [
             'name'          => $request->name,
-            'sequence'      => $request->has('sequence')? $request->sequence : "",
             'round_time'    => (int) $request->round_time,
             'weeks'         => $request->weeks,
-            'broadcast_time'=> "{$request->broadcast_start_time}~{$request->broadcast_end_time}",
+            'broadcast_area'=> $request->broadcast_area,
+            'broadcast_time'=> replaceTimeColon($request->broadcast_start_time).'~'.replaceTimeColon($request->broadcast_end_time),
             'publish_at'    => $request->publish_at,
             'status'        => $request->has('status')? (int) $request->status : 0,
         ];
@@ -97,7 +97,6 @@ class AdvertisementsController extends Controller
     public function edit($id)
     {
         $advertisement = $this->advertisementRepository->findOneById($id);
-
         if(is_null($advertisement)) {
             session()->flash('error', __('form.no_data'));
             return redirect()->back();
@@ -128,10 +127,10 @@ class AdvertisementsController extends Controller
         $status = $request->has('status')? 1 : 0;
         $args = [
             'name'          => $request->name,
-            'sequence'      => $request->input('sequence', null),
             'round_time'    => (int) $request->round_time,
             'weeks'         => $request->weeks,
-            'broadcast_time'=> "{$request->broadcast_start_time}~{$request->broadcast_end_time}",
+            'broadcast_area'=> $request->broadcast_area,
+            'broadcast_time'=> replaceTimeColon($request->broadcast_start_time).'~'.replaceTimeColon($request->broadcast_end_time),
             'publish_at'    => new \MongoDB\BSON\UTCDateTime(strtotime("{$request->publish_at} 00:00:00") * 1000),
             'status'        => ($advertisement->status != $status)? $status : $advertisement->status,
         ];
@@ -161,6 +160,7 @@ class AdvertisementsController extends Controller
             if(! $this->advertisementRepository->delete($id)) {
                 throw new \Exception(__('message.delete_fail'));
             }
+            unlink(public_path($advertisement['path']));
             return response()->json(successOutput($advertisement), 200);
         } catch (\Exception $e) {
             return response()->json(errorOutput($e->getMessage()), 500);

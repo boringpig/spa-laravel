@@ -30,7 +30,7 @@
                         @lang('form.area')：
                         <select name="area" id="area" class="form-control">
                             <option value="">@lang('form.all')</option>
-                            @forelse($areas as $key => $value)
+                            @forelse(getSCityAreaArray() as $key => $value)
                                 <option value="{{ $key }}" @if($key == old('area')) selected @endif>{{ $value }}</option>
                             @empty
                             @endforelse
