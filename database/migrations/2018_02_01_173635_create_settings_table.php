@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
+use Jenssegers\Mongodb\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class CreateSettingsTable extends Migration
@@ -13,12 +13,12 @@ class CreateSettingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('settings', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('customer_service_phone');
-            $table->string('customer_service_email');
-            $table->string('kiosk_freetime');
-            $table->timestamps();
+        Schema::create('settings', function (Blueprint $collection) {
+            $collection->increments('id');
+            $collection->string('customer_service_phone');
+            $collection->string('customer_service_email');
+            $collection->string('kiosk_freetime');
+            $collection->timestamps();
         });
     }
 

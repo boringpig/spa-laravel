@@ -58,3 +58,13 @@ function selectAllKiosks() {
         }
     });
 }
+// 系統操作紀錄權限全選
+function selectAllActionlogs() {
+    $('#actionlogs_selectAll').click(function() {
+        if($('#actionlogs_selectAll').prop("checked")) {
+            $("input[id='actionlogs_permission[]']").prop('checked', true);
+        } else {
+            $("input[id='actionlogs_permission[]']").prop('checked', false);
+        }
+    });
+}

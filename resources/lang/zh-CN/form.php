@@ -45,6 +45,7 @@ return [
     'choose_one_a_role'                 => '选择一个角色',
     'choose_one_language'               => '选择一个语系',
     'choose_one_area'                   => '选择一个地区',
+    'choose_one_menu'                   => '选择一个选单',
     'language'                          => '语系',
     'title'                             => '标题',
     'content'                           => '内容',
@@ -130,4 +131,9 @@ return [
     'setting_data_save_success'         => '系统资讯保存成功',
     'setting_data_save_fail'            => '系统资讯保存失败',
     'broadcast_area'                    => '播放地区',
+    'operate_time'                      => '操作时间',
+    'operate_role'                      => '操作角色',
+    'operate_user'                      => '操作使用者',
+    'operate_menu'                      => '操作选单',
+    'operate_event'                     => '操作事件',
 ];

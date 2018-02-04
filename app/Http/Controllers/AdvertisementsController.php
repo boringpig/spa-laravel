@@ -20,7 +20,7 @@ class AdvertisementsController extends Controller
         AdvertisementRepository $advertisementRepository,
         AdvertisementTransformer $advertisementTransformer
     ) {
-        $this->middleware('auth');
+        $this->middleware(['auth','record.actionlog']);
         $this->middleware('role.auth', ['except' => 'changeStatus']);
         $this->advertisementRepository = $advertisementRepository;
         $this->advertisementTransformer = $advertisementTransformer;

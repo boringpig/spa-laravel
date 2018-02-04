@@ -28,7 +28,7 @@
                     </div>
                     <div class="col-xs-3">
                         @lang('form.area')：
-                        <select name="area" id="area" class="form-control">
+                        <select class="chosen-select width-100" id="area" name="area">
                             <option value="">@lang('form.all')</option>
                             @forelse(getSCityAreaArray() as $key => $value)
                                 <option value="{{ $key }}" @if($key == old('area')) selected @endif>{{ $value }}</option>

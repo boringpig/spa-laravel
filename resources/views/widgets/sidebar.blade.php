@@ -117,7 +117,7 @@
 </li>
 @endif
 
-@if(in_array('settings', $role_menu))
+@if(in_array('settings', $role_menu) || in_array('actionlogs', $role_menu))
 <li class="{{ (\Request::segment(1) == 'setting-manage')? 'open' : '' }}">
 	<a href="#" class="dropdown-toggle">
 		<i class="menu-icon fa fa-cogs"></i>
@@ -127,14 +127,17 @@
 
 	<b class="arrow"></b>
 	<ul class="submenu">
-		<li class="">
-			<a href="#" >
+		@if(in_array('actionlogs', $role_menu))
+		<li class="{{ (\Request::segment(2) == 'actionlogs')? 'active' : '' }}">
+			<a href="{{ route('actionlogs.index') }}" >
 				<i class="menu-icon fa fa-caret-right"></i>
-				系統操作紀錄查詢
+				@lang('pageTitle.actionlogs_page')
 			</a>
 
 			<b class="arrow"></b>
 		</li>
+		@endif
+		@if(in_array('settings', $role_menu))
 		<li class="{{ (\Request::segment(2) == 'settings')? 'active' : '' }}">
 			<a href="{{ route('settings.index') }}" >
 				<i class="menu-icon fa fa-caret-right"></i>
@@ -143,6 +146,7 @@
 
 			<b class="arrow"></b>
 		</li>
+		@endif
 	</ul>
 </li>
 @endif

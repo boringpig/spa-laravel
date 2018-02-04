@@ -18,7 +18,7 @@ class ArticlesController extends Controller
         ArticleRepository $articleRepository,
         ArticleTransformer $articleTransformer
     ) {
-        $this->middleware(['auth','role.auth']);
+        $this->middleware(['auth','role.auth','record.actionlog']);
         $this->articleRepository = $articleRepository;
         $this->articleTransformer = $articleTransformer;
     }

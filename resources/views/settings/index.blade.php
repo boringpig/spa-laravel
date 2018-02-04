@@ -98,7 +98,7 @@
                         </div>
                     </div>
                 </div>
-
+                @if(in_array('store', $role_button))
                 <div class="space-10"></div>
                 <div class="clearfix ">
                     <div class="col-md-offset-3 col-md-9">
@@ -108,6 +108,7 @@
                         </button>
                     </div>
                 </div>
+                @endif
             </form>
             <!-- content -->
         </div><!-- /.col -->

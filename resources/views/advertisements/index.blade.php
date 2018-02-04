@@ -31,16 +31,8 @@
                         <input type="text" class="form-control" placeholder="@lang('form.name')" id="name" name="name" value="{{ old('name') }}">
                     </div>
                     <div class="col-xs-3">
-                        @lang('form.sequence')：
-                        <select name="sequence" id="sequence" class="form-control">
-                            <option value="">@lang('form.all')</option>
-                            <option value="yes" @if(old('sequence') == 'yes') selected @endif>@lang('form.yes')</option>
-                            <option value="no" @if(old('sequence') == 'no') selected @endif>@lang('form.no')</option>
-                        </select>
-                    </div>
-                    <div class="col-xs-3">
                         @lang('form.status')：
-                        <select name="status" id="status" class="form-control">
+                        <select class="chosen-select width-100" id="status" name="status">
                             <option value="">@lang('form.all')</option>
                             <option value="1" @if(old('status') == '1') selected @endif>@lang('form.broadcast')</option>
                             <option value="0" @if(old('status') == '0') selected @endif>@lang('form.broadcast_off')</option>
@@ -51,9 +43,6 @@
                         <input type="number" class="form-control" placeholder="@lang('form.round_time')" id="round_time" name="round_time" value="{{ old('round_time') }}"
                             min="0">
                     </div>
-                </div>
-                <div class="space-8"></div>
-                <div class="row">
                     <div class="col-xs-3">
                         @lang('form.publish_at')：
                         <div class="input-group">
@@ -63,7 +52,10 @@
                             </span>
                         </div>
                     </div>
-                    <div class="col-xs-9" style="text-align:right;margin-top: 22px;">
+                </div>
+                <div class="space-8"></div>
+                <div class="row">
+                    <div class="col-xs-12" style="text-align:right;margin-top: 22px;">
                         @if(in_array('search', $role_button))
                             <button type="submit" class="btn btn-white btn-default btn-bold">
                                 <i class="fa fa-fw fa-search"></i>@lang('form.search')

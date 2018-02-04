@@ -16,5 +16,6 @@ return [
     'kiosk-manage'              => 'KIOSK管理',
     'kiosks_page'               => 'KIOSK资料',
     'setting-manage'            => '系统管理',
-    'settings_page'              => '系统参数设定',
+    'settings_page'             => '系统参数设定',
+    'actionlogs_page'           => '系统操作纪录',
 ];

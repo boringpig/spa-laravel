@@ -29,18 +29,6 @@ class AdvertisementRepository extends Repository
             $condition['name'] = ['$eq' => $args['name']];
         }
 
-        if(array_key_exists('sequence', $args) && !empty($args['sequence'])) {
-            switch ($args['sequence']) {
-                case 'yes':
-                    $condition['sequence'] = ['$ne' => null];
-                    break;
-                
-                case 'no':
-                    $condition['sequence'] = ['$eq' => null];
-                    break;
-            }
-        }
-        
         if(array_key_exists('publish_at', $args) && !empty($args['publish_at'])) {
             $condition['publish_at'] = ['$gte' => new \MongoDB\BSON\UTCDateTime(strtotime("{$args['publish_at']} 00:00:00") * 1000),
                                         '$lte' => new \MongoDB\BSON\UTCDateTime(strtotime("{$args['publish_at']} 23:59:59") * 1000)];

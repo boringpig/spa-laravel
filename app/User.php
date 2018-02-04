@@ -38,6 +38,11 @@ class User extends Model implements
 
     public function role()
     {
-        return $this->belongsTo('App\Entities\Role', 'role_id');
+        return $this->belongsTo('App\Entities\Role');
+    }
+
+    public function actionlogs()
+    {
+        return $this->hasMany('App\Entities\Actionlog');
     }
 }

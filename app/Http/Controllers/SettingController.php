@@ -13,6 +13,7 @@ class SettingController extends Controller
     public function __construct(
         SettingRepository $settingRepository
     ) {
+        $this->middleware(['auth','role.auth','record.actionlog']);
         $this->settingRepository = $settingRepository;
     }
 
@@ -38,7 +39,6 @@ class SettingController extends Controller
             session()->flash('error', __('form.enter_at_least_one_field'));            
             return redirect()->back();
         }
-
         // 建立或修改系統設定
         $setting = $this->settingRepository->createOrUpdate($args);
         

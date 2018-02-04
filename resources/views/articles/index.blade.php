@@ -24,7 +24,7 @@
                 <div class="row">
                     <div class="col-xs-3">
                         @lang('form.language')：
-                        <select class="form-control" id="language" name="language">
+                        <select class="chosen-select width-100" id="language" name="language">
                             <option value="">@lang('form.all')</option>
                             @foreach(getLanguageList() as $key => $value)
                                 <option value="{{ $key }}" @if(old('language') == $key) selected @endif>{{ $value }}</option>

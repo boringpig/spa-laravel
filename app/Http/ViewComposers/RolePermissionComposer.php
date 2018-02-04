@@ -20,7 +20,7 @@ class RolePermissionComposer
     public function compose(View $view)
     {
         if(str_contains(Route::current()->getName(), '.')) {
-            $menu = Route::current()->getName()[0];
+            $menu = explode('.', Route::current()->getName())[0];
             $this->role_button = collect($this->permission)->filter(function($value) use ($menu) {
                 return preg_match("/^{$menu}/", $value);
             })->map(function($value) {
@@ -33,7 +33,6 @@ class RolePermissionComposer
         })->map(function($value) {
             return explode('.', $value)[0];
         })->unique()->values()->toArray();
-
         $view->with('role_button', $this->role_button);
         $view->with('role_menu', $this->role_menu);
     }

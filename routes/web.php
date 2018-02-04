@@ -11,7 +11,11 @@
 |
 */
 
-Auth::routes();
+
+Route::get('/login', 'Auth\LoginController@showLoginForm');
+Route::post('/login', ['uses' => 'Auth\LoginController@login', 'as' => 'auth.login']);
+Route::post('/logout', ['uses' => 'Auth\LoginController@logout', 'as' => 'auth.logout']);
+
 Route::get('/', ['uses' => 'HomeController@index', 'as' => 'home']);
 
 Route::group(['prefix' => 'user-manage'], function() {
@@ -47,4 +51,6 @@ Route::group(['prefix' => 'kiosk-manage'], function() {
 Route::group(['prefix' => 'setting-manage'], function() {
     Route::get('settings', ['uses' => 'SettingController@index', 'as' => 'settings.index']);
     Route::post('settings', ['uses' => 'SettingController@store', 'as' => 'settings.store']);
+    Route::get('actionlogs/search', ['uses' => 'ActionlogsController@search', 'as' => 'actionlogs.search']);
+    Route::get('actionlogs', ['uses' => 'ActionlogsController@index', 'as' => 'actionlogs.index']);
 });

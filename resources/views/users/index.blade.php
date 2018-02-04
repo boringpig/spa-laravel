@@ -24,7 +24,7 @@
                 <div class="row">
                     <div class="col-xs-3">
                         @lang('form.status')：
-                        <select class="form-control" id="status" name="status">
+                        <select class="chosen-select width-100" id="status" name="status">
                             <option value="">@lang('form.all')</option>
                             <option value="1" @if(old('status') == "1") selected @endif>@lang('form.enable')</option>
                             <option value="0" @if(old('status') == "0") selected @endif>@lang('form.disable')</option>
@@ -36,21 +36,17 @@
                     </div>
                     <div class="col-xs-3">
                         @lang('form.role_name')：
-                        @php 
-                            $roles = getRoleNameArray(); 
-                        @endphp
-                        @if(!empty($roles))
-                            <select class="chosen-select width-100" id="role_id" name="role_id" data-placeholder="@lang('form.choose_one_a_role')">
-                                <option value="">  </option>
-                                @foreach($roles as $key => $value)
-                                    @if(!empty(old('role_id')) && ($key === old('role_id')))
-                                        <option value="{{ $key }}" selected>{{ $value }}</option>
-                                    @else
-                                        <option value="{{ $key }}">{{ $value }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        @endif
+                        <select class="chosen-select width-100" id="role_id" name="role_id">
+                            <option value="">@lang('form.all')</option>
+                            @forelse(getRoleNameArray() as $key => $value)
+                                @if(!empty(old('role_id')) && ($key === old('role_id')))
+                                    <option value="{{ $key }}" selected>{{ $value }}</option>
+                                @else
+                                    <option value="{{ $key }}">{{ $value }}</option>
+                                @endif
+                            @empty
+                            @endforelse
+                        </select>
                     </div>
                     <div class="col-xs-3">
                         @lang('form.updated_at')：

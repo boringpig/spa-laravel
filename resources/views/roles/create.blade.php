@@ -24,7 +24,7 @@
         <div class="col-xs-10">
             <form id="create_form" class="form-horizontal" role="form" action="{{ route('roles.store') }}" method="post">
                 {{ csrf_field() }}
-                @include('roles.partials.form', ['submit_button' => Lang::get('form.submit_create'),'data' => $data, 'menu_list' => $menu_list, 'button_list' => $button_list])
+                @include('roles.partials.form', ['submit_button' => Lang::get('form.submit_create'),'data' => $data])
             </form>
         </div>
     </div>
@@ -40,6 +40,7 @@
         selectAllAdvertisements();
         selectAllKiosks();
         selectAllKiosks();
+        selectAllActionlogs();
     });
 </script>
 @endsection

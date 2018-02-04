@@ -18,7 +18,7 @@ class RolesController extends Controller
         RoleRepository $roleRepository, 
         RoleTransformer $roleTransformer
     ) {
-        $this->middleware(['auth','role.auth']);
+        $this->middleware(['auth','role.auth','record.actionlog']);
         $this->roleRepository = $roleRepository;
         $this->roleTransformer = $roleTransformer;
     }
@@ -45,8 +45,6 @@ class RolesController extends Controller
     public function create()
     {
         return view('roles.create', [
-            'menu_list'     => config('menu'),
-            'button_list'   => config('button'),
             'data'          => $this->processPermissionList(),
         ]);
     }
@@ -92,8 +90,6 @@ class RolesController extends Controller
         $role = $this->roleTransformer->transform($role);
 
         return view('roles.edit', [
-            'menu_list'     => config('menu'),
-            'button_list'   => config('button'),
             'data'          => $this->processPermissionList(),
             'role'          => $role
         ]);
@@ -167,7 +163,7 @@ class RolesController extends Controller
             if(str_contains($route->getName(), '.')) {
                 $menu = explode('.',$route->getName())[0];
                 $button = explode('.',$route->getName())[1];
-                if(array_key_exists($menu, config('menu'))) {
+                if(array_key_exists($menu, array_except(config('menu'), 'auth'))) {
                     $data[$menu][] = $button;
                 }
             }

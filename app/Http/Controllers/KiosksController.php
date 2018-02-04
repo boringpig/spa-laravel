@@ -18,7 +18,7 @@ class KiosksController extends Controller
         StationRepository $stationRepository,
         StationTransformer $stationTransformer
     ) {
-        $this->middleware('auth');
+        $this->middleware(['auth','record.actionlog']);
         $this->middleware('role.auth', ['only' => 'index', 'edit', 'search']);
         $this->stationRepository = $stationRepository;
         $this->stationTransformer = $stationTransformer;

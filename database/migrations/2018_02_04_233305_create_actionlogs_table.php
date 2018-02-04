@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Jenssegers\Mongodb\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateArticlesTable extends Migration
+class CreateActionlogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateArticlesTable extends Migration
      */
     public function up()
     {
-        Schema::create('articles', function (Blueprint $collection) {
+        Schema::create('actionlogs', function (Blueprint $collection) {
             $collection->increments('id');
-            $collection->string('title');
-            $collection->longText('content');
-            $collection->string('language');
+            $collection->integer('user_id')->unsigned();
+            $collection->string('action');
+            $collection->string('routeName');
             $collection->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateArticlesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('articles');
+        Schema::dropIfExists('actionlogs');
     }
 }

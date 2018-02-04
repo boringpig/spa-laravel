@@ -155,3 +155,12 @@ if (!function_exists('UniqueRandomNumbersWithinRange')) {
     }
 }
 
+if (!function_exists('breakupDateRange')) {
+    function breakupDateRange($time) {
+        list($start, $end) = explode('-', $time);
+        return [
+            trim($start), trim($end)
+        ];
+    }
+}
+

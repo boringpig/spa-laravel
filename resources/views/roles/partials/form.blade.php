@@ -29,6 +29,10 @@
                 </tr>
             </thead>
             <tbody>
+                @php
+                    $menu_list = config('menu');
+                    $button_list = config('button');
+                @endphp
                 @forelse($data as $menu => $button)
                 <tr>
                     <td class="center">{{ $menu_list[$menu] }}</td>

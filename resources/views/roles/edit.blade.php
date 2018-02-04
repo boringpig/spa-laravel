@@ -26,7 +26,7 @@
                 {{ csrf_field() }}
                 {{ method_field('PATCH') }}
                 <input type="hidden" name="id" value="{{ $role['id'] }}">
-                @include('roles.partials.form', ['role' => $role, 'submit_button' => Lang::get('form.save_change'),'data' => $data, 'menu_list' => $menu_list, 'button_list' => $button_list])
+                @include('roles.partials.form', ['role' => $role, 'submit_button' => Lang::get('form.save_change'),'data' => $data])
             </form>
         </div>
     </div>
@@ -42,6 +42,7 @@
         selectAllAdvertisements();
         selectAllKiosks();
         selectAllKiosks();
+        selectAllActionlogs();
     });
 </script>
 @endsection
