@@ -26,3 +26,10 @@ if (!function_exists('getSCityArray')) {
                 })->collapse()->toArray();
     }
 }
+
+if (!function_exists('getCategoryNameArray')) {
+    function getCategoryNameArray() 
+    {
+        return \App\Entities\Category::get()->pluck('name', 'no')->toArray();
+    }
+}

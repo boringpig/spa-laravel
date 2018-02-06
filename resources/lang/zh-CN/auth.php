@@ -29,4 +29,7 @@ return [
     'back_to_login_page'    => '返回登入页面',
     'send_button'           => '寄出',
     'logout_button'         => '登出',
+    'unauthenticated'       => '授权失败，:message',
+    'lack_token_field'      => '缺少token栏位',
+    'invalid_token'         => '无效的token'
 ];

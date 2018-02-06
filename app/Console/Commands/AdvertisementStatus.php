@@ -55,7 +55,7 @@ class AdvertisementStatus extends Command
             // 啟動符合當日的廣告狀態
             $result = $this->advertisementRepository->enableStatusAtSpecificDate($date);
             if(!$result) {
-                throw new \Exception(Lang::get('message.enable_status_fail'));
+                throw new \Exception(__('message.enable_status_fail'));
             }
             $end = microtime(true);
             echo __('message.end_time', ['time' => date('Y-m-d H:i:s')])."\n";

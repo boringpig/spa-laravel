@@ -28,6 +28,16 @@ function selectAllArticles() {
         }
     });
 }
+// 標題分類資料權限全選
+function selectAllCategories() {
+    $('#categories_selectAll').click(function() {
+        if($('#categories_selectAll').prop("checked")) {
+            $("input[id='categories_permission[]']").prop('checked', true);
+        } else {
+            $("input[id='categories_permission[]']").prop('checked', false);
+        }
+    });
+}
 // 廣告資料權限全選
 function selectAllAdvertisements() {
     $('#advertisements_selectAll').click(function() {

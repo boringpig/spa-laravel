@@ -24,7 +24,7 @@ class CreateArticleRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'          => 'required|string',
+            'category_no'    => 'required|string',
             'content'        => 'required|string',
             'language'       => 'required|string|in:zh-CN,zh-TW,en',
             'broadcast_area' => 'required|array',
@@ -34,7 +34,7 @@ class CreateArticleRequest extends FormRequest
     public function attributes()
     {
         return [
-            'title'           => '标题',
+            'category_no'     => '标题分类',
             'content'         => '内容',
             'language'        => '语系',
             'broadcast_area'  => '播放地区',

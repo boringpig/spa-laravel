@@ -11,6 +11,7 @@ return [
     'roles_page'                => '角色资料',
     'article-manage'            => '文章管理',
     'articles_page'             => '文章资料',
+    'categories_page'           => '标题分类资料',
     'advertisement-manage'      => '广告管理',
     'advertisements_page'       => '广告资料',
     'kiosk-manage'              => 'KIOSK管理',

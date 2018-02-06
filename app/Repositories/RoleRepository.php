@@ -13,16 +13,6 @@ class RoleRepository extends Repository
     }
 
     /**
-     * 回傳所有使用者並以註冊日期最新排序
-     */
-    public function getAll($perPage = null)
-    {
-        $query = $this->model()->with('users')->orderBy('created_at','desc');
-
-        return is_null($perPage)? $query->get() : $query->paginate($perPage);
-    }
-
-    /**
      * 根據搜尋參數回傳符合條件的使用者
      */
     public function getByArgs($args, $perPage = null)
@@ -42,4 +32,5 @@ class RoleRepository extends Repository
 
         return is_null($perPage)? $query->get() : $query->paginate($perPage);
     }
+    
 }

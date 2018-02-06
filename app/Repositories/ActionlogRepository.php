@@ -15,7 +15,7 @@ class ActionlogRepository extends Repository
     /**
      * 回傳所有使用者並以註冊日期最新排序
      */
-    public function getAll($perPage = null)
+    public function getAll($perPage = null, $releation = [])
     {
         $query = $this->model()->with(['user'])->orderBy('created_at','desc');
 

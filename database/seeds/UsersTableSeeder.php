@@ -13,6 +13,9 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        User::truncate();
+        Role::truncate();
+
         $user1 = [
             'name' => 'admin',
             'username' => 'admin',

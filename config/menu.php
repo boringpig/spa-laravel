@@ -9,4 +9,5 @@ return [
     'kiosks'            => 'KIOSK资料',
     'settings'          => '系统参数设定',
     'actionlogs'        => '系统操作纪录',
+    'categories'        => '标题分类资料',
 ];

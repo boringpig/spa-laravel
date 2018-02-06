@@ -30,7 +30,7 @@ class RolesController extends Controller
      */
     public function index()
     {
-        $roles = $this->roleRepository->getAll(config('website.perPage'));
+        $roles = $this->roleRepository->getAll(config('website.perPage'), ['users']);
         $roles = (count($roles) > 0)? $this->roleTransformer->transform($roles)->setPath("/".Route::current()->uri()) : [];
         return view('roles.index', [
             'roles'      => $roles,

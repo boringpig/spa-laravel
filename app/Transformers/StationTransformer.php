@@ -63,7 +63,7 @@ class StationTransformer
             'station_number'        => array_get($station, 's_no', ""),
             'station_ip'            => array_get($station, "s_ip", ""),
             'station_area'          => array_get($this->scity_areas, substr($station['s_no'],0,4)."{$station['area_id']}.s_area.cn", ""),
-            'identification'        => str_random(30),
+            'identification'        => empty($station['s_no'])? '' : hash('sha256', $station->s_no),
             'version'               => array_get($this->kiosk_status, "{$station['s_no']}.kversion", ""),
             'internal_temperature'  => array_get($this->kiosk_status, "{$station['s_no']}.temperatureinsidebox", ""),
             'external_temperature'  => array_get($this->kiosk_status, "{$station['s_no']}.temperatureoutsidebox", ""),

@@ -29,6 +29,10 @@ class AdvertisementRepository extends Repository
             $condition['name'] = ['$eq' => $args['name']];
         }
 
+        if(array_key_exists('s_city', $args) && !empty($args['s_city'])) {
+            $condition['broadcast_area'] = ['$in' => [$args['s_city']]];
+        }
+
         if(array_key_exists('publish_at', $args) && !empty($args['publish_at'])) {
             $condition['publish_at'] = ['$gte' => new \MongoDB\BSON\UTCDateTime(strtotime("{$args['publish_at']} 00:00:00") * 1000),
                                         '$lte' => new \MongoDB\BSON\UTCDateTime(strtotime("{$args['publish_at']} 23:59:59") * 1000)];

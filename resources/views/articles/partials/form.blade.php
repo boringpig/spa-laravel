@@ -1,15 +1,24 @@
-<div class="form-group {{ $errors->has('title')? ' has-error' : '' }}">
-    <label for="title" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right"> <span class="text-danger">*</span> @lang('form.title') </label>
+<div class="form-group {{ $errors->has('category_no')? ' has-error' : '' }}">
+    <label for="category_no" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right"> <span class="text-danger">*</span> @lang('form.title') </label>
     <div class="col-xs-3">
         <span class="block input-icon input-icon-right">
-            <input type="text" id="title" name="title" class="width-100" value="{{ !empty($article['title'])? $article['title'] : old('title') }}">
-            @if($errors->has('title'))
+            <select class="chosen-select width-100" id="category_no" name="category_no" data-placeholder="@lang('form.choose_one_title')">
+                <option value="">  </option>
+                @foreach(getCategoryNameArray() as $key => $value)
+                    @if(!empty($article['category_no']) && $key == $article['category_no'])
+                        <option value="{{ $key }}" selected>{{ $value }}</option>
+                    @else
+                        <option value="{{ $key }}">{{ $value }}</option>
+                    @endif
+                @endforeach
+            </select>
+            @if($errors->has('category_no'))
                 <i class="ace-icon fa fa-times-circle"></i>
             @endif
         </span>
     </div>
-    @if($errors->has('title'))
-        <div class="help-block col-xs-12 col-sm-reset inline">{{ $errors->first('title') }}</div>
+    @if($errors->has('category_no'))
+        <div class="help-block col-xs-12 col-sm-reset inline">{{ $errors->first('category_no') }}</div>
     @endif
 </div>
 <div class="space-4"></div>

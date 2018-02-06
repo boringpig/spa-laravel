@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Transformers;
+namespace App\Transformers\API;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -8,11 +8,11 @@ use App\Entities\Article;
 
 class ArticleTransformer
 {
-    private $languages = [];
+    private $scity_names = [];
 
     public function __construct()
     {
-        $this->languages = getLanguageList();
+        $this->scity_names = getSCityArray(); 
     }
 
     public function transform($data)
@@ -33,15 +33,19 @@ class ArticleTransformer
 
     private function format(Article $article)
     {
+        $scitys = [];
+        if(!empty($article->broadcast_area)) {
+            foreach ($article->broadcast_area as $value) {
+                if(array_key_exists($value, $this->scity_names)) {
+                    $scitys[] = $this->scity_names[$value];
+                }
+            }
+        }
         return [
-            'id'            => array_get($article, '_id', ''),
             'title'         => empty($article->category)? '' : $article->category->name,
-            'category_no'   => array_get($article, 'category_no', ''),
             'content'       => transformContentImageSrc($article->content),
-            'broadcast_area'=> empty($article->broadcast_area)? [] : $article->broadcast_area,
+            'broadcast_area'=> $scitys,
             'language'      => array_get($article, 'language', ''),
-            'language_name' => empty($this->languages[$article->language])? '' : $this->languages[$article->language],
-            'updated_at'    => empty($article->updated_at)? '' : $article->updated_at->toDateTimeString(),
         ];
     }
 }

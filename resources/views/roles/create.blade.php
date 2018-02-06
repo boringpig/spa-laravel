@@ -41,6 +41,7 @@
         selectAllKiosks();
         selectAllKiosks();
         selectAllActionlogs();
+        selectAllCategories();
     });
 </script>
 @endsection

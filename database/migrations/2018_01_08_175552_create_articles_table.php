@@ -15,7 +15,7 @@ class CreateArticlesTable extends Migration
     {
         Schema::create('articles', function (Blueprint $collection) {
             $collection->increments('id');
-            $collection->string('title');
+            $collection->string('category_no');
             $collection->longText('content');
             $collection->string('language');
             $collection->timestamps();

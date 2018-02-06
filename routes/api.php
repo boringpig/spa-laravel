@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -12,8 +11,9 @@ use Illuminate\Http\Request;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
 
-// Route::post('advertisements/change-file/{id}', ['uses' => 'AdvertisementsController@changeFile','as' => 'advertisements.change-file']);
+
+Route::post('setting/customer', 'SettingController@getCustomerData');
+Route::post('setting/kiosk', 'SettingController@getKioskFreetime');
+Route::post('advertisements', 'AdvertisementsController@index');
+Route::post('articles', 'ArticlesController@index');

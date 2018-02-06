@@ -33,7 +33,12 @@
                     </div>
                     <div class="col-xs-3">
                         @lang('form.title')：
-                        <input type="text" class="form-control" placeholder="@lang('form.title')" id="title" name="title" value="{{ old('title') }}">
+                        <select class="chosen-select width-100" id="category_no" name="category_no">
+                            <option value="">@lang('form.all')</option>
+                            @foreach(getCategoryNameArray() as $key => $value)
+                                <option value="{{ $key }}" @if(old('category_no') == $key) selected @endif>{{ $value }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="col-xs-3">
                         @lang('form.updated_at')：

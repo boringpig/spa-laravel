@@ -93,7 +93,7 @@
 </li>
 @endif
 
-@if(in_array('articles', $role_menu))
+@if(in_array('articles', $role_menu) || in_array('categories', $role_menu))
 <li class="{{ (\Request::segment(1) == 'article-manage')? 'open' : '' }}">
 	<a href="" class="dropdown-toggle">
 		<i class="menu-icon fa fa-book"></i>
@@ -108,6 +108,16 @@
 			<a href="{{ route('articles.index') }}" >
 				<i class="menu-icon fa fa-caret-right"></i>
 				@lang('pageTitle.articles_page')
+			</a>
+
+			<b class="arrow"></b>
+		</li>
+		@endif
+		@if(in_array('categories', $role_menu))
+		<li class="{{ (\Request::segment(2) == 'categories')? 'active' : '' }}">
+			<a href="{{ route('categories.index') }}" >
+				<i class="menu-icon fa fa-caret-right"></i>
+				@lang('pageTitle.categories_page')
 			</a>
 
 			<b class="arrow"></b>

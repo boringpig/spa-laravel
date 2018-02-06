@@ -30,7 +30,7 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        $articles = $this->articleRepository->getAll(config('website.perPage'));
+        $articles = $this->articleRepository->getAll(config('website.perPage'), ['category']);
         $articles = (count($articles) > 0)? $this->articleTransformer->transform($articles)->setPath("/".Route::current()->uri()) : [];
         return view('articles.index', [
             'articles'   => $articles,
@@ -56,13 +56,13 @@ class ArticlesController extends Controller
     public function store(CreateArticleRequest $request)
     {
         // 檢查是否有相同的文章標題、語系
-        if($this->articleRepository->checkSameArticle($request->title, $request->language)) {
+        if($this->articleRepository->checkSameArticle($request->category_no, $request->language)) {
             session()->flash('error', __('form.exists_same_lang_article_title'));            
             return redirect()->back();
         }
 
         $args = [
-            'title'          => $request->title,
+            'category_no'    => $request->category_no,
             'content'        => processContent($request->content),
             'language'       => $request->language,
             'broadcast_area' => $request->broadcast_area,
@@ -117,15 +117,17 @@ class ArticlesController extends Controller
         }
 
         // 檢查是否有相同的文章標題、語系，如果與本身文章相符就略過檢查
-        if( ($article->title != $request->title) 
-            && ($article->language != $request->language)
-            && $this->articleRepository->checkSameArticle($request->title, $request->language, $article)
+        if(($article->category_no != $request->category_no) || 
+           ($article->language != $request->language)
         ) {
-            session()->flash('error', __('form.exists_same_lang_article_title'));            
-            return redirect()->back();
-        }
+            if($this->articleRepository->checkSameArticle($request->category_no, $request->language)) {
+                session()->flash('error', __('form.exists_same_lang_article_title'));            
+                return redirect()->back();
+            }
+        } 
+        
         $args = [
-            'title'          => $request->title,
+            'category_no'    => $request->category_no,
             'content'        => processContent($request->content),
             'language'       => $request->language,
             'broadcast_area' => $request->broadcast_area,

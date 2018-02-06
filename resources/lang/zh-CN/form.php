@@ -46,8 +46,9 @@ return [
     'choose_one_language'               => '选择一个语系',
     'choose_one_area'                   => '选择一个地区',
     'choose_one_menu'                   => '选择一个选单',
+    'choose_one_title'                  => '选择一个标题分类',
     'language'                          => '语系',
-    'title'                             => '标题',
+    'title'                             => '标题分类',
     'content'                           => '内容',
     'exists_same_lang_article_title'    => '已存在相同語系的標題',
     'advertisement_name'                => '广告名称',
@@ -136,4 +137,6 @@ return [
     'operate_user'                      => '操作使用者',
     'operate_menu'                      => '操作选单',
     'operate_event'                     => '操作事件',
+    'title_no'                          => '标题编号',
+    'title_name'                        => '标题名称',
 ];

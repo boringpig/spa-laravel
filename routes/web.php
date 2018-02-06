@@ -29,6 +29,7 @@ Route::group(['prefix' => 'user-manage'], function() {
 Route::group(['prefix' => 'article-manage'], function() {
     Route::get('articles/search', ['uses' => 'ArticlesController@search','as' => 'articles.search']);
     Route::resource('articles', 'ArticlesController');
+    Route::resource('categories', 'CategoriesController');
 }); 
 
 Route::group(['prefix' => 'advertisement-manage'], function() {
@@ -46,7 +47,6 @@ Route::group(['prefix' => 'kiosk-manage'], function() {
     Route::get('kiosks/calculate-station', ['uses' => 'KiosksController@calculateStation', 'as' => 'kiosks.calculate-station']);
     Route::resource('kiosks', 'KiosksController')->only(['index','edit','update']);
 });
-
 
 Route::group(['prefix' => 'setting-manage'], function() {
     Route::get('settings', ['uses' => 'SettingController@index', 'as' => 'settings.index']);

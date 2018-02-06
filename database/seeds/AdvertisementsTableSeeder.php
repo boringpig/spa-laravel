@@ -12,6 +12,8 @@ class AdvertisementsTableSeeder extends Seeder
      */
     public function run()
     {
+        Advertisement::truncate();
+
         $advertisement = [
             'name'          => '微笑表情包',
             'round_time'    => (int) 10,
