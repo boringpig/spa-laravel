@@ -46,6 +46,7 @@ Route::group(['prefix' => 'kiosk-manage'], function() {
     Route::post('kiosks/control-power/{station}', ['uses' => 'KiosksController@controlPower', 'as' => 'kiosks.control-power']);
     Route::get('kiosks/calculate-station', ['uses' => 'KiosksController@calculateStation', 'as' => 'kiosks.calculate-station']);
     Route::resource('kiosks', 'KiosksController')->only(['index','edit','update']);
+    Route::resource('areagroups', 'AreaGroupsController');
 });
 
 Route::group(['prefix' => 'setting-manage'], function() {

@@ -17,3 +17,4 @@ Route::post('setting/customer', 'SettingController@getCustomerData');
 Route::post('setting/kiosk', 'SettingController@getKioskFreetime');
 Route::post('advertisements', 'AdvertisementsController@index');
 Route::post('articles', 'ArticlesController@index');
+Route::post('kiosks/areagroup', 'AreaGroupsController@index');

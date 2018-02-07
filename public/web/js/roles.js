@@ -58,6 +58,16 @@ function selectAllKiosks() {
         }
     });
 }
+// KIOSK地區群組權限全選
+function selectAllAreaGroups() {
+    $('#areagroups_selectAll').click(function () {
+        if ($('#areagroups_selectAll').prop("checked")) {
+            $("input[id='areagroups_permission[]']").prop('checked', true);
+        } else {
+            $("input[id='areagroups_permission[]']").prop('checked', false);
+        }
+    });
+} 
 // 系統參數設定權限全選
 function selectAllKiosks() {
     $('#settings_selectAll').click(function() {

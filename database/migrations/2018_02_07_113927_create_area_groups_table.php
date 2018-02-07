@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Jenssegers\Mongodb\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateKioskTokensTable extends Migration
+class CreateAreaGroupsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateKioskTokensTable extends Migration
      */
     public function up()
     {
-        Schema::create('kiosk_tokens', function (Blueprint $collection) {
+        Schema::create('area_groups', function (Blueprint $collection) {
             $collection->increments('id');
-            $collection->string('station_no');
-            $collection->string('token');
+            $collection->string('parent_area');
+            $collection->array('child_area');
             $collection->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateKioskTokensTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kiosk_tokens');
+        Schema::dropIfExists('area_groups');
     }
 }

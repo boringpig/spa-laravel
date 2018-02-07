@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         'App\Console\Commands\AdvertisementStatus',
+        'App\Console\Commands\HashStation',
     ];
 
     /**
@@ -30,6 +31,13 @@ class Kernel extends ConsoleKernel
                  ->withoutOverlapping()
                  ->after(function() {
                     Log::info('AdvertisementStatus:switch 每天凌晨12点将预发布的广告啟动状态');
+                 });
+
+        $schedule->command('hash:station')
+                 ->everyFiveMinutes()
+                 ->withoutOverlapping()
+                 ->after(function() {
+                    Log::info('hash:station 每五分鐘取得cps的場站代號產生token');
                  });
     }
 

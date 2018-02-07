@@ -2,7 +2,7 @@
 
 @section('breadcrumb')
 <li>
-    <i class="ace-icon fa fa-book book-icon"></i>
+    <i class="ace-icon fa fa-desktop"></i>
     @lang('pageTitle.kiosk-manage')
 </li>
 <li>

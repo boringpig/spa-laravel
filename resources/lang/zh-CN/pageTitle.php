@@ -16,6 +16,7 @@ return [
     'advertisements_page'       => '广告资料',
     'kiosk-manage'              => 'KIOSK管理',
     'kiosks_page'               => 'KIOSK资料',
+    'kiosks_areagroup_page'     => 'KIOSK地区群组',
     'setting-manage'            => '系统管理',
     'settings_page'             => '系统参数设定',
     'actionlogs_page'           => '系统操作纪录',

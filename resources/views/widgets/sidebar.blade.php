@@ -63,7 +63,7 @@
 </li>
 @endif
 
-@if(in_array('kiosks', $role_menu))
+@if(in_array('kiosks', $role_menu) || in_array('areagroups', $role_menu))
 <li class="{{ (\Request::segment(1) == 'kiosk-manage')? 'open' : '' }}">
 	<a href="#" class="dropdown-toggle">
 		<i class="menu-icon fa fa-desktop"></i>
@@ -73,6 +73,7 @@
 
 	<b class="arrow"></b>
 	<ul class="submenu">
+		@if(in_array('kiosks', $role_menu))
 		<li class="{{ (\Request::segment(2) == 'kiosks')? 'active' : '' }}">
 			<a href="{{ route('kiosks.index') }}">
 				<i class="menu-icon fa fa-caret-right"></i>
@@ -81,14 +82,17 @@
 
 			<b class="arrow"></b>
 		</li>
-		<li class="">
-			<a href="#" >
+		@endif
+		@if(in_array('areagroups', $role_menu))
+		<li class="{{ (\Request::segment(2) == 'areagroups')? 'active' : '' }}">
+			<a href="{{ route('areagroups.index') }}">
 				<i class="menu-icon fa fa-caret-right"></i>
-				KIOSK地区群组
+				@lang('pageTitle.kiosks_areagroup_page')
 			</a>
 
 			<b class="arrow"></b>
 		</li>
+		@endif
 	</ul>
 </li>
 @endif

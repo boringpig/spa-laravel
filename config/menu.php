@@ -7,6 +7,7 @@ return [
     'articles'          => '文章资料',
     'advertisements'    => '广告资料',
     'kiosks'            => 'KIOSK资料',
+    'areagroups'        => 'KIOSK地区群组',
     'settings'          => '系统参数设定',
     'actionlogs'        => '系统操作纪录',
     'categories'        => '标题分类资料',

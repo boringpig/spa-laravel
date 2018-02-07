@@ -3,24 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\CategoryRepository;
-use App\Transformers\CategoryTransformer;
-use App\Http\Requests\Category\CreateCategoryRequest;
-use App\Http\Requests\Category\EditCategoryRequest;
+use App\Repositories\AreaGroupRepository;
+use App\Transformers\AreaGroupTransformer;
+use App\Http\Requests\AreaGroup\CreateAreaGroupRequest;
+use App\Http\Requests\AreaGroup\EditAreaGroupRequest;
 use Illuminate\Support\Facades\Route;
 
-class CategoriesController extends Controller
+class AreaGroupsController extends Controller
 {
-    protected $categoryRepository;
-    protected $categoryTransformer;
+    protected $areaGroupRepository;
+    protected $areaGroupTransformer;
 
     public function __construct(
-        CategoryRepository $categoryRepository,
-        CategoryTransformer $categoryTransformer
+        AreaGroupRepository $areaGroupRepository,
+        AreaGroupTransformer $areaGroupTransformer
     ) {
         $this->middleware(['auth','role.auth','record.actionlog']);
-        $this->categoryRepository = $categoryRepository;
-        $this->categoryTransformer = $categoryTransformer;
+        $this->areaGroupRepository = $areaGroupRepository;
+        $this->areaGroupTransformer = $areaGroupTransformer;
     }
 
     /**
@@ -30,10 +30,10 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = $this->categoryRepository->getAll(config('website.perPage'));
-        $categories = (count($categories) > 0)? $this->categoryTransformer->transform($categories)->setPath("/".Route::current()->uri()) : [];
-        return view('categories.index', [
-            'categories' => $categories,
+        $groups = $this->areaGroupRepository->getAll(config('website.perPage'));
+        $groups = (count($groups) > 0)? $this->areaGroupTransformer->transform($groups)->setPath("/".Route::current()->uri()) : [];
+        return view('areagroups.index', [
+            'groups' => $groups,
         ]);
     }
 
@@ -44,7 +44,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {   
-        return view('categories.create');
+        return view('areagroups.create');
     }
 
     /**
@@ -53,22 +53,22 @@ class CategoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateCategoryRequest $request)
+    public function store(CreateAreaGroupRequest $request)
     {
         $args = [
-            'no'    => $request->no,
-            'name'  => $request->name,
+            'parent_area' => $request->parent_area,
+            'child_area'  => $request->child_area,
         ];
 
-        $category = $this->categoryRepository->create($args);
+        $group = $this->areaGroupRepository->create($args);
         
-        if(is_null($category)) {
+        if(is_null($group)) {
             session()->flash('error', __('form.created_fail'));            
             return redirect()->back();
         }
         
         session()->flash('success', __('form.created_success'));
-        return redirect()->route('categories.index');
+        return redirect()->route('areagroups.index');
     }
 
     /**
@@ -79,17 +79,17 @@ class CategoriesController extends Controller
      */
     public function edit($id)
     {
-        $category = $this->categoryRepository->findOneById($id);
+        $group = $this->areaGroupRepository->findOneById($id);
 
-        if(is_null($category)) {
+        if(is_null($group)) {
             session()->flash('error', __('form.no_data'));
             return redirect()->back();
         }
 
-        $category = $this->categoryTransformer->transform($category);
+        $group = $this->areaGroupTransformer->transform($group);
 
-        return view('categories.edit', [
-            'category' => $category,
+        return view('areagroups.edit', [
+            'group' => $group,
         ]);
     }
 
@@ -100,22 +100,22 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(EditCategoryRequest $request, $id)
+    public function update(EditAreaGroupRequest $request, $id)
     {
-        $category = $this->categoryRepository->findOneById($id);
+        $group = $this->areaGroupRepository->findOneById($id);
 
-        if(is_null($category)) {
+        if(is_null($group)) {
             session()->flash('error', __('form.no_data'));
             return redirect()->back();
         }
 
         $args = [
-            'no'    => $request->no,
-            'name'  => $request->name,
+            'parent_area' => $request->parent_area,
+            'child_area'  => $request->child_area,
         ];
-        if($this->categoryRepository->update($id, $args)) {
+        if($this->areaGroupRepository->update($id, $args)) {
             session()->flash('success', __('form.updated_success'));
-            return redirect()->route('categories.index');
+            return redirect()->route('areagroups.index');
         }
 
         session()->flash('error', __('form.updated_fail'));
@@ -131,14 +131,14 @@ class CategoriesController extends Controller
     public function destroy($id)
     {
         try {
-            $category = $this->categoryRepository->findOneById($id);
-            if(is_null($category)) {
+            $group = $this->areaGroupRepository->findOneById($id);
+            if(is_null($group)) {
                 throw new \Exception(__('message.no_data'));
             }
-            if(! $this->categoryRepository->delete($id)) {
+            if(! $this->areaGroupRepository->delete($id)) {
                 throw new \Exception(__('message.delete_fail'));
             }
-            return response()->json(successOutput($category), 200);
+            return response()->json(successOutput($group), 200);
         } catch (\Exception $e) {
             return response()->json(errorOutput($e->getMessage()), 500);
         }

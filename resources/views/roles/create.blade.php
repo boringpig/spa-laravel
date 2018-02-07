@@ -42,6 +42,7 @@
         selectAllKiosks();
         selectAllActionlogs();
         selectAllCategories();
+        selectAllAreaGroups();
     });
 </script>
 @endsection

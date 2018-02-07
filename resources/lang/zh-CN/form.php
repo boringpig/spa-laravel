@@ -139,4 +139,5 @@ return [
     'operate_event'                     => '操作事件',
     'title_no'                          => '标题编号',
     'title_name'                        => '标题名称',
+    'group'                             => '群组',
 ];

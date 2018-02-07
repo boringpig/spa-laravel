@@ -20,16 +20,16 @@ class SettingTransformer
 
     private function customerFormat(Setting $setting)
     {
-        return [
+        return [[
             'customer_service_phone'    => array_get($setting, 'customer_service_phone', ''),
             'customer_service_email'    => array_get($setting, 'customer_service_email', ''),
-        ];
+        ]];
     }
 
     private function kioskFormat(Setting $setting)
     {
-        return [
+        return [[
             'kiosk_freetime'    => array_get($setting, 'kiosk_freetime', ''),
-        ];
+        ]];
     }
 }

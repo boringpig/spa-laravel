@@ -22,6 +22,7 @@ return [
     'are_you_sure_delete_article'       => '确定要删除此文章吗？',
     'are_you_sure_delete_advertisement' => '确定要删除此广告吗？',
     'are_you_sure_delete_category'      => '确定要删除此标题分类吗？',
+    'are_you_sure_delete_area_group'    => '确定要删除此地区群组吗？',
     'the_account_no_authority'          => '此帐号無权限',
     'the_page_is_forbidden_to_enter'    => '该页面禁止进入',
     'enable_status_success'             => '啟动状态成功',
