@@ -65,22 +65,22 @@
             </form>
             <div class="space-10"></div>
             <!-- content -->
-            <table id="simple-table" class="table table-bordered table-hover">
+            <table id="simple-table" class="table table-bordered table-hover table-center">
                 <thead>
                     <tr>
-                        <th class="center">@lang('form.language')</th>
-                        <th class="center">@lang('form.title')</th>
-                        <th class="center">@lang('form.broadcast_area')</th>
-                        <th class="center">@lang('form.updated_at')</th>
-                        <th class="center"></th>
+                        <th>@lang('form.language')</th>
+                        <th>@lang('form.title')</th>
+                        <th>@lang('form.broadcast_area')</th>
+                        <th>@lang('form.updated_at')</th>
+                        <th>@lang('form.action')</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($articles as $article)
                         <tr>
-                            <td class="center">{{ $article['language_name'] }}</td>
-                            <td class="center">{{ $article['title'] }}</td>
-                            <td class="center">
+                            <td>{{ $article['language_name'] }}</td>
+                            <td>{{ $article['title'] }}</td>
+                            <td>
                                 @php
                                     $scitys = getSCityArray();
                                 @endphp
@@ -89,7 +89,7 @@
                                 @empty
                                 @endforelse
                             </td>
-                            <td class="center">{{ $article['updated_at'] }}</td>
+                            <td>{{ $article['updated_at'] }}</td>
                             <td>
                                 <div class="action-buttons">
                                     @if(in_array('update', $role_button))
@@ -107,7 +107,7 @@
 						</tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="text-center">@lang('form.no_data')</td>
+                            <td colspan="5">@lang('form.no_data')</td>
                         </tr>
                     @endforelse
                 </tbody>

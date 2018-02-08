@@ -30,21 +30,21 @@
             </div>
             <div class="space-10"></div>
             <!-- content -->
-            <table id="simple-table" class="table table-bordered table-hover">
+            <table id="simple-table" class="table table-bordered table-hover table-center">
                 <thead>
                     <tr>
-                        <th class="center">@lang('form.title_no')</th>
-                        <th class="center">@lang('form.title_name')</th>
-                        <th class="center">@lang('form.updated_at')</th>
-                        <th class="center"></th>
+                        <th>@lang('form.title_no')</th>
+                        <th>@lang('form.title_name')</th>
+                        <th>@lang('form.updated_at')</th>
+                        <th>@lang('form.action')</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($categories as $category)
                         <tr>
-                            <td class="center">{{ $category['no'] }}</td>
-                            <td class="center">{{ $category['name'] }}</td>
-                            <td class="center">{{ $category['updated_at'] }}</td>
+                            <td>{{ $category['no'] }}</td>
+                            <td>{{ $category['name'] }}</td>
+                            <td>{{ $category['updated_at'] }}</td>
                             <td>
                                 <div class="action-buttons">
                                     @if(in_array('update', $role_button))
@@ -62,7 +62,7 @@
 						</tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="text-center">@lang('form.no_data')</td>
+                            <td colspan="5">@lang('form.no_data')</td>
                         </tr>
                     @endforelse
                 </tbody>

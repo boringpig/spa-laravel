@@ -71,25 +71,25 @@
             </form>
             <div class="space-10"></div>
             <!-- content -->
-            <table id="simple-table" class="table table-bordered table-hover">
+            <table id="simple-table" class="table table-bordered table-hover table-center">
                 <thead>
                     <tr>
-                        <th class="center" width="5%">@lang('form.status')</th>
-                        <th class="center" width="5%">@lang('form.preview_image')</th>
-                        <th class="center" width="12%">@lang('form.advertisement_name')</th>
-                        <th class="center" width="5%">@lang('form.round_time')</th>
-                        <th class="center" width="17%">@lang('form.round_weeks')</th>
-                        <th class="center" width="12%">@lang('form.broadcast_area')</th>
-                        <th class="center" width="12%">@lang('form.broadcast_time')</th>
-                        <th class="center" width="10%">@lang('form.publish_at')</th>
-                        <th class="center" width="16%">@lang('form.updated_at')</th>
-                        <th class="center" width="10%"></th>
+                        <th width="5%">@lang('form.status')</th>
+                        <th width="5%">@lang('form.preview_image')</th>
+                        <th width="12%">@lang('form.advertisement_name')</th>
+                        <th width="5%">@lang('form.round_time')</th>
+                        <th width="17%">@lang('form.round_weeks')</th>
+                        <th width="12%">@lang('form.broadcast_area')</th>
+                        <th width="12%">@lang('form.broadcast_time')</th>
+                        <th width="10%">@lang('form.publish_at')</th>
+                        <th width="16%">@lang('form.updated_at')</th>
+                        <th width="10%">@lang('form.action')</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($advertisements as $advertisement)
                         <tr>
-                            <td class="center">
+                            <td>
                                 <label>
                                 @if($advertisement['status'] == 1)
                                     <input name="switch-status" class="ace ace-switch ace-switch-4 btn-empty" type="checkbox" data-id="{{ $advertisement['id'] }}" value="1" checked>
@@ -99,7 +99,7 @@
                                     <span class="lbl"></span>
                                 </label>
                             </td>
-                            <td class="center">
+                            <td>
                                 <ul class="ace-thumbnails clearfix">
                                     <li>
                                         <a href="{{ $advertisement['path'] }}" data-rel="colorbox" class="cboxElement">
@@ -112,14 +112,14 @@
                                 </ul>
                                 
                             </td>
-                            <td class="center">{{ $advertisement['name'] }}</td>
-                            <td class="center">{{ $advertisement['round_time'] }}</td>
-                            <td class="center">
+                            <td>{{ $advertisement['name'] }}</td>
+                            <td>{{ $advertisement['round_time'] }}</td>
+                            <td>
                                 @foreach($advertisement['weeks'] as $value)
                                     <span class="badge badge-success">{{ array_get(config('weeks'), "cn.{$value}", "") }}</span>
                                 @endforeach
                             </td>
-                            <td class="center">
+                            <td>
                                 @php 
                                     $scitys = getSCityArray();
                                 @endphp
@@ -127,9 +127,9 @@
                                     <span class="label label-grey middle">{{ array_get($scitys, $value, "") }}</span>
                                 @endforeach
                             </td>                            
-                            <td class="center">{{ $advertisement['broadcast_time'] }}</td>
-                            <td class="center">{{ $advertisement['publish_at'] }}</td>
-                            <td class="center">{{ $advertisement['updated_at'] }}</td>
+                            <td>{{ $advertisement['broadcast_time'] }}</td>
+                            <td>{{ $advertisement['publish_at'] }}</td>
+                            <td>{{ $advertisement['updated_at'] }}</td>
                             <td>
                                 <div class="action-buttons">
                                     @if(in_array('update', $role_button))
@@ -147,7 +147,7 @@
 						</tr>
                     @empty
                         <tr>
-                            <td colspan="10" class="text-center">@lang('form.no_data')</td>
+                            <td colspan="10">@lang('form.no_data')</td>
                         </tr>
                     @endforelse
                 </tbody>

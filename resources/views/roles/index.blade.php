@@ -50,21 +50,21 @@
             </form>
             <div class="space-10"></div>
             <!-- content -->
-            <table id="simple-table" class="table table-bordered table-hover">
+            <table id="simple-table" class="table table-bordered table-hover table-center">
                 <thead>
                     <tr>
-                        <th class="text-center">@lang('form.role_name')</th>
-                        <th class="text-center">@lang('form.using_username')</th>
-                        <th class="text-center">@lang('form.updated_at')</th>
-                        <th class="text-center"></th>
+                        <th>@lang('form.role_name')</th>
+                        <th>@lang('form.using_username')</th>
+                        <th>@lang('form.updated_at')</th>
+                        <th>@lang('form.action')</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($roles as $role)
                         <tr>
-                            <td class="text-center">{{ $role['name'] }}</td>
-                            <td class="text-center">{{ empty($role['usernames'])? "" : implode('、', $role['usernames']) }}</td>
-                            <td class="text-center">{{ $role['updated_at'] }}</td>
+                            <td>{{ $role['name'] }}</td>
+                            <td>{{ empty($role['usernames'])? "" : implode('、', $role['usernames']) }}</td>
+                            <td>{{ $role['updated_at'] }}</td>
                             <td>
                                 <div class="action-buttons">
                                     @if(in_array('update', $role_button))
@@ -82,7 +82,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4" class="text-center">@lang('form.no_data')</td>
+                            <td colspan="4">@lang('form.no_data')</td>
                         </tr>
                     @endforelse
                 </tbody>

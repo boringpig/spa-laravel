@@ -160,7 +160,9 @@ class AdvertisementsController extends Controller
             if(! $this->advertisementRepository->delete($id)) {
                 throw new \Exception(__('message.delete_fail'));
             }
-            unlink(public_path($advertisement['path']));
+            if(file_exists(public_path($advertisement['path']))) {
+                unlink(public_path($advertisement['path']));
+            }
             return response()->json(successOutput($advertisement), 200);
         } catch (\Exception $e) {
             return response()->json(errorOutput($e->getMessage()), 500);

@@ -12,6 +12,7 @@
 		<link rel="stylesheet" href="{{ asset('assets/css/ace.min.css') }}" class="ace-main-stylesheet" id="main-ace-style" />
 		<link rel="stylesheet" href="{{ asset('assets/css/ace-skins.min.css') }}" />
 		<link rel="stylesheet" href="{{ asset('assets/css/ace-rtl.min.css') }}" />
+		<link rel="stylesheet" href="{{ asset('css/common.css') }}" />
 	</head>
 
 	<body class="skin-1">

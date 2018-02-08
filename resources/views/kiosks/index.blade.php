@@ -47,23 +47,23 @@
             </form>
             <div class="space-10"></div>
             <!-- content -->
-            <table id="simple-table" class="table table-bordered table-hover">
+            <table id="simple-table" class="table table-bordered table-hover table-center">
                 <thead>
                     <tr>
                         <th class="detail-col">@lang('form.details')</th>
-                        <th class="center">@lang('form.station')</th>
-                        <th class="center">@lang('form.area')</th>
-                        <th class="center">@lang('form.ip_address')</th>
-                        <th class="center">@lang('form.kiosk_identification')</th>
-                        <th class="center">@lang('form.version')</th>
-                        <th class="center">@lang('form.connection_status')</th>
-                        <th class="center"></th>
+                        <th>@lang('form.station')</th>
+                        <th>@lang('form.area')</th>
+                        <th>@lang('form.ip_address')</th>
+                        <th>@lang('form.kiosk_identification')</th>
+                        <th>@lang('form.version')</th>
+                        <th>@lang('form.connection_status')</th>
+                        <th>@lang('form.action')</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($kiosks as $kiosk)
                         <tr>
-                            <td class="center">
+                            <td>
                                 <div class="action-buttons">
                                     <a href="#" class="green bigger-140 show-details-btn" title="@lang('form.details')">
                                         <i class="ace-icon fa fa-angle-double-down"></i>
@@ -71,12 +71,12 @@
                                     </a>
                                 </div>
                             </td>
-                            <td class="center">{{ $kiosk['station_number'] }}&nbsp;{{ $kiosk['station_name'] }}</td>
-                            <td class="center">{{ $kiosk['station_area'] }}</td>
-                            <td class="center">{{ $kiosk['station_ip'] }}</td>
-                            <td class="center">{{ $kiosk['identification'] }}</td>
-                            <td class="center">{{ $kiosk['version'] }}</td>
-                            <td class="center">
+                            <td>{{ $kiosk['station_number'] }}&nbsp;{{ $kiosk['station_name'] }}</td>
+                            <td>{{ $kiosk['station_area'] }}</td>
+                            <td>{{ $kiosk['station_ip'] }}</td>
+                            <td>{{ $kiosk['identification'] }}</td>
+                            <td>{{ $kiosk['version'] }}</td>
+                            <td>
                                 @if($kiosk['connection_status'] === 1)
                                     <span class="badge badge-success" style="border-radius:50%">&nbsp;</span>
                                 @elseif($kiosk['connection_status'] === 0)
@@ -173,7 +173,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="10" class="text-center">@lang('form.no_data')</td>
+                            <td colspan="10">@lang('form.no_data')</td>
                         </tr>
                     @endforelse
                 </tbody>

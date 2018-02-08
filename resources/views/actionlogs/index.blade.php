@@ -80,28 +80,28 @@
             </form>
             <div class="space-10"></div>
             <!-- content -->
-            <table id="simple-table" class="table table-bordered table-hover">
+            <table id="simple-table" class="table table-bordered table-hover table-center">
                 <thead>
                     <tr>
-                        <th class="center">@lang('form.operate_time')</th>
-                        <th class="center">@lang('form.operate_role')</th>
-                        <th class="center">@lang('form.operate_user')</th>
-                        <th class="center">@lang('form.operate_menu')</th>
-                        <th class="center">@lang('form.operate_event')</th>
+                        <th>@lang('form.operate_time')</th>
+                        <th>@lang('form.operate_role')</th>
+                        <th>@lang('form.operate_user')</th>
+                        <th>@lang('form.operate_menu')</th>
+                        <th>@lang('form.operate_event')</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($actionlogs as $actionlog)
                         <tr>
-                            <td class="center">{{ $actionlog['created_at'] }}</td>
-                            <td class="center">{{ $actionlog['role_name'] }}</td>
-                            <td class="center">{{ $actionlog['name'] }}</td>
-                            <td class="center">{{ $actionlog['menu'] }}</td>
-                            <td class="center">{{ $actionlog['action'] }}</td>
+                            <td>{{ $actionlog['created_at'] }}</td>
+                            <td>{{ $actionlog['role_name'] }}</td>
+                            <td>{{ $actionlog['name'] }}</td>
+                            <td>{{ $actionlog['menu'] }}</td>
+                            <td>{{ $actionlog['action'] }}</td>
 						</tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="text-center">@lang('form.no_data')</td>
+                            <td colspan="5">@lang('form.no_data')</td>
                         </tr>
                     @endforelse
                 </tbody>

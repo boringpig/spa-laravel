@@ -30,19 +30,19 @@
             </div>
             <div class="space-10"></div>
             <!-- content -->
-            <table id="simple-table" class="table table-bordered table-hover">
+            <table id="simple-table" class="table table-bordered table-hover table-center">
                 <thead>
                     <tr>
-                        <th class="center">@lang('form.area')</th>
-                        <th class="center">@lang('form.group')</th>
-                        <th class="center"></th>
+                        <th>@lang('form.area')</th>
+                        <th>@lang('form.group')</th>
+                        <th>@lang('form.action')</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($groups as $group)
                         <tr>
-                            <td class="center">{{ $group['parent_area_name'] }}</td>
-                            <td class="center">{{ $group['child_area_name'] }}</td>
+                            <td>{{ $group['parent_area_name'] }}</td>
+                            <td>{{ $group['child_area_name'] }}</td>
                             <td>
                                 <div class="action-buttons">
                                     @if(in_array('update', $role_button))
@@ -60,7 +60,7 @@
 						</tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="text-center">@lang('form.no_data')</td>
+                            <td colspan="5">@lang('form.no_data')</td>
                         </tr>
                     @endforelse
                 </tbody>

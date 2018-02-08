@@ -148,4 +148,5 @@ return [
     'area_group'                        => '地区群组',
     'article_title'                     => '文章标题',
     'station_quantity'                  => '场站数量',
+    'action'                            => '动作',
 ];

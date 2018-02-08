@@ -76,35 +76,35 @@
             </form>
             <div class="space-10"></div>
             <!-- content -->
-            <table id="simple-table" class="table table-bordered table-hover">
+            <table id="simple-table" class="table table-bordered table-hover table-center">
                 <thead>
                     <tr>
-                        <th class="center">@lang('form.status')</th>
-                        <th class="center">@lang('form.username')</th>
-                        <th class="center">@lang('form.name')</th>
-                        <th class="center">@lang('form.role_name')</th>
-                        <th class="center">@lang('form.email')</th>
-                        <th class="center">@lang('form.phone')</th>
-                        <th class="center">@lang('form.updated_at')</th>
-                        <th class="center"></th>
+                        <th>@lang('form.status')</th>
+                        <th>@lang('form.username')</th>
+                        <th>@lang('form.name')</th>
+                        <th>@lang('form.role_name')</th>
+                        <th>@lang('form.email')</th>
+                        <th>@lang('form.phone')</th>
+                        <th>@lang('form.updated_at')</th>
+                        <th>@lang('form.action')</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($users as $user)
                         <tr>
-                            <td class="center">
+                            <td>
                                 @if($user['status'] == 1)
                                     <span class="label label-success label-white middle">@lang('form.enable')</span>    
                                 @else
                                     <span class="label label-danger label-white middle">@lang('form.disable')</span>
                                 @endif
                             </td>
-                            <td class="center">{{ $user['username'] }}</td>
-                            <td class="center">{{ $user['name'] }}</td>
-                            <td class="center">{{ $user['role_name'] }}</td>
-                            <td class="center">{{ $user['email'] }}</td>
-                            <td class="center">{{ $user['phone'] }}</td>
-                            <td class="center">{{ $user['updated_at'] }}</td>
+                            <td>{{ $user['username'] }}</td>
+                            <td>{{ $user['name'] }}</td>
+                            <td>{{ $user['role_name'] }}</td>
+                            <td>{{ $user['email'] }}</td>
+                            <td>{{ $user['phone'] }}</td>
+                            <td>{{ $user['updated_at'] }}</td>
                             <td>
                                 <div class="action-buttons">
                                     @if(in_array('update', $role_button))
@@ -122,7 +122,7 @@
 						</tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="text-center">@lang('form.no_data')</td>
+                            <td colspan="7">@lang('form.no_data')</td>
                         </tr>
                     @endforelse
                 </tbody>

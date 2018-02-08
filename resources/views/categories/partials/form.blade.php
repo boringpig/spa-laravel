@@ -34,7 +34,7 @@
             <i class="ace-icon fa fa-floppy-o bigger-120 blue"></i>
             {{ $submit_button }}
         </button>
-        <a href="{{ route('articles.index') }}" class="btn btn-white btn-grey btn-bold">
+        <a href="{{ route('categories.index') }}" class="btn btn-white btn-grey btn-bold">
             <i class="ace-icon fa fa-undo bigger-110"></i>
             @lang('form.cancel_back')
         </a>
