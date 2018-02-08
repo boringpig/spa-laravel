@@ -2,7 +2,7 @@
 
 @section('breadcrumb')
 <li>
-    <i class="ace-icon fa fa-book book-icon"></i>
+    <i class="ace-icon fa fa-picture-o"></i>
     @lang('pageTitle.advertisement-manage')
 </li>
 <li>

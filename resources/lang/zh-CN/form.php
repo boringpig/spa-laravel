@@ -149,4 +149,5 @@ return [
     'article_title'                     => '文章标题',
     'station_quantity'                  => '场站数量',
     'action'                            => '动作',
+    'export'                            => '汇出',
 ];

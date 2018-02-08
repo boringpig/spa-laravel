@@ -20,7 +20,7 @@
     <div class="row">
         <div class="col-xs-12">
             <!-- form -->
-            <form action="{{ route('kiosks.search') }}" method="get">
+            <form id="search-form" method="get">
                 <div class="row">
                     <div class="col-xs-3">
                         @lang('form.station')：
@@ -38,8 +38,13 @@
                     </div>
                     <div class="col-xs-6" style="text-align:right;margin-top: 22px;">
                         @if(in_array('search', $role_button))
-                            <button type="submit" class="btn btn-white btn-default btn-bold">
+                            <button type="submit" id="search-btn" class="btn btn-white btn-default btn-bold">
                                 <i class="fa fa-fw fa-search"></i>@lang('form.search')
+                            </button>
+                        @endif
+                        @if(in_array('export', $role_button))
+                            <button type="submit" id="export-btn" class="btn btn-white btn-success btn-bold">
+                                <i class="fa fa-fw fa-file"></i>@lang('form.export')
                             </button>
                         @endif
                     </div>
@@ -192,6 +197,14 @@
         $('#publish_at').datetimepicker({
             sideBySide: true,
             format: 'YYYY-MM-DD',
+        });
+
+        $('#search-btn').click(function() {
+            $('#search-form').prop('action', '/kiosk-manage/kiosks/search');
+        });
+
+        $('#export-btn').click(function() {
+            $('#search-form').prop('action', '/kiosk-manage/kiosks/export');
         });
 
         $('.show-details-btn').on('click', function(e) {

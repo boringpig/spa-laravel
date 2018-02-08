@@ -69,7 +69,7 @@ function selectAllAreaGroups() {
     });
 } 
 // 系統參數設定權限全選
-function selectAllKiosks() {
+function selectAllSettings() {
     $('#settings_selectAll').click(function() {
         if($('#settings_selectAll').prop("checked")) {
             $("input[id='settings_permission[]']").prop('checked', true);

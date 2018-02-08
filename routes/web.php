@@ -44,6 +44,7 @@ Route::group(['prefix' => 'advertisement-manage'], function() {
 
 Route::group(['prefix' => 'kiosk-manage'], function() {
     Route::get('kiosks/search', ['uses' => 'KiosksController@search','as' => 'kiosks.search']);
+    Route::get('kiosks/export', ['uses' => 'KiosksController@export','as' => 'kiosks.export']);
     Route::post('kiosks/control-light/{station}', ['uses' => 'KiosksController@controlLight', 'as' => 'kiosks.control-light']);
     Route::post('kiosks/control-fan/{station}', ['uses' => 'KiosksController@controlFan', 'as' => 'kiosks.control-fan']);
     Route::post('kiosks/control-power/{station}', ['uses' => 'KiosksController@controlPower', 'as' => 'kiosks.control-power']);

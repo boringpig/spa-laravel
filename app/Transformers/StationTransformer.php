@@ -73,6 +73,7 @@ class StationTransformer
             'camera'                => $camera,
             'card_reader'           => $card_reader,
             'connection_status'     => $connection_status,
+            'connection_status_name'=> ($connection_status)? __('form.normal') : __('form.abnormal'),
         ];
     }
 }

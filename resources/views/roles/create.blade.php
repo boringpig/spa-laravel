@@ -39,11 +39,11 @@
         selectAllArticles();
         selectAllAdvertisements();
         selectAllKiosks();
-        selectAllKiosks();
         selectAllActionlogs();
         selectAllCategories();
         selectAllAreaGroups();
         selectAllSchedules();
+        selectAllSettings();
     });
 </script>
 @endsection

@@ -6,7 +6,7 @@
 
 @section('breadcrumb')
 <li>
-    <i class="ace-icon fa fa-users users-icon"></i>
+    <i class="ace-icon fa fa-book"></i>
     @lang('pageTitle.article-manage')
 </li>
 <li>

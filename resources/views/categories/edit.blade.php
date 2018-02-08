@@ -2,7 +2,7 @@
 
 @section('breadcrumb')
 <li>
-    <i class="ace-icon fa fa-users users-icon"></i>
+    <i class="ace-icon fa fa-book"></i>
     @lang('pageTitle.article-manage')
 </li>
 <li>
@@ -16,7 +16,7 @@
             @lang('pageTitle.categories_page')
             <small>
                 <i class="ace-icon fa fa-angle-double-right"></i>
-                @lang('form.create')
+                @lang('form.edit')
             </small>
         </h1>
     </div><!-- /.page-header -->
