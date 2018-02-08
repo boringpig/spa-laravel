@@ -145,4 +145,7 @@ return [
     'frequence'                         => '频率(分)',
     'error_message'                     => '异常讯息',
     'last_runtime'                      => '最后执行时间',
+    'area_group'                        => '地区群组',
+    'article_title'                     => '文章标题',
+    'station_quantity'                  => '场站数量',
 ];

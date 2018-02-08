@@ -53,6 +53,39 @@
                             <div class="infobox-content">@lang('form.article')</div>
                         </div>
                     </div>
+
+                    <div class="infobox infobox-red">
+                        <div class="infobox-icon">
+                            <i class="ace-icon fa fa-location-arrow"></i>
+                        </div>
+
+                        <div class="infobox-data">
+                            <span class="infobox-data-number">{{ $areagroup_total }}</span>
+                            <div class="infobox-content">@lang('form.area_group')</div>
+                        </div>
+                    </div>
+
+                    <div class="infobox infobox-orange2">
+                        <div class="infobox-icon">
+                            <i class="ace-icon fa fa-align-justify"></i>
+                        </div>
+
+                        <div class="infobox-data">
+                            <span class="infobox-data-number">{{ $category_total }}</span>
+                            <div class="infobox-content">@lang('form.article_title')</div>
+                        </div>
+                    </div>
+
+                    <div class="infobox infobox-blue2">
+                        <div class="infobox-icon">
+                            <i class="ace-icon fa fa-steam"></i>
+                        </div>
+
+                        <div class="infobox-data">
+                            <span class="infobox-data-number">{{ $station_total }}</span>
+                            <div class="infobox-content">@lang('form.station_quantity')</div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="vspace-12-sm"></div>

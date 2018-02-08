@@ -29,21 +29,7 @@
 
 				<div class="sidebar-shortcuts" id="sidebar-shortcuts">
 					<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
-						<button class="btn btn-success">
-							<i class="ace-icon fa fa-signal"></i>
-						</button>
-
-						<button class="btn btn-info">
-							<i class="ace-icon fa fa-pencil"></i>
-						</button>
-
-						<button class="btn btn-warning">
-							<i class="ace-icon fa fa-users"></i>
-						</button>
-
-						<button class="btn btn-danger">
-							<i class="ace-icon fa fa-cogs"></i>
-						</button>
+						<img class="nav-user-photo" src="{{ asset('uploads/logo.png') }}" alt="youbike" style="width:160px;height:100px;border-radius:20%; margin-top:3%; margin-bottom:3%"/>
 					</div>
 
 					<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">

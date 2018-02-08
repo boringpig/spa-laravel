@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Repositories\UserRepository;
 use App\Repositories\ArticleRepository;
 use App\Repositories\AdvertisementRepository;
+use App\Repositories\AreaGroupRepository;
+use App\Repositories\CategoryRepository;
 use App\CPS\Repositories\StationRepository;
 
 class HomeController extends Controller
@@ -14,6 +16,8 @@ class HomeController extends Controller
     protected $articleRepository;
     protected $advertisementRepository;
     protected $stationRepository;
+    protected $areaGroupRepository;
+    protected $categoryRepository;
 
     /**
      * Create a new controller instance.
@@ -24,13 +28,17 @@ class HomeController extends Controller
         UserRepository $userRepository,
         ArticleRepository $articleRepository,
         AdvertisementRepository $advertisementRepository,
-        StationRepository $stationRepository
+        StationRepository $stationRepository,
+        AreaGroupRepository $areaGroupRepository,
+        CategoryRepository $categoryRepository
     ) {
         $this->middleware('auth');
         $this->userRepository = $userRepository;
         $this->articleRepository = $articleRepository;
         $this->advertisementRepository = $advertisementRepository;
         $this->stationRepository = $stationRepository;
+        $this->areaGroupRepository = $areaGroupRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -42,6 +50,7 @@ class HomeController extends Controller
     {
         $station_count = collect($this->stationRepository->getTotalCount());
         $areas = getSCityAreaArray();
+        $station_total = $station_count->sum('count');
         $station_count = $station_count->map(function ($item) use ($areas) {
             return [
                 'area' => array_get($areas,$item['area'],""),
@@ -53,6 +62,9 @@ class HomeController extends Controller
             'user_total'          => $this->userRepository->getAllTotal(),
             'article_total'       => $this->articleRepository->getAllTotal(),
             'advertisement_total' => $this->advertisementRepository->getAllTotal(),
+            'areagroup_total'     => $this->areaGroupRepository->getAllTotal(),
+            'category_total'      => $this->categoryRepository->getAllTotal(),
+            'station_total'       => $station_total,
             'station_count'       => $station_count
         ]);
     }
