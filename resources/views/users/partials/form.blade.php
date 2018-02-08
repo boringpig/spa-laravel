@@ -122,7 +122,7 @@
             <i class="ace-icon fa fa-floppy-o bigger-120 blue"></i>
             {{ $submit_button }}
         </button>
-        @if(!empty($user) && in_array('change-password', $role_button))
+        @if(!empty($user))
             <button class="btn btn-white btn-warning btn-bold" type="button" data-toggle="modal" data-target="#changePasswordModal">
                 <i class="ace-icon fa fa-pencil bigger-110"></i>
                 @lang('form.change_password')

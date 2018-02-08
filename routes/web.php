@@ -18,6 +18,9 @@ Route::post('/logout', ['uses' => 'Auth\LoginController@logout', 'as' => 'auth.l
 
 Route::get('/', ['uses' => 'HomeController@index', 'as' => 'home']);
 
+Route::get('/person/{id}/edit', 'PersonController@edit');
+Route::patch('/person/{id}', 'PersonController@update');
+
 Route::group(['prefix' => 'user-manage'], function() {
     Route::post('users/change-password/{id}', ['uses' => 'UsersController@changePassword','as' => 'users.change-password']);
     Route::get('users/search', ['uses' => 'UsersController@search','as' => 'users.search']);

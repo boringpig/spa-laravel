@@ -19,6 +19,7 @@
             </a>
         </div>
 
+        @if(Auth::check())
         <div class="navbar-buttons navbar-header pull-right" role="navigation">
             <ul class="nav ace-nav">
                 <li class="light-blue dropdown-modal">
@@ -34,7 +35,7 @@
                     <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 
                         <li>
-                            <a href="#">
+                            <a href="/person/{{ Auth::id() }}/edit">
                                 <i class="ace-icon fa fa-user"></i>
                                 @lang('pageTitle.person_account')
                             </a>
@@ -52,6 +53,7 @@
                 </li>
             </ul>
         </div>
+        @endif
     </div><!-- /.navbar-container -->
 </div>
 

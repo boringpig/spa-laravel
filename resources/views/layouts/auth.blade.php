@@ -40,7 +40,7 @@
 			<div class="main-content">
 				<div class="row">
 					<div class="col-sm-10 col-sm-offset-1">
-						<div class="login-container">
+						<div class="login-container" style="margin-top:10%;">
 							<div class="center">
 								<h1>
 									<i class="ace-icon fa fa-leaf green"></i>
