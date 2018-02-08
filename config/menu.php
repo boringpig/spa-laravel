@@ -10,5 +10,6 @@ return [
     'areagroups'        => 'KIOSK地区群组',
     'settings'          => '系统参数设定',
     'actionlogs'        => '系统操作纪录',
+    'schedules'         => '系统排程监控',
     'categories'        => '标题分类资料',
 ];

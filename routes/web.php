@@ -54,4 +54,5 @@ Route::group(['prefix' => 'setting-manage'], function() {
     Route::post('settings', ['uses' => 'SettingController@store', 'as' => 'settings.store']);
     Route::get('actionlogs/search', ['uses' => 'ActionlogsController@search', 'as' => 'actionlogs.search']);
     Route::get('actionlogs', ['uses' => 'ActionlogsController@index', 'as' => 'actionlogs.index']);
+    Route::get('schedules', ['uses' => 'SchedulesController@index', 'as' => 'schedules.index']);
 });

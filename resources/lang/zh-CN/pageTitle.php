@@ -20,4 +20,5 @@ return [
     'setting-manage'            => '系统管理',
     'settings_page'             => '系统参数设定',
     'actionlogs_page'           => '系统操作纪录',
+    'schedules_page'            => '系统排程监控',
 ];

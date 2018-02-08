@@ -131,7 +131,7 @@
 </li>
 @endif
 
-@if(in_array('settings', $role_menu) || in_array('actionlogs', $role_menu))
+@if(in_array('settings', $role_menu) || in_array('actionlogs', $role_menu) || in_array('schedules', $role_menu))
 <li class="{{ (\Request::segment(1) == 'setting-manage')? 'open' : '' }}">
 	<a href="#" class="dropdown-toggle">
 		<i class="menu-icon fa fa-cogs"></i>
@@ -146,6 +146,16 @@
 			<a href="{{ route('actionlogs.index') }}" >
 				<i class="menu-icon fa fa-caret-right"></i>
 				@lang('pageTitle.actionlogs_page')
+			</a>
+
+			<b class="arrow"></b>
+		</li>
+		@endif
+		@if(in_array('schedules', $role_menu))
+		<li class="{{ (\Request::segment(2) == 'schedules')? 'active' : '' }}">
+			<a href="{{ route('schedules.index') }}" >
+				<i class="menu-icon fa fa-caret-right"></i>
+				@lang('pageTitle.schedules_page')
 			</a>
 
 			<b class="arrow"></b>

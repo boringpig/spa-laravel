@@ -51,8 +51,12 @@ class AdvertisementRepository extends Repository
                 '$lte' => new \MongoDB\BSON\UTCDateTime(strtotime("{$date} 23:59:59") * 1000),
             ]
         ];
-        
-        return $this->model()->whereRaw($condition)
-                            ->update(['status' => 1], ['upsert' => true, 'multi' => true]);
+        $result = true;
+        $count = $this->model()->whereRaw($condition)->count();
+        if($count) {
+            $result = $this->model()->whereRaw($condition)
+                           ->update(['status' => 1], ['upsert' => true, 'multi' => true]);
+        }
+        return $result;
     }
 }

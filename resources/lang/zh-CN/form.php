@@ -140,4 +140,9 @@ return [
     'title_no'                          => '标题编号',
     'title_name'                        => '标题名称',
     'group'                             => '群组',
+    'command_name'                      => '指令名称',
+    'description'                       => '描述',
+    'frequence'                         => '频率(分)',
+    'error_message'                     => '异常讯息',
+    'last_runtime'                      => '最后执行时间',
 ];

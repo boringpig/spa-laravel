@@ -5,11 +5,13 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\CPS\Repositories\StationRepository;
 use App\Repositories\KioskTokenRepository;
+use App\Repositories\ScheduleRepository;
 
 class HashStation extends Command
 {
     protected $stationRepository;
     protected $kioskTokenRepository;
+    protected $scheduleRepository;
 
     /**
      * The name and signature of the console command.
@@ -23,7 +25,7 @@ class HashStation extends Command
      *
      * @var string
      */
-    protected $description = '每五分鐘取得cps的場站代號並 hash 產生 token';
+    protected $description = '每五分钟取得cps的场站代号产生token';
 
     /**
      * Create a new command instance.
@@ -32,11 +34,13 @@ class HashStation extends Command
      */
     public function __construct(
         StationRepository $stationRepository,
-        KioskTokenRepository $kioskTokenRepository
+        KioskTokenRepository $kioskTokenRepository,
+        ScheduleRepository $scheduleRepository
     ) {
         parent::__construct();
         $this->stationRepository = $stationRepository;
         $this->kioskTokenRepository = $kioskTokenRepository;
+        $this->scheduleRepository = $scheduleRepository;
     }
 
     /**
@@ -46,6 +50,8 @@ class HashStation extends Command
      */
     public function handle()
     {
+        preg_match('/^(.*)\{?/',$this->signature, $match);
+        $command = trim($match[1]);
         try {
             $start = microtime(true);
             echo __('message.start_time', ['time' => date('Y-m-d H:i:s')])."\n";
@@ -64,10 +70,13 @@ class HashStation extends Command
             if(!$this->kioskTokenRepository->insertMany($tokens)) {
                 throw new \Exception(__('message.insert_many_fail'));
             }
+            // 紀錄排程執行時間
+            $this->scheduleRepository->createOrUpdate($command, $this->description, 5);
             $end = microtime(true);
             echo __('message.end_time', ['time' => date('Y-m-d H:i:s')])."\n";
             echo __('message.total_time_spent', ['success_message' => __('message.insert_many_success'), 'second' => round($end-$start,2)])."\n";
         } catch (\Exception $e) {
+            $this->scheduleRepository->createOrUpdate($command, $this->description, 5, $e->getMessage());
             echo __('message.end_time', ['time' => date('Y-m-d H:i:s')])."\n";
             echo __('message.error_message', ['message' => $e->getMessage()])."\n";
             Log::error("hash:station，".__('message.error_message', ['message' => $e->getMessage()]));

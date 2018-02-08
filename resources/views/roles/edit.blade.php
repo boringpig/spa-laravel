@@ -45,6 +45,7 @@
         selectAllActionlogs();
         selectAllCategories();
         selectAllAreaGroups();
+        selectAllSchedules();
     });
 </script>
 @endsection

@@ -30,14 +30,14 @@ class Kernel extends ConsoleKernel
                  ->dailyAt('14:47')
                  ->withoutOverlapping()
                  ->after(function() {
-                    Log::info('AdvertisementStatus:switch 每天凌晨12点将预发布的广告啟动状态');
+                    Log::info('AdvertisementStatus:switch 每天凌晨12点将预发布的广告转变成啟动状态');
                  });
 
         $schedule->command('hash:station')
                  ->everyFiveMinutes()
                  ->withoutOverlapping()
                  ->after(function() {
-                    Log::info('hash:station 每五分鐘取得cps的場站代號產生token');
+                    Log::info('hash:station 每五分钟取得cps的场站代号产生token');
                  });
     }
 

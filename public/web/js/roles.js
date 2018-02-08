@@ -88,3 +88,13 @@ function selectAllActionlogs() {
         }
     });
 }
+// 系統排程監控權限全選
+function selectAllSchedules() {
+    $('#schedules_selectAll').click(function() {
+        if($('#schedules_selectAll').prop("checked")) {
+            $("input[id='schedules_permission[]']").prop('checked', true);
+        } else {
+            $("input[id='schedules_permission[]']").prop('checked', false);
+        }
+    });
+}
