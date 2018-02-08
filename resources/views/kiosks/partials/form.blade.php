@@ -17,7 +17,7 @@
 <div class="space-4"></div>
 <div class="row">
     <!--燈號控制-->
-    <div class="col-sm-3">
+    <div class="col-sm-3" style="margin-left:12%">
         <div class="widget-box">
             <div class="widget-header">
                 <h4 class="widget-title">@lang('form.light_control')</h4>
@@ -52,9 +52,66 @@
             </div>
         </div>
     </div><!-- /.燈號控制 -->
-    <!--門位狀態-->
     <div class="col-sm-3">
+        <!--電源控制-->
         <div class="widget-box">
+            <div class="widget-header">
+                <h4 class="widget-title">@lang('form.power_control')</h4>
+
+                <div class="widget-toolbar">
+                    <a href="#" data-action="collapse">
+                        <i class="ace-icon fa fa-chevron-up"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main">
+                    <form class="form-horizontal" role="form" onsubmit="submitForm(event,this)" action="{{ route('kiosks.control-power', ['station' => $kiosk['station_number']]) }}">
+                        {{ csrf_field() }}
+                        <input type="hidden" id="power_type" name="power_type" value="1"> 
+                        @include('kiosks.partials.power', ['type' => 'xps1'])
+                    </form>
+                    <form class="form-horizontal" role="form" onsubmit="submitForm(event,this)" action="{{ route('kiosks.control-power', ['station' => $kiosk['station_number']]) }}">
+                        {{ csrf_field() }}
+                        <input type="hidden" id="power_type" name="power_type" value="2"> 
+                        @include('kiosks.partials.power', ['type' => 'xps2'])
+                    </form>
+                    <form class="form-horizontal" role="form" onsubmit="submitForm(event,this)" action="{{ route('kiosks.control-power', ['station' => $kiosk['station_number']]) }}">
+                        {{ csrf_field() }}
+                        <input type="hidden" id="power_type" name="power_type" value="8"> 
+                        @include('kiosks.partials.power', ['type' => 'atur'])
+                    </form>
+                    <form class="form-horizontal" role="form" onsubmit="submitForm(event,this)" action="{{ route('kiosks.control-power', ['station' => $kiosk['station_number']]) }}">
+                        {{ csrf_field() }}
+                        <input type="hidden" id="power_type" name="power_type" value="7"> 
+                        @include('kiosks.partials.power', ['type' => 'router'])
+                    </form>
+                    <form class="form-horizontal" role="form" onsubmit="submitForm(event,this)" action="{{ route('kiosks.control-power', ['station' => $kiosk['station_number']]) }}">
+                        {{ csrf_field() }}
+                        <input type="hidden" id="power_type" name="power_type" value="3"> 
+                        @include('kiosks.partials.power', ['type' => 'card_reader'])
+                    </form>
+                    <form class="form-horizontal" role="form" onsubmit="submitForm(event,this)" action="{{ route('kiosks.control-power', ['station' => $kiosk['station_number']]) }}">
+                        {{ csrf_field() }}
+                        <input type="hidden" id="power_type" name="power_type" value="5"> 
+                        @include('kiosks.partials.power', ['type' => 'show_screen'])
+                    </form>
+                    <form class="form-horizontal" role="form" onsubmit="submitForm(event,this)" action="{{ route('kiosks.control-power', ['station' => $kiosk['station_number']]) }}">
+                        {{ csrf_field() }}
+                        <input type="hidden" id="power_type" name="power_type" value="6"> 
+                        @include('kiosks.partials.power', ['type' => 'touch_function'])
+                    </form>
+                    <form class="form-horizontal" role="form" onsubmit="submitForm(event,this)" action="{{ route('kiosks.control-power', ['station' => $kiosk['station_number']]) }}">
+                        {{ csrf_field() }}
+                        <input type="hidden" id="power_type" name="power_type" value="4"> 
+                        @include('kiosks.partials.power', ['type' => 'camera'])
+                    </form>
+                </div>
+            </div>
+        </div><!-- /.電源控制 -->
+        <!--門位狀態-->
+        <div class="widget-box" style="margin-top:10%;">
             <div class="widget-header">
                 <h4 class="widget-title">@lang('form.door_status')</h4>
 
@@ -125,67 +182,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div><!-- /.門位狀態 -->
-    <!--電源控制-->
-    <div class="col-sm-3">
-        <div class="widget-box">
-            <div class="widget-header">
-                <h4 class="widget-title">@lang('form.power_control')</h4>
-
-                <div class="widget-toolbar">
-                    <a href="#" data-action="collapse">
-                        <i class="ace-icon fa fa-chevron-up"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="widget-body">
-                <div class="widget-main">
-                    <form class="form-horizontal" role="form" onsubmit="submitForm(event,this)" action="{{ route('kiosks.control-power', ['station' => $kiosk['station_number']]) }}">
-                        {{ csrf_field() }}
-                        <input type="hidden" id="power_type" name="power_type" value="1"> 
-                        @include('kiosks.partials.power', ['type' => 'xps1'])
-                    </form>
-                    <form class="form-horizontal" role="form" onsubmit="submitForm(event,this)" action="{{ route('kiosks.control-power', ['station' => $kiosk['station_number']]) }}">
-                        {{ csrf_field() }}
-                        <input type="hidden" id="power_type" name="power_type" value="2"> 
-                        @include('kiosks.partials.power', ['type' => 'xps2'])
-                    </form>
-                    <form class="form-horizontal" role="form" onsubmit="submitForm(event,this)" action="{{ route('kiosks.control-power', ['station' => $kiosk['station_number']]) }}">
-                        {{ csrf_field() }}
-                        <input type="hidden" id="power_type" name="power_type" value="8"> 
-                        @include('kiosks.partials.power', ['type' => 'atur'])
-                    </form>
-                    <form class="form-horizontal" role="form" onsubmit="submitForm(event,this)" action="{{ route('kiosks.control-power', ['station' => $kiosk['station_number']]) }}">
-                        {{ csrf_field() }}
-                        <input type="hidden" id="power_type" name="power_type" value="7"> 
-                        @include('kiosks.partials.power', ['type' => 'router'])
-                    </form>
-                    <form class="form-horizontal" role="form" onsubmit="submitForm(event,this)" action="{{ route('kiosks.control-power', ['station' => $kiosk['station_number']]) }}">
-                        {{ csrf_field() }}
-                        <input type="hidden" id="power_type" name="power_type" value="3"> 
-                        @include('kiosks.partials.power', ['type' => 'card_reader'])
-                    </form>
-                    <form class="form-horizontal" role="form" onsubmit="submitForm(event,this)" action="{{ route('kiosks.control-power', ['station' => $kiosk['station_number']]) }}">
-                        {{ csrf_field() }}
-                        <input type="hidden" id="power_type" name="power_type" value="5"> 
-                        @include('kiosks.partials.power', ['type' => 'show_screen'])
-                    </form>
-                    <form class="form-horizontal" role="form" onsubmit="submitForm(event,this)" action="{{ route('kiosks.control-power', ['station' => $kiosk['station_number']]) }}">
-                        {{ csrf_field() }}
-                        <input type="hidden" id="power_type" name="power_type" value="6"> 
-                        @include('kiosks.partials.power', ['type' => 'touch_function'])
-                    </form>
-                    <form class="form-horizontal" role="form" onsubmit="submitForm(event,this)" action="{{ route('kiosks.control-power', ['station' => $kiosk['station_number']]) }}">
-                        {{ csrf_field() }}
-                        <input type="hidden" id="power_type" name="power_type" value="4"> 
-                        @include('kiosks.partials.power', ['type' => 'camera'])
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div><!-- /.電源控制 -->
+        </div><!-- /.門位狀態 -->
+    </div>
     <!--風扇控制-->
     <div class="col-sm-3">
         <div class="widget-box">
