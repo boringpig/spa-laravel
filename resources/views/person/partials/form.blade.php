@@ -1,16 +1,8 @@
-<div class="form-group {{ $errors->has('username')? ' has-error' : '' }}">
-    <label for="username" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right"> <span class="text-danger">*</span> @lang('form.username') </label>
+<div class="form-group">
+    <label for="username" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right"> @lang('form.username') </label>
     <div class="col-xs-3">
-        <span class="block input-icon input-icon-right">
-            <input type="text" id="username" name="username" class="width-100" value="{{ !empty($person['username'])? $person['username'] : old('username') }}">
-            @if($errors->has('username'))
-                <i class="ace-icon fa fa-times-circle"></i>
-            @endif
-        </span>
+        <h5>{{ $person['username'] }}</h5>
     </div>
-    @if($errors->has('username'))
-        <div class="help-block col-xs-12 col-sm-reset inline">{{ $errors->first('username') }}</div>
-    @endif
 </div>
 <div class="space-4"></div>
 <div class="form-group {{ $errors->has('name')? ' has-error' : '' }}">

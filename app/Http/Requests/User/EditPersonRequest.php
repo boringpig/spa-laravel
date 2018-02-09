@@ -25,7 +25,6 @@ class EditPersonRequest extends FormRequest
     public function rules()
     {
         $rules = [
-			'username'  => 'required|string|max:20|unique:users',
             'email'     => 'required|string|email|max:255|unique:users',
             'name'      => 'required|string|max:20',
         ];
@@ -34,9 +33,6 @@ class EditPersonRequest extends FormRequest
 		if ($_REQUEST['email'] === $user->email){
 			$rules['email'] = 'required|string|email|max:255';
 		}
-		if ($_REQUEST['username'] === $user->username){
-			$rules['username'] = 'required|string|max:20';
-        }
         
         return $rules;
     }
@@ -44,7 +40,6 @@ class EditPersonRequest extends FormRequest
     public function attributes()
     {
         return [
-            'username'      => '帐号',
             'name'          => '姓名',
             'email'         => '信箱',
         ];

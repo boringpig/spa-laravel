@@ -57,7 +57,6 @@ class PersonController extends Controller
             return redirect()->back();
         }
         $args = [
-            'username'  => $request->username,
             'name'      => $request->name,
             'email'     => $request->email,
             'phone'     => $request->phone,
