@@ -5,6 +5,9 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Validation\ValidationException;
+use App\Exceptions\ForbiddenException;
+use App\Exceptions\MissingFieldException;
 
 class Handler extends ExceptionHandler
 {
@@ -49,6 +52,25 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        switch ($exception) {
+            case $exception instanceof ForbiddenException:
+                return response()->view('errors.403', [], 403);
+                break;
+            case $exception instanceof MissingFieldException:
+                return response()->json(errorOutput($exception->getMessage()),422);
+                break;
+            // case $exception instanceof ValidationException:
+            //     return response()->json([[
+            //             "retCode"   => 0, 
+            //             "retMsg"    => "Validation Failed", 
+            //             "retVal"    => [
+            //                 "invalidFields" => array_keys($exception->validator->errors()->toArray())
+            //             ]
+            //         ]]);
+            //     break;
+
+        }
+
         return parent::render($request, $exception);
     }
 
@@ -65,6 +87,6 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
 
-        return redirect()->guest('login'); //<----- Change this
+        return redirect()->guest('login');
     }
 }

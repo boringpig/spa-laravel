@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use App\Exceptions\ForbiddenException;
 
 class RouteAuthority
 {
@@ -34,7 +35,7 @@ class RouteAuthority
 
         if(is_null(Auth::user()->role) || (str_contains($route_name, '.') 
             && ! in_array($route_name, Auth::user()->role->permission))) {
-            abort(403);
+            throw new ForbiddenException;
         }
 
         return $next($request);
