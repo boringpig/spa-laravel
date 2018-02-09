@@ -22,11 +22,14 @@ class AreaGroupsTableSeederr extends Seeder
      */
     public function run()
     {
+        AreaGroup::truncate();
+        
         $s_citys = $this->sCityRepository->getAll()->toArray();
         $s_citys = collect($s_citys)->map(function($item) {
+            $area = "{$item['province']}{$item['country_id']}";
             return [
-                'parent_area' => "{$item['province']}{$item['country_id']}",
-                'child_area' => [],
+                'parent_area' => $area,
+                'child_area' => [$area],
             ];
         })->toArray();
 

@@ -1,26 +1,8 @@
-<div class="form-group {{ $errors->has('parent_area')? ' has-error' : '' }}">
-    <label for="parent_area" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right"> <span class="text-danger">*</span> @lang('form.area') </label>
+<div class="form-group">
+    <label for="parent_area" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right"> @lang('form.area') </label>
     <div class="col-xs-3">
-        <span class="block input-icon input-icon-right">
-            <select class="chosen-select width-100" id="parent_area" name="parent_area" data-placeholder="@lang('form.choose_one_area')">
-                @forelse(getSCityArray() as $key => $value)
-                    <option value=""></option>
-                    @if(!empty($group['parent_area']) && ($key == $group['parent_area']))
-                        <option value="{{ $key }}" selected>{{ $value }}</option>
-                    @else
-                        <option value="{{ $key }}">{{ $value }}</option>
-                    @endif
-                @empty
-                @endforelse
-            </select>
-            @if($errors->has('parent_area'))
-                <i class="ace-icon fa fa-times-circle"></i>
-            @endif
-        </span>
+        <h5>{{ $group['parent_area_name'] }}</h5>  
     </div>
-    @if($errors->has('parent_area'))
-        <div class="help-block col-xs-12 col-sm-reset inline">{{ $errors->first('parent_area') }}</div>
-    @endif
 </div>
 <div class="space-4"></div>
 <div class="form-group {{ $errors->has('child_area')? ' has-error' : '' }}">

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repositories\AreaGroupRepository;
 use App\Transformers\AreaGroupTransformer;
-use App\Http\Requests\AreaGroup\CreateAreaGroupRequest;
 use App\Http\Requests\AreaGroup\EditAreaGroupRequest;
 use Illuminate\Support\Facades\Route;
 
@@ -30,45 +29,11 @@ class AreaGroupsController extends Controller
      */
     public function index()
     {
-        $groups = $this->areaGroupRepository->getAll(config('website.perPage'));
+        $groups = $this->areaGroupRepository->getAllOrCreateNewArea(config('website.perPage'));
         $groups = (count($groups) > 0)? $this->areaGroupTransformer->transform($groups)->setPath("/".Route::current()->uri()) : [];
         return view('areagroups.index', [
             'groups' => $groups,
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {   
-        return view('areagroups.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(CreateAreaGroupRequest $request)
-    {
-        $args = [
-            'parent_area' => $request->parent_area,
-            'child_area'  => $request->child_area,
-        ];
-
-        $group = $this->areaGroupRepository->create($args);
-        
-        if(is_null($group)) {
-            session()->flash('error', __('form.created_fail'));            
-            return redirect()->back();
-        }
-        
-        session()->flash('success', __('form.created_success'));
-        return redirect()->route('areagroups.index');
     }
 
     /**
@@ -110,7 +75,6 @@ class AreaGroupsController extends Controller
         }
 
         $args = [
-            'parent_area' => $request->parent_area,
             'child_area'  => $request->child_area,
         ];
         if($this->areaGroupRepository->update($id, $args)) {

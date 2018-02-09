@@ -19,15 +19,6 @@
 
     <div class="row">
         <div class="col-xs-12">
-            <div class="row">
-                <div class="col-xs-12" style="text-align:right;margin-top: 22px;">
-                    @if(in_array('store', $role_button))
-                        <a href="{{ route('areagroups.create') }}" class="btn btn-white btn-success btn-bold">
-                            <i class="fa fa-fw fa-plus"></i>@lang('form.create')</button>
-                        </a>
-                    @endif
-                </div>
-            </div>
             <div class="space-10"></div>
             <!-- content -->
             <table id="simple-table" class="table table-bordered table-hover table-center">

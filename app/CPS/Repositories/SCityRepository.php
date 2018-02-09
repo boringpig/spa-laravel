@@ -18,4 +18,18 @@ class SCityRepository
 
         return is_null($perPage)? $query->get() : $query->paginate($perPage);
     }
+
+    public function getByArgs($args, $perPage = null)
+    {
+        $condition = [];
+
+        if(array_key_exists('s_city', $args) && !empty($args['s_city'])) {
+            $condition['province'] = ['$eq' => substr($args['s_city'],0,2)];
+            $condition['country_id'] = ['$eq' => substr($args['s_city'],2,2)];
+        }
+        
+        $query = (count($condition) > 0)? $this->model()->whereRaw($condition)->orderBy('parent_area','asc') : $this->model()->orderBy('parent_area','asc');
+
+        return is_null($perPage)? $query->get() : $query->paginate($perPage);
+    }
 }
