@@ -48,7 +48,7 @@ class AdvertisementStatus extends Command
      */
     public function handle()
     {
-        preg_match('/^(.*)\{?/',$this->signature, $match);
+        preg_match('/^(.*)\s\{/',$this->signature, $match);
         $command = trim($match[1]);
         try {
             $start = microtime(true);
