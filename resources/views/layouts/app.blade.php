@@ -30,7 +30,7 @@
 
 				<div class="sidebar-shortcuts" id="sidebar-shortcuts">
 					<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
-						<img class="nav-user-photo" src="{{ asset('uploads/logo.png') }}" alt="youbike" style="width:160px;height:100px;border-radius:20%; margin-top:3%; margin-bottom:3%"/>
+						<img class="nav-user-photo" src="{{ asset('uploads/youbike.svg.png') }}" alt="youbike" style="width:120px; margin:4%;"/>
 					</div>
 
 					<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
