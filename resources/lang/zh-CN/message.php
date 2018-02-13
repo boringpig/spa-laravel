@@ -36,4 +36,5 @@ return [
     'change_status_fail'                => '状态更改失败',
     'change_status_success'             => '状态更改成功',
     'unable_to_operate'                 => '无法进行操作',
+    'request_must_json'                 => '请求必须為JSON',
 ];

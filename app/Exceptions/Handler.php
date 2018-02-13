@@ -7,7 +7,6 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\ForbiddenException;
-use App\Exceptions\MissingFieldException;
 
 class Handler extends ExceptionHandler
 {
@@ -55,9 +54,6 @@ class Handler extends ExceptionHandler
         switch ($exception) {
             case $exception instanceof ForbiddenException:
                 return response()->view('errors.403', [], 403);
-                break;
-            case $exception instanceof MissingFieldException:
-                return response()->json(errorOutput($exception->getMessage()),422);
                 break;
             // case $exception instanceof ValidationException:
             //     return response()->json([[

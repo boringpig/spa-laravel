@@ -40,7 +40,8 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:60,1',
             'bindings',
-            \App\Http\Middleware\APIAuthenticate::class,
+            'expectsJson',
+            'auth.api',
         ],
     ];
 
@@ -60,5 +61,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'role.auth' => \App\Http\Middleware\RouteAuthority::class,
         'record.actionlog' => \App\Http\Middleware\RecordActionlog::class,
+        'auth.api' => \App\Http\Middleware\APIAuthenticate::class,
+        'expectsJson' => \App\Http\Middleware\ExpectsJson::class,
     ];
 }

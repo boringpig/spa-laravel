@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use App\Repositories\KioskTokenRepository;
-use App\Exceptions\MissingFieldException;
+use App\Exceptions\InvalidTokenException;
 
 class APIAuthenticate
 {
@@ -25,15 +25,25 @@ class APIAuthenticate
      */
     public function handle($request, Closure $next)
     {
-        if(empty($request->token)) {
-            throw new MissingFieldException(__('auth.unauthenticated', ['message' => __('auth.lack_token_field')]));
+        // 驗證表頭
+        $header_token = $request->header('Authorization');
+        $token = $request->token;
+        if(!is_null($header_token)) {
+            //判斷 Bearer
+            preg_match('/^Bearer\s(.*)/',$header_token, $match);
+            if(count($match) > 1) {
+                $token = $match[1];
+            } 
+        }
+        if(empty($token)) {
+            throw new InvalidTokenException(__('auth.unauthenticated', ['message' => __('auth.lack_token_field')]));
         }
         // 驗證該token是否存在db 或 驗證token是否存在於即時產生token內
-        if($this->kioskTokenRepository->findByToken($request->token) || 
-           $this->kioskTokenRepository->validateToken($request->token)) {
+        if($this->kioskTokenRepository->findByToken($token) || 
+           $this->kioskTokenRepository->validateToken($token)) {
             return $next($request);
-        } else {
-            return response()->json(errorOutput(__('auth.unauthenticated', ['message' => __('auth.invalid_token')])), 403);
-        }
+        } 
+        
+        throw new \App\Exceptions\InvalidTokenException(__('auth.unauthenticated', ['message' => __('auth.invalid_token')]));
     }
 }
