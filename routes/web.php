@@ -18,6 +18,11 @@ Route::post('/logout', ['uses' => 'Auth\LoginController@logout', 'as' => 'auth.l
 
 Route::get('/', ['uses' => 'HomeController@index', 'as' => 'home']);
 
+Route::get('/notifications', 'PersonController@notifications');
+Route::get('/notification/readAll', 'PersonController@markAsReadAll');
+Route::get('/notification/deleteAll', 'PersonController@deleteAll');
+Route::get('/notification/{id}/read', 'PersonController@markAsRead');
+Route::get('/notification/{id}/delete', 'PersonController@delete');
 Route::get('/person/{id}/edit', 'PersonController@edit');
 Route::patch('/person/{id}', 'PersonController@update');
 

@@ -69,6 +69,7 @@ class UsersController extends Controller
             'status'    => $request->has('status')? (int) $request->status : 0,
             'phone'     => $request->phone,
             'role_id'   => $request->role_id,
+            'role_objectid'   => new \MongoDB\BSON\ObjectID($request->role_id),
         ];
 
         $user = $this->userRepository->create($args);
@@ -128,6 +129,7 @@ class UsersController extends Controller
             'status'    => ($user->status != $status)? $status : $user->status,
             'phone'     => $request->phone,
             'role_id'   => $request->role_id,
+            'role_objectid'   => new \MongoDB\BSON\ObjectID($request->role_id),
         ];
         if($this->userRepository->update($id, $args)) {
             session()->flash('success', __('form.updated_success'));

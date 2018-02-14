@@ -57,7 +57,8 @@ abstract class Repository
      */
     public function update($id, $args)
     {
-        return $this->model()->where('_id', $id)->update($args);
+        $model = $this->model()->find($id);
+        return $model->update($args);
     }
 
     /**

@@ -41,6 +41,15 @@
                             </a>
                         </li>
 
+                        @if(Auth::user()->role->name == "系統管理者")
+                            <li>
+                                <a href="/notifications">
+                                    <i class="ace-icon fa fa-bell"></i>
+                                    @lang('pageTitle.notification_center')
+                                </a>
+                            </li>
+                        @endif
+
                         <li class="divider"></li>
 
                         <li>

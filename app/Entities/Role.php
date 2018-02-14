@@ -19,6 +19,7 @@ class Role extends Model
         static::deleting(function($role) {
             $role->users->each(function($user) {
                 $user->role_id = "";
+                $user->role_objectid = "";
                 $user->save();
             });
         });
