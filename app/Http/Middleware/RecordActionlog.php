@@ -30,6 +30,7 @@ class RecordActionlog
                array_key_exists($button, config('actionlog')) &&
                Auth::check()
             ) {
+                cache()->tags('actionlog')->flush();
                 $actionlogRepository = new ActionlogRepository();
                 $actionlog = $actionlogRepository->create([
                     'user_id'         => Auth::id(),

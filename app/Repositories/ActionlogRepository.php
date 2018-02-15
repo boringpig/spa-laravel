@@ -6,26 +6,20 @@ use App\Entities\Actionlog;
 
 class ActionlogRepository extends Repository
 {
-
     public function model()
     {
         return app(Actionlog::class);
     }
 
-    /**
-     * 回傳所有使用者並以註冊日期最新排序
-     */
-    public function getAll($perPage = null, $releation = [])
+    public function tag()
     {
-        $query = $this->model()->with(['user'])->orderBy('created_at','desc');
-
-        return is_null($perPage)? $query->get() : $query->paginate($perPage);
+        return 'actionlog';
     }
 
     /**
      * 根據搜尋參數回傳符合條件的使用者
      */
-    public function getByArgs($args, $perPage = null)
+    public function getByArgs($queryString = '', $args, $perPage = null)
     {
         $condition = [];
         $userModel = new \App\User();
@@ -53,8 +47,9 @@ class ActionlogRepository extends Repository
                                         '$lte' => new \MongoDB\BSON\UTCDateTime(strtotime($end) * 1000)];
         }
 
-        $query = (count($condition) > 0)? $this->model()->whereRaw($condition)->orderBy('created_at','desc') : $this->model()->orderBy('created_at','desc');
-
-        return is_null($perPage)? $query->get() : $query->paginate($perPage);
+        return cache()->tags($this->tag())->remember($this->tag().".{$queryString}", 60, function() use ($perPage,$condition) {
+            $query = (count($condition) > 0)? $this->model()->whereRaw($condition)->orderBy('created_at','desc') : $this->model()->orderBy('created_at','desc');
+            return is_null($perPage)? $query->get() : $query->paginate($perPage);
+        });
     }
 }

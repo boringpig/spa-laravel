@@ -183,7 +183,7 @@ class UsersController extends Controller
 
     public function search(Request $request)
     {
-        $users = $this->userRepository->getByArgs($request->all(),config('website.perPage'));
+        $users = $this->userRepository->getByArgs($request->getQueryString(),$request->all(),config('website.perPage'));
         $users = (count($users) > 0)? $this->userTransformer->transform($users)->appends($request->all())->setPath("/{$request->path()}") : [];
         $request->flash();
         return view('users.index', [

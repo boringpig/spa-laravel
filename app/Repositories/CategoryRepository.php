@@ -10,4 +10,9 @@ class CategoryRepository extends Repository
     {
         return app(Category::class);
     }
+
+    public function tag()
+    {
+        return 'category';
+    }
 }

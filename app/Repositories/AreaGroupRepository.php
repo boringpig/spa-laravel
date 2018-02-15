@@ -11,6 +11,11 @@ class AreaGroupRepository extends Repository
     {
         return app(AreaGroup::class);
     }
+
+    public function tag()
+    {
+        return 'area_group';
+    }
     
     /**
      * 回傳全部地區群組並新增沒有的地區資料

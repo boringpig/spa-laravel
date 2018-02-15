@@ -12,6 +12,11 @@ class KioskTokenRepository extends Repository
         return app(KioskToken::class);
     }
 
+    public function tag()
+    {
+        return 'kiosk_token';
+    }
+
     public function findByToken($token)
     {
         return $this->model()->where('token', $token)->exists();

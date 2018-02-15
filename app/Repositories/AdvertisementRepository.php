@@ -6,16 +6,20 @@ use App\Entities\Advertisement;
 
 class AdvertisementRepository extends Repository
 {
-
     public function model()
     {
         return app(Advertisement::class);
     }
 
+    public function tag()
+    {
+        return 'advertisement';
+    }
+
     /**
      * 根據搜尋參數回傳符合條件的使用者
      */
-    public function getByArgs($args, $perPage = null)
+    public function getByArgs($queryString = '', $args, $perPage = null)
     {
         $condition = [];
 
@@ -38,9 +42,10 @@ class AdvertisementRepository extends Repository
                                         '$lte' => new \MongoDB\BSON\UTCDateTime(strtotime("{$args['publish_at']} 23:59:59") * 1000)];
         }
 
-        $query = (count($condition) > 0)? $this->model()->whereRaw($condition)->orderBy('created_at','desc') : $this->model()->orderBy('created_at','desc');
-
-        return is_null($perPage)? $query->get() : $query->paginate($perPage);
+        return cache()->tags($this->tag())->remember($this->tag().".{$queryString}", 60, function() use ($perPage,$condition) {
+            $query = (count($condition) > 0)? $this->model()->whereRaw($condition)->orderBy('created_at','desc') : $this->model()->orderBy('created_at','desc');
+            return is_null($perPage)? $query->get() : $query->paginate($perPage);
+        });
     }
 
     public function enableStatusAtSpecificDate($date)

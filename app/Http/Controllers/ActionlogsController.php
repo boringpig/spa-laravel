@@ -23,7 +23,7 @@ class ActionlogsController extends Controller
 
     public function index()
     {
-        $actionlogs = $this->actionlogRepository->getAll(config('website.perPage'));
+        $actionlogs = $this->actionlogRepository->getAll(config('website.perPage'),['user']);
         $actionlogs = (count($actionlogs) > 0)? $this->actionlogTransformer->transform($actionlogs)->setPath("/".Route::current()->uri()) : [];
         return view('actionlogs.index', [
             'actionlogs'   => $actionlogs,
@@ -32,7 +32,7 @@ class ActionlogsController extends Controller
 
     public function search(Request $request)
     {
-        $actionlogs = $this->actionlogRepository->getByArgs($request->all(), config('website.perPage'));
+        $actionlogs = $this->actionlogRepository->getByArgs($request->getQueryString(),$request->all(), config('website.perPage'));
         $actionlogs = (count($actionlogs) > 0)? $this->actionlogTransformer->transform($actionlogs)->setPath("/".Route::current()->uri()) : [];
         $request->flash();
         return view('actionlogs.index', [

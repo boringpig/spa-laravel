@@ -147,7 +147,7 @@ class RolesController extends Controller
 
     public function search(Request $request)
     {
-        $roles = $this->roleRepository->getByArgs($request->all(), config('website.perPage'));
+        $roles = $this->roleRepository->getByArgs($request->getQueryString(),$request->all(), config('website.perPage'));
         $roles = (count($roles) > 0 )? $this->roleTransformer->transform($roles)->appends($request->all())->setPath("/{$request->path()}") : [];
         $request->flash();
         return view('roles.index', [

@@ -6,10 +6,14 @@ use App\Entities\Schedule;
 
 class ScheduleRepository extends Repository
 {
-
     public function model()
     {
         return app(Schedule::class);
+    }
+
+    public function tag()
+    {
+        return 'schedule';
     }
 
     /**

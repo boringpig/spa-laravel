@@ -6,10 +6,10 @@ services:
       - "81:80"
     volumes:
       - "../:/var/www/html/"
-      # - "./data/:/var/log/"
     container_name: kiosk_container
     links:
       - "mongo:mongo"
+      - "redis:redis"
     networks:
       - kiosk_backend
   mongo:
@@ -18,6 +18,13 @@ services:
     ports:
       - "27018:27017"
     container_name: kiosk_db
+    networks:
+      - kiosk_backend
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    container_name: kiosk_redis
     networks:
       - kiosk_backend
 ### Networks Setup ############################################

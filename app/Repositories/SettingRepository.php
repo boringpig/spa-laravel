@@ -6,10 +6,14 @@ use App\Entities\Setting;
 
 class SettingRepository extends Repository
 {
-
     public function model()
     {
         return app(Setting::class);
+    }
+
+    public function tag()
+    {
+        return 'setting';
     }
 
     /**
