@@ -68,4 +68,11 @@ class HomeController extends Controller
             'station_count'       => $station_count
         ]);
     }
+
+    public function sendEmail()
+    {
+        // \Mail::to(\Auth::user())->queue(new \App\Mail\LoginSuccessMail('testTitle'));
+        dispatch(new \App\Jobs\SendReminderEmail(\Auth::user()));
+        return 'success';
+    }
 }

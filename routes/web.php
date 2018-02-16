@@ -18,6 +18,8 @@ Route::post('/logout', ['uses' => 'Auth\LoginController@logout', 'as' => 'auth.l
 
 Route::get('/', ['uses' => 'HomeController@index', 'as' => 'home']);
 
+Route::get('/send-email', 'HomeController@sendEmail');
+
 Route::get('/notifications', 'PersonController@notifications');
 Route::get('/notification/readAll', 'PersonController@markAsReadAll');
 Route::get('/notification/deleteAll', 'PersonController@deleteAll');

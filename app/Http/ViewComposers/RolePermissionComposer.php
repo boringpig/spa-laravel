@@ -19,7 +19,7 @@ class RolePermissionComposer
 
     public function compose(View $view)
     {
-        if(str_contains(Route::current()->getName(), '.')) {
+        if(!is_null(Route::current()->getName()) && str_contains(Route::current()->getName(), '.')) {
             $menu = explode('.', Route::current()->getName())[0];
             $this->role_button = collect($this->permission)->filter(function($value) use ($menu) {
                 return preg_match("/^{$menu}/", $value);
