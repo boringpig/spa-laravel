@@ -19,21 +19,29 @@ class RolePermissionComposer
 
     public function compose(View $view)
     {
-        if(!is_null(Route::current()->getName()) && str_contains(Route::current()->getName(), '.')) {
-            $menu = explode('.', Route::current()->getName())[0];
-            $this->role_button = collect($this->permission)->filter(function($value) use ($menu) {
-                return preg_match("/^{$menu}/", $value);
+        $excludedViews = ['emails.test'];
+
+        // 過濾不需傳遞值的頁面
+        if(in_array($view->getName(), $excludedViews)) {
+            $view->with('role_button', $this->role_button);
+            $view->with('role_menu', $this->role_menu);
+        } else {
+            if(array_key_exists('as', Route::current()->action) && str_contains(Route::current()->getName(), '.')) {
+                $menu = explode('.', Route::current()->getName())[0];
+                $this->role_button = collect($this->permission)->filter(function($value) use ($menu) {
+                    return preg_match("/^{$menu}/", $value);
+                })->map(function($value) {
+                    return explode('.', $value)[1];
+                })->values()->toArray();
+            }
+            
+            $this->role_menu = collect($this->permission)->filter(function($value) {
+                return preg_match("/.index$/", $value);
             })->map(function($value) {
-                return explode('.', $value)[1];
-            })->values()->toArray();
+                return explode('.', $value)[0];
+            })->unique()->values()->toArray();
+            $view->with('role_button', $this->role_button);
+            $view->with('role_menu', $this->role_menu);
         }
-        
-        $this->role_menu = collect($this->permission)->filter(function($value) {
-            return preg_match("/.index$/", $value);
-        })->map(function($value) {
-            return explode('.', $value)[0];
-        })->unique()->values()->toArray();
-        $view->with('role_button', $this->role_button);
-        $view->with('role_menu', $this->role_menu);
     }
 }
