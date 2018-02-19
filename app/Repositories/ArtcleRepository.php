@@ -17,7 +17,12 @@ class ArticleRepository extends Repository
     }
 
     /**
-     * 根據搜尋參數回傳符合條件的使用者
+     * 根據搜尋參數回傳符合條件的文章
+     *
+     * @param string $queryString 搜尋字串用來當作快取的key值
+     * @param array $args 搜尋參數
+     * @param string $perPage 分頁數量
+     * @return Collection/Pagination
      */
     public function getByArgs($queryString = '', $args, $perPage = null)
     {
@@ -50,6 +55,9 @@ class ArticleRepository extends Repository
     /**
      * 檢查唯一的文章標題、語系
      *
+     * @param string $category_no 文章標題的id
+     * @param string $language 語系
+     * @return boolean
      */
     public function checkSameArticle($category_no, $language)
     {

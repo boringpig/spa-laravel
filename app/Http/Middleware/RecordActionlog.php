@@ -21,6 +21,13 @@ class RecordActionlog
         return $next($request);
     }
 
+    /**
+     * 儲存 response 的操作記錄
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
     public function terminate($request, $response)
     {
         $route_name = $request->route()->getName();

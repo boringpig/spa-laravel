@@ -16,7 +16,8 @@ class PLC
     /**
      * 搜尋各類型燈號狀態
      *
-     * @return void
+     * @param string $type 燈號類型
+     * @return array
      */
     public function searchLightStatus($type)
     {
@@ -49,7 +50,7 @@ class PLC
     /**
      * 搜尋門位狀態
      *
-     * @return void
+     * @return array
      */
     public function searchDoorStatus()
     {
@@ -79,9 +80,10 @@ class PLC
     }
 
     /**
-     * 搜詢各類型的電源狀態
+     * 搜尋各類型的電源狀態
      *
-     * @return void
+     * @param string $type 電源類型
+     * @return array
      */
     public function searchPowerStatus($type)
     {
@@ -91,7 +93,7 @@ class PLC
         if($response[$cmd]['_res']) {
             /**
              * 回應格式
-             * P: 電源埠號。1xps1、2xps2 ....
+             * P: 電源埠號。 1xps1、2xps2 ....
              * F: 運作狀態。 0關、1開、2重置(off->等5秒->on)
              */
             $output = $response[$cmd]['response']['syntax'];
@@ -104,9 +106,10 @@ class PLC
     }
 
     /**
-     * 搜詢各類型的風扇狀態
+     * 搜尋各類型的風扇狀態
      *
-     * @return void
+     * @param string $type 風扇類型
+     * @return array
      */
     public function searchFanStatus($type)
     {
@@ -137,10 +140,10 @@ class PLC
     }
 
     /**
-     * 控制kiosk狀態
+     * 控制 kiosk 狀態
      *
-     * @param string $cmd
-     * @return void
+     * @param string $cmd 指令
+     * @return boolean
      */
     public function controlStatus($cmd)
     {
@@ -149,14 +152,20 @@ class PLC
         return $response[$cmd]['_res'];
     }
 
+    /**
+     * curl 送出 get 請求
+     *
+     * @param string $url 路由
+     * @return array
+     */
     private function sendGetRequest($url)
     {
         // 執行
         $ch = curl_init();
-        curl_setopt($ch,CURLOPT_URL, $url);
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
-        $response = str_replace("\n", "" , curl_exec($ch));
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
         // 將回應處理為json格式
+        $response = str_replace("\n","",curl_exec($ch));
         if(!preg_match("/^\{/", $response)) {
             $response = "{{$response}";
         }

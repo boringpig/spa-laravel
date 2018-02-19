@@ -17,9 +17,9 @@ class SettingRepository extends Repository
     }
 
     /**
-     * 找出第一筆
+     * 找出第一筆系統設定
      *
-     * @return void
+     * @return setting
      */
     public function findOne()
     {
@@ -27,7 +27,10 @@ class SettingRepository extends Repository
     }
 
     /**
-     * 建立或更新資料
+     * 建立或更新系統資料
+     *
+     * @param array $args 參數
+     * @return boolean
      */
     public function createOrUpdate($args)
     {

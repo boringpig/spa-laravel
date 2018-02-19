@@ -17,9 +17,7 @@ Route::post('/login', ['uses' => 'Auth\LoginController@login', 'as' => 'auth.log
 Route::post('/logout', ['uses' => 'Auth\LoginController@logout', 'as' => 'auth.logout']);
 
 Route::get('/', ['uses' => 'HomeController@index', 'as' => 'home']);
-
 Route::get('/send-email', 'HomeController@sendEmail');
-
 Route::get('/notifications', 'PersonController@notifications');
 Route::get('/notification/readAll', 'PersonController@markAsReadAll');
 Route::get('/notification/deleteAll', 'PersonController@deleteAll');

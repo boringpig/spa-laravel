@@ -8,7 +8,11 @@ abstract class Repository
     public abstract function tag();
 
     /**
-     * 回傳所有使用者並以註冊日期最新排序
+     * 回傳所有的資料並用建立日期遞增排序
+     *
+     * @param string $perPage 分頁數量
+     * @param array $releation 關聯資料表
+     * @return Collection/Pagination
      */
     public function getAll($perPage = null, $releation = [])
     {
@@ -23,7 +27,9 @@ abstract class Repository
     }
 
     /**
-     * 回傳所有使用者的數量
+     * 回傳全部資料的總數量
+     *
+     * @return int 總數量
      */
     public function getAllTotal()
     {
@@ -33,7 +39,10 @@ abstract class Repository
     }
 
     /**
-     * 回傳單一使用者
+     * 回傳單一符合的資料
+     *
+     * @param string $id 資料的ID
+     * @return Model
      */
     public function findOneById($id)
     {
@@ -43,7 +52,10 @@ abstract class Repository
     }
 
     /**
-     * 建立新的使用者並回傳該物件 
+     * 建立一筆資料並回傳該物件
+     *
+     * @param array $args 建立參數
+     * @return Model
      */
     public function create($args)
     {
@@ -53,6 +65,9 @@ abstract class Repository
 
     /**
      * 建立多筆資料
+     *
+     * @param array $rows 多筆參數的陣列
+     * @return boolean
      */
     public function insertMany($rows)
     {
@@ -61,7 +76,11 @@ abstract class Repository
     }
 
     /**
-     * 儲存修改後的使用者並回傳該物件
+     * 修改符合條件資料的內容
+     *
+     * @param string $id 資料的ID
+     * @param array $args 更新參數
+     * @return boolean
      */
     public function update($id, $args)
     {
@@ -71,7 +90,10 @@ abstract class Repository
     }
 
     /**
-     * 刪除特定的使用者
+     * 刪除符合條件的資料
+     *
+     * @param string $id 資料的ID
+     * @return boolean
      */
     public function delete($id)
     {
@@ -81,6 +103,8 @@ abstract class Repository
 
     /**
      * 清空資料表
+     *
+     * @return boolean
      */
     public function truncate()
     {
@@ -89,7 +113,9 @@ abstract class Repository
     }
 
     /**
-     * 清除單一快取
+     * 清除同類型的快取資料
+     *
+     * @return void
      */
     public function clearCache()
     {
@@ -97,7 +123,9 @@ abstract class Repository
     }
 
     /**
-     * 清除所有快取
+     * 清除所有快取資料
+     *
+     * @return void
      */
     public function clearAllCache()
     {

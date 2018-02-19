@@ -17,7 +17,12 @@ class RoleRepository extends Repository
     }
 
     /**
-     * 根據搜尋參數回傳符合條件的使用者
+     * 根據搜尋參數回傳符合條件的角色
+     *
+     * @param string $queryString 搜尋字串用來當作快取的key值
+     * @param array $args 搜尋參數
+     * @param string $perPage 分頁數量
+     * @return Collection/Pagination
      */
     public function getByArgs($queryString = '', $args, $perPage = null)
     {

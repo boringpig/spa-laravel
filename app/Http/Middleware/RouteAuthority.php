@@ -18,7 +18,7 @@ class RouteAuthority
     public function handle($request, Closure $next)
     {
         $route_name = $request->route()->getName();
-        // 轉化 create、edit 的路由名稱
+        // 轉換 create、edit 的路由名稱
         if(str_contains($route_name, '.')) {
             $menu = explode('.', $route_name)[0];
             $button = explode('.', $route_name)[1];
@@ -32,7 +32,7 @@ class RouteAuthority
             }
             $route_name = "{$menu}.{$button}";
         }
-
+        // 檢查目前的路由是否為該角色可存取的權限
         if(is_null(Auth::user()->role) || (str_contains($route_name, '.') 
             && ! in_array($route_name, Auth::user()->role->permission))) {
             throw new ForbiddenException;

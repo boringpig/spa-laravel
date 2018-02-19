@@ -17,7 +17,12 @@ class AdvertisementRepository extends Repository
     }
 
     /**
-     * 根據搜尋參數回傳符合條件的使用者
+     * 根據搜尋參數回傳符合條件的廣告
+     *
+     * @param string $queryString 搜尋字串用來當作快取的key值
+     * @param array $args 搜尋參數
+     * @param string $perPage 分頁數量
+     * @return Collection/Pagination
      */
     public function getByArgs($queryString = '', $args, $perPage = null)
     {
@@ -48,6 +53,12 @@ class AdvertisementRepository extends Repository
         });
     }
 
+    /**
+     * 將預發佈的廣告更改為啟動狀態
+     *
+     * @param string $date 發佈日期
+     * @return boolean
+     */
     public function enableStatusAtSpecificDate($date)
     {
         $condition = [

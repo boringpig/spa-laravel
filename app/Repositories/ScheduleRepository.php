@@ -19,6 +19,15 @@ class ScheduleRepository extends Repository
     /**
      * 建立或更新資料
      */
+    /**
+     * 建立或更新排程狀態的資料
+     *
+     * @param string $command 排程名稱
+     * @param string $description 排程作動的描述
+     * @param string $frequence 排程啟動的頻率
+     * @param string $error 排程錯誤訊息
+     * @return void
+     */
     public function createOrUpdate($command, $description, $frequence, $error = "")
     {
         $schedule = $this->model()->where('command', $command)->first();

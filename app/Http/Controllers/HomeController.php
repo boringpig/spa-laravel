@@ -48,6 +48,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // 取得泉州全部場站的數量
         $station_count = collect($this->stationRepository->getTotalCount());
         $areas = getSCityAreaArray();
         $station_total = $station_count->sum('count');

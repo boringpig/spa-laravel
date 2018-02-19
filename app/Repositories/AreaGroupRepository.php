@@ -19,6 +19,9 @@ class AreaGroupRepository extends Repository
     
     /**
      * 回傳全部地區群組並新增沒有的地區資料
+     *
+     * @param string $perPage 分頁數量
+     * @return Collection/Pagination
      */
     public function getAllOrCreateNewArea($perPage = null)
     {
@@ -53,6 +56,13 @@ class AreaGroupRepository extends Repository
         return is_null($perPage)? $this->model()->orderBy('parent_area','asc')->get() : $this->model()->orderBy('parent_area','asc')->paginate($perPage);
     }
 
+    /**
+     * 根據搜尋參數回傳符合條件的地區群組
+     *
+     * @param array $args 搜尋參數
+     * @param string $perPage 分頁數量
+     * @return Collection/Pagination
+     */
     public function getByArgs($args, $perPage = null)
     {
         $condition = [];

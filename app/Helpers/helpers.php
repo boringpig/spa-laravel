@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * 語系列表
+ */
 if (!function_exists('getLanguageList')) {
     function getLanguageList() 
     {
@@ -13,6 +16,9 @@ if (!function_exists('getLanguageList')) {
     }
 }
 
+/**
+ * 轉換文章內容的圖片連結
+ */
 if (!function_exists('transformContentImageSrc')) {
     function transformContentImageSrc($content)
     {
@@ -30,16 +36,23 @@ if (!function_exists('transformContentImageSrc')) {
     }
 }
 
+/**
+ * 處理 html 的圖片內容
+ */
 if (!function_exists('processContent')) {
     function processContent($content)
     {
+        //  取得 body 標籤內的內容
         if(preg_match("/^<!DOCTYPE/", $content)) {
             preg_match("/<body[^>]*>(.*?)<\/body>/is", $content, $matches);
             $content = $matches[1];
         }
+        // 檢查內容是否有 div 標籤
         $content = preg_match("/^<div>.*<\/div>$/is", $content)? $content : "<div>{$content}</div>";
+        // 用 php-dom 加載 html 
         $dom = new \DomDocument();
         $dom->loadHtml(mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'));    
+        // 取得 img 標籤的圖片內容，進行 base64 解碼後，將圖片內容儲存回 html 標籤內
         $images = $dom->getElementsByTagName('img');
         if ($images->length > 0) {
             foreach($images as $key => $image) {
@@ -60,6 +73,9 @@ if (!function_exists('processContent')) {
     }
 }
 
+/**
+ * 檢查資料夾是否存在
+ */
 if (!function_exists('checkDirectoryExists')) {
     function checkDirectoryExists($path)
     {
@@ -70,7 +86,10 @@ if (!function_exists('checkDirectoryExists')) {
     }
 }
 
-if (!function_exists('getImageName')) {
+/**
+ * 將圖片用 base64 解構
+ */
+if (!function_exists('processImage')) {
     function processImage($image)
     {
         list($type, $data) = explode(';', $image);
@@ -82,6 +101,9 @@ if (!function_exists('getImageName')) {
     }
 }
 
+/**
+ * 取得上傳圖片的資訊
+ */
 if (!function_exists('getFileInfo')) {
     function getFileInfo($file) 
     {
@@ -99,6 +121,9 @@ if (!function_exists('getFileInfo')) {
     }
 }
 
+/**
+ * 換算圖片大小的單位
+ */
 if (!function_exists('formatSizeUnits')) {
     function formatSizeUnits($size)
     {	
@@ -109,6 +134,9 @@ if (!function_exists('formatSizeUnits')) {
     }
 }
 
+/**
+ * 檢查日期格式
+ */
 if (!function_exists('checkDateFormat')) {
     function checkDateFormat($date)
     {
@@ -122,6 +150,9 @@ if (!function_exists('checkDateFormat')) {
     }
 }
 
+/**
+ * 成功回應
+ */
 if (!function_exists('successOutput')) {
     function successOutput($data)
     {
@@ -129,6 +160,9 @@ if (!function_exists('successOutput')) {
     }
 }
 
+/**
+ * 錯誤回應
+ */
 if (!function_exists('errorOutput')) {
     function errorOutput($message)
     {
@@ -136,6 +170,9 @@ if (!function_exists('errorOutput')) {
     }
 }
 
+/**
+ * 替換時間的分號或將時間長度補足為四碼
+ */
 if (!function_exists('replaceTimeColon')) {
     function replaceTimeColon($time, $replace = false)
     {
@@ -147,6 +184,9 @@ if (!function_exists('replaceTimeColon')) {
     }
 }
 
+/**
+ * 亂數產生器
+ */
 if (!function_exists('UniqueRandomNumbersWithinRange')) {
     function UniqueRandomNumbersWithinRange($min, $max, $quantity) {
         $numbers = range($min, $max);
@@ -155,6 +195,9 @@ if (!function_exists('UniqueRandomNumbersWithinRange')) {
     }
 }
 
+/**
+ * 取出日期範圍的開始與結束的日期 
+ */
 if (!function_exists('breakupDateRange')) {
     function breakupDateRange($time) {
         list($start, $end) = explode('-', $time);

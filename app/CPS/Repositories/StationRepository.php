@@ -12,11 +12,24 @@ class StationRepository
         return app(Station::class);
     }
 
+    /**
+     * 取得全部的場站
+     *
+     * @param string $perPage 分頁數量
+     * @return Collection/Pagination
+     */
     public function getAll($perPage = null)
     {
         return is_null($perPage)? $this->model()->get() : $this->model()->paginate($perPage);
     }
 
+    /**
+     * 根據搜尋參數回傳符合條件的場站
+     *
+     * @param array $args 搜尋參數
+     * @param string $perPage 分頁數量
+     * @return Collection/Pagination
+     */
     public function getByArgs($args, $perPage = null)
     {
         $condition = [];
@@ -34,11 +47,22 @@ class StationRepository
         return is_null($perPage)? $query->get() : $query->paginate($perPage);
     }
 
+    /**
+     * 根據場站代號回傳單一場站資料
+     *
+     * @param string $station 場站代號
+     * @return Station
+     */
     public function findOneByStation($station)
     {
         return $this->model()->where('s_no', $station)->first();
     }
 
+    /**
+     * 計算泉州各地區的場站數量
+     *
+     * @return Array
+     */
     public function getTotalCount()
     {
         $pipeline = [

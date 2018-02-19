@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * 縣市別地區的選單
+ */
 if (!function_exists('getSCityAreaArray')) {
     function getSCityAreaArray() 
     {
@@ -7,6 +10,9 @@ if (!function_exists('getSCityAreaArray')) {
     }
 }
 
+/**
+ * 角色名稱的選單
+ */
 if (!function_exists('getRoleNameArray')) {
     function getRoleNameArray() 
     {
@@ -14,6 +20,9 @@ if (!function_exists('getRoleNameArray')) {
     }
 }
 
+/**
+ * 縣市別的選單
+ */
 if (!function_exists('getSCityArray')) {
     function getSCityArray() 
     {
@@ -27,6 +36,9 @@ if (!function_exists('getSCityArray')) {
     }
 }
 
+/**
+ * 標題類別名稱的選單
+ */
 if (!function_exists('getCategoryNameArray')) {
     function getCategoryNameArray() 
     {
