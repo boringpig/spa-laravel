@@ -1,0 +1,26 @@
+image: gitlab.program.com.tw:4567/jeffery/kiosk-ci-docker:latest
+
+services:
+  - name: mongo:3.6
+    alias: mongo
+
+# variables:
+#   MYSQL_DATABASE: homestead
+#   MYSQL_USER: homestead
+#   MYSQL_PASSWORD: secret
+#   MYSQL_ROOT_PASSWORD: secret
+#   DB_HOST: mariadb
+
+stages:
+  - test
+
+before_script:
+  - cp .env.example .env
+  - composer install
+  - php artisan k:g
+  # - mongorestore -h mongo --gzip --archive=./test_db/vms.agz
+  
+phpunit:
+  stage: test
+  script:
+    - php vendor/bin/phpunit
