@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use App\CPS\Repositories\StationRepository;
 use App\Repositories\KioskTokenRepository;
 use App\Repositories\ScheduleRepository;
+use Illuminate\Support\Facades\Log;
 
 class HashStation extends Command
 {
