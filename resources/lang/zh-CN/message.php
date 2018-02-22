@@ -37,4 +37,5 @@ return [
     'change_status_success'             => '状态更改成功',
     'unable_to_operate'                 => '无法进行操作',
     'request_must_json'                 => '请求必须為JSON',
+    'member_has_been_disabled'          => '该帐号已被禁用',
 ];

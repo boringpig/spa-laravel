@@ -40,4 +40,15 @@ class UserRepository extends Repository
 
         return is_null($perPage)? $query->get() : $query->paginate($perPage);
     }
+
+    /**
+     * 根據帳號找使用者
+     *
+     * @param string $username 帳號
+     * @return Model
+     */
+    public function findByUsername($username)
+    {
+        return $this->model()->where('username', $username)->first();
+    }
 }

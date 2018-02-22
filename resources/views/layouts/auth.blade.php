@@ -78,12 +78,12 @@
 		<script src="{{ asset('assets/js/jquery.gritter.min.js') }}"></script>
 
 		<script>
-			@if(Session::has('status'))
+			@if(Session::has('error'))
 				$.gritter.add({
-					title: "{{ Session::get('status') }}",
-					class_name: "gritter-success gritter-center",
-					sticky: true,
-					time: 1500,
+					title: "{{ Session::get('error') }}",
+					class_name: "gritter-error",
+					sticky: false,
+					time: 2000,
 				});	
 			@endif
 		</script>
