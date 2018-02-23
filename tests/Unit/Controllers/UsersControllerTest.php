@@ -1,128 +1,513 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Pagination\LengthAwarePaginator;
+use App\Http\Requests\User\CreateUserRequest;
+use App\Http\Requests\User\EditUserRequest;
+use App\Http\Requests\User\ChangePasswordRequest;
+use Illuminate\Http\Request;
+use App\User;
 
 class UsersControllerTest extends TestCase
 {
-    // 用 Mockery 隔離 repository
-    protected $repositoryMock = null;
+    // use WithoutMiddleware;
 
-    // public function setUp()
-    // {
-    //     parent::setUp();
+    protected $userRepositoryMock = null;
+    protected $roleRepositoryMock = null;
+    protected $userTransformerMock = null;
+    protected $target = null;
 
-        // Mockery::mock 可以利用 Reflection 機制幫我們建立假物件
-        // $this->repositoryMock = Mockery::mock('App\Repositories\ArticleRepository');
-
-        // Service Container 的 instance 方法可以讓我們
-        // 用假物件取代原來的 ArticleRepository 物件
-        // $this->app->instance('App\Repositories\ArticleRepository', $this->repositoryMock);
-    // }
-
-    // 有些方法必須為登入後才可以執行
-    // protected function userLoggedIn()
-    // {
-    //     $this->be(new User(['email' => 'username@example.com']));
-    // }
-
-    // public function testCreateArticleSuccess()
-    // {
-    //     // 把 Session::start 移到 setUp
-
-    //     // 模擬使用者已登入
-    //     $this->userLoggedIn();
-
-    //     // 以下不變
-    //     // ...
-    // }
-    // 測試沒有登入存取失敗
-    // public function testAuthFailed()
-    // {
-    //     $this->call('POST', 'articles', [
-    //         '_token' => csrf_token(),
-    //     ]);
-    //     $this->assertRedirectedTo('auth/login');
-    // }
-    // public function testArticleList()
-    // {
-    //     // 確認程式會呼叫一次 ArticleRepository::latest10 方法
-    //     // 實際上是為這個 mock object 加入 latest10 方法
-    //     // 沒有呼叫到的話就會發出異常
-    //     // 再假設它會回傳 foo 這個字串
-    //     // 這樣就不需要真的去連結資料庫
-    //     $this->repositoryMock
-    //         ->shouldReceive('latest10')
-    //         ->once()
-    //         ->andReturn([]);
-
-    //     $this->call('GET', '/');
-    //     $this->assertResponseOk();
-
-    //     // 應取得 articles 變數
-    //     // 而其值為空陣列
-    //     $this->assertViewHas('articles', []);
-    // }
-
-    // public function testCsrfFailed()
-    // {
-    //     // 模擬沒有 token 時
-    //     // 程式應該是輸出 500 Error
-    //     $this->call('POST', 'articles');
-    //     $this->assertResponseStatus(500);
-    // }
-
-    // 測試沒有填值送出表單的驗證錯誤
-    // public function testCreateArticleFails()
-    // {
-    //     Session::start();
-
-    //     $this->call('POST', 'articles', [
-    //         '_token' => csrf_token(),
-    //     ]);
-
-    //     $this->assertHasOldInput();
-    //     $this->assertSessionHasErrors();
-
-    //     // 應該會導回前一個 URL
-    //     $this->assertResponseStatus(302);
-    // }
-
-    // 測試新增資料成功時的行為
-    // public function testCreateArticleSuccess()
-    // {
-    //     // 會呼叫到 ArticleRepository::create
-    //     $this->repositoryMock
-    //         ->shouldReceive('create')
-    //         ->once();
-
-    //     // 初始化 Session ，因為需要避免 CSRF 的 token
-    //     Session::start();
-
-    //     // 模擬送出表單
-    //     $this->call('POST', 'articles', [
-    //         'title' => 'title 999',
-    //         'body' => 'body 999',
-    //         '_token' => csrf_token(), // 手動加入 _token
-    //     ]);
-
-    //     // 完成後會導向列表頁
-    //     $this->assertRedirectedToRoute('articles.index');
-    // }
-
-    /**
-     * @group controller
-     */
-    public function test使用者()
+    public function setUp()
     {
-        $this->assertTrue(true);
+        parent::setUp();
+        $this->userRepositoryMock = $this->initMock('App\Repositories\UserRepository');
+        $this->roleRepositoryMock = $this->initMock('App\Repositories\RoleRepository');
+        $this->userTransformerMock = $this->initMock('App\Transformers\UserTransformer');
+        $this->target = $this->app->make('App\Http\Controllers\UsersController');
     }
 
     public function tearDown()
     {
-        // 每次完成 test case 後，要清除掉被 mock 的假物件
-        // Mockery::close();
+        $this->userRepositoryMock = null;
+        $this->roleRepositoryMock = null;
+        $this->userTransformerMock = null;
+        $this->target = null;
+        parent::tearDown();
+    }
+
+    /**
+     * @group user-controller
+     */
+    public function test成功取得使用者列表()
+    {
+        // arrange
+        $perPage = 2;
+        $expected = $this->paginationOfUsers($perPage);
+        $this->userRepositoryMock->shouldReceive('getAll')
+                                 ->once()
+                                 ->withAnyArgs()
+                                 ->andReturn($expected);
+        $this->userTransformerMock->shouldReceive('transform')
+                                  ->once()
+                                  ->withAnyArgs()
+                                  ->andReturn($expected);
+        // act
+        $view = $this->target->index(new Request());  // Illuminate\View\View，可以用 get_class 查看型別
+        $actual = $view->users;
+        // assert
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * @group user-controller
+     */
+    public function test使用者新增頁面進入成功()
+    {
+        // act
+        $view = $this->target->create();
+        // assert
+        $this->assertEquals('users.create', $view->getName());
+    }
+
+    /**
+     * @group user-controller
+     */
+    public function test使用者建立成功()
+    {
+        // arrange
+        $form_data = [
+            'username'  => 'admin',
+            'name'      => 'admin',
+            'email'     => 'admin@example.com.tw',
+            'password'  => bcrypt('secret'),
+            'status'    => 0,
+            'phone'     => '123456',
+            'role_id'   => '5a72ad2a33523e00272963d2',
+        ];
+        $request = new CreateUserRequest();
+        $query = $request->replace($form_data);
+        $this->userRepositoryMock->shouldReceive('create')
+                                 ->once()
+                                 ->withAnyArgs()
+                                 ->andReturn(new User($form_data));
+        // act
+        $response = $this->target->store($query); // Illuminate\Http\RedirectResponse
+        // assert
+        $this->assertEquals(302, $response->status());
+        $this->assertEquals(route('users.index'), $response->headers->get('location'));
+        $this->assertEquals(__('form.created_success'), $response->getSession()->get('success'));
+    }
+
+    /**
+     * @group user-controller
+     */
+    public function test使用者建立失敗()
+    {
+        // arrange
+        $form_data = [
+            'username'  => 'admin',
+            'name'      => 'admin',
+            'email'     => 'admin@example.com.tw',
+            'password'  => bcrypt('secret'),
+            'status'    => 0,
+            'phone'     => '123456',
+            'role_id'   => '5a72ad2a33523e00272963d2',
+        ];
+        $request = new CreateUserRequest();
+        $query = $request->replace($form_data);
+        $this->userRepositoryMock->shouldReceive('create')
+                                 ->once()
+                                 ->withAnyArgs()
+                                 ->andReturn(null);
+        // act 
+        $response = $this->target->store($query);
+        // assert
+        $this->assertEquals(302, $response->status());
+        $this->assertEquals(route('users.create'), $response->headers->get('location'));
+        $this->assertEquals(__('form.created_fail'), $response->getSession()->get('error'));
+    }
+
+    /**
+     * @group user-controller
+     */
+    public function test使用者編輯頁進入成功()
+    {
+        // arrange
+        $id = str_random(32);
+        $expected = new User([
+            'username'  => 'admin',
+            'name'      => 'admin',
+            'email'     => 'admin@example.com.tw',
+            'password'  => bcrypt('secret'),
+            'status'    => 0,
+            'phone'     => '123456',
+            'role_id'   => '5a72ad2a33523e00272963d2',
+        ]);
+        $this->userRepositoryMock->shouldReceive('findOneById')
+                                 ->once()
+                                 ->withAnyArgs()
+                                 ->andReturn($expected);
+        $this->userTransformerMock->shouldReceive('transform')
+                                  ->once()
+                                  ->withAnyArgs()
+                                  ->andReturn($expected);
+        // act
+        $view = $this->target->edit($id);
+        $actual = $view->user;
+        // assert
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * @group user-controller
+     */
+    public function test使用者編輯頁面進入失敗()
+    {
+        // arrange
+        $id = str_random(32);
+        $this->userRepositoryMock->shouldReceive('findOneById')
+                                 ->once()
+                                 ->withAnyArgs()
+                                 ->andReturn(null);
+        // act 
+        $response = $this->target->edit($id);
+        // arrange
+        $this->assertEquals(302, $response->status());
+        $this->assertEquals(route('users.index'), $response->headers->get('location'));
+        $this->assertEquals(__('form.no_data'), $response->getSession()->get('error'));
+    }
+
+    /**
+     * @group user-controller
+     */
+    public function test使用者修改成功()
+    {
+        // arrange
+        $form_data = [
+            'username'  => 'admin',
+            'name'      => 'admin',
+            'email'     => 'admin@example.com.tw',
+            'password'  => bcrypt('secret'),
+            'status'    => 0,
+            'phone'     => '23692699',
+            'role_id'   => '5a72ad2a33523e00272963d2',
+        ];
+        $request = new EditUserRequest();
+        $query = $request->replace($form_data);
+        $this->userRepositoryMock->shouldReceive('findOneById')
+                                 ->once()
+                                 ->withAnyArgs()
+                                 ->andReturn($this->fakeUser());
+        $this->userRepositoryMock->shouldReceive('update')
+                                 ->once()
+                                 ->withAnyArgs()
+                                 ->andReturn(new User($form_data));
+        // act
+        $response = $this->target->update($query, str_random(7));
+        // assert
+        $this->assertEquals(302, $response->status());
+        $this->assertEquals(route('users.index'), $response->headers->get('location'));
+        $this->assertEquals(__('form.updated_success'), $response->getSession()->get('success'));
+    }
+
+    /**
+     * @group user-controller
+     */
+    public function test使用者不存在DB修改失敗()
+    {
+        // arrange
+        $form_data = [
+            'username'  => 'admin',
+            'name'      => 'admin',
+            'email'     => 'admin@example.com.tw',
+            'password'  => bcrypt('secret'),
+            'status'    => 0,
+            'phone'     => '23692699',
+            'role_id'   => '5a72ad2a33523e00272963d2',
+        ];
+        $request = new EditUserRequest();
+        $query = $request->replace($form_data);
+        $this->userRepositoryMock->shouldReceive('findOneById')
+                                 ->once()
+                                 ->withAnyArgs()
+                                 ->andReturn(null);
+        $id = str_random(7);
+        // act
+        $response = $this->target->update($query,$id);
+        // assert
+        $this->assertEquals(302, $response->status());
+        $this->assertEquals(route('users.edit', ['id' => $id]), $response->headers->get('location'));
+        $this->assertEquals(__('form.no_data'), $response->getSession()->get('error'));
+    }
+
+    /**
+     * @group user-controller
+     */
+    public function test使用者修改失敗()
+    {
+        // arrange
+        $form_data = [
+            'username'  => 'admin',
+            'name'      => 'admin',
+            'email'     => 'admin@example.com.tw',
+            'password'  => bcrypt('secret'),
+            'status'    => 0,
+            'phone'     => '23692699',
+            'role_id'   => '5a72ad2a33523e00272963d2',
+        ];
+        $request = new EditUserRequest();
+        $query = $request->replace($form_data);
+        $this->userRepositoryMock->shouldReceive('findOneById')
+                                 ->once()
+                                 ->withAnyArgs()
+                                 ->andReturn($this->fakeUser());
+        $this->userRepositoryMock->shouldReceive('update')
+                                 ->once()
+                                 ->withAnyArgs()
+                                 ->andReturn(false);
+        $id = str_random(7);
+        // act
+        $response = $this->target->update($query,$id);
+        // assert
+        $this->assertEquals(302, $response->status());
+        $this->assertEquals(route('users.edit', ['id' => $id]), $response->headers->get('location'));
+        $this->assertEquals(__('form.updated_fail'), $response->getSession()->get('error'));
+    }
+
+    /**
+     * @group user-controller
+     */
+    public function test使用者刪除成功()
+    {
+        // arrange
+        $id = str_random(7);
+        $user = $this->fakeUser();
+        $expected = ['RetCode' => 1,'RetVal' => $user->toArray()];
+        $this->userRepositoryMock->shouldReceive('findOneById')
+                                 ->once()
+                                 ->withAnyArgs()
+                                 ->andReturn($user);
+        $this->userRepositoryMock->shouldReceive('delete')
+                                 ->once()
+                                 ->withAnyArgs()
+                                 ->andReturn(true);
+        // act
+        $response = $this->target->destroy($id);
+        // assert
+        $this->assertEquals(200, $response->status());
+        $this->assertEquals($expected, $response->getData(true));
+    }
+
+    /**
+     * @group user-controller
+     */
+    public function test使用者不存在DB刪除失敗()
+    {
+        // arrange
+        $id = str_random(7);
+        $expected = ['RetCode' => 0,'RetMsg' => __('message.no_data')];
+        $this->userRepositoryMock->shouldReceive('findOneById')
+                                 ->once()
+                                 ->withAnyArgs()
+                                 ->andReturn(null);
+        // act
+        $response = $this->target->destroy($id);
+        // assert
+        $this->assertEquals(500, $response->status());
+        $this->assertEquals($expected, $response->getData(true));
+    }
+
+    /**
+     * @group user-controller
+     */
+    public function test使用者刪除失敗()
+    {
+        // arrange
+        $id = str_random(7);
+        $user = $this->fakeUser();
+        $expected = ['RetCode' => 0,'RetMsg' => __('message.delete_fail')];
+        $this->userRepositoryMock->shouldReceive('findOneById')
+                                 ->once()
+                                 ->withAnyArgs()
+                                 ->andReturn($user);
+        $this->userRepositoryMock->shouldReceive('delete')
+                                 ->once()
+                                 ->withAnyArgs()
+                                 ->andReturn(false);
+        // act
+        $response = $this->target->destroy($id);
+        // assert
+        $this->assertEquals(500, $response->status());
+        $this->assertEquals($expected, $response->getData(true));
+    }
+
+    /**
+     * @group user-controller
+     */
+    public function test使用者更改密碼成功()
+    {
+        // arrange
+        $id = str_random(7);
+        $user = $this->fakeUser();
+        $form_data = [
+            'password'  => bcrypt('secret'),
+        ];
+        $request = new ChangePasswordRequest();
+        $query = $request->replace($form_data);
+        $expected = ['RetCode' => 1,'RetVal' => $user->toArray()];
+        $this->userRepositoryMock->shouldReceive('findOneById')
+                                 ->once()
+                                 ->withAnyArgs()
+                                 ->andReturn($user);
+        $this->userRepositoryMock->shouldReceive('update')
+                                 ->once()
+                                 ->withAnyArgs()
+                                 ->andReturn(true);
+        // act
+        $response = $this->target->changePassword($query,$id);
+        // assert
+        $this->assertEquals(200, $response->status());
+        $this->assertEquals($expected, $response->getData(true));        
+    }
+
+    /**
+     * @group user-controller
+     */
+    public function test使用者不存在DB更改密碼失敗()
+    {
+        // arrange
+        $id = str_random(7);
+        $form_data = [
+            'password'  => bcrypt('secret'),
+        ];
+        $request = new ChangePasswordRequest();
+        $query = $request->replace($form_data);
+        $expected = ['RetCode' => 0,'RetMsg' => __('message.no_data')];
+        $this->userRepositoryMock->shouldReceive('findOneById')
+                                 ->once()
+                                 ->withAnyArgs()
+                                 ->andReturn(null);
+        // act
+        $response = $this->target->changePassword($query,$id);
+        // assert
+        $this->assertEquals(500, $response->status());
+        $this->assertEquals($expected, $response->getData(true));
+    }
+
+    /**
+     * @group user-controller
+     */
+    public function test使用者更改密碼失敗()
+    {
+        // arrange
+        $id = str_random(7);
+        $user = $this->fakeUser();
+        $form_data = [
+            'password'  => bcrypt('secret'),
+        ];
+        $request = new ChangePasswordRequest();
+        $query = $request->replace($form_data);
+        $expected = ['RetCode' => 0,'RetMsg' => __('message.change_password_fail')];
+        $this->userRepositoryMock->shouldReceive('findOneById')
+                                 ->once()
+                                 ->withAnyArgs()
+                                 ->andReturn($user);
+        $this->userRepositoryMock->shouldReceive('update')
+                                 ->once()
+                                 ->withAnyArgs()
+                                 ->andReturn(false);
+        // act
+        $response = $this->target->changePassword($query,$id);
+        // assert
+        $this->assertEquals(500, $response->status());
+        $this->assertEquals($expected, $response->getData(true));
+    }
+
+    /**
+     * @group user-controller 
+     */
+    public function test使用者列表搜尋成功()
+    {
+        // arrange
+        $perPage = 2;
+        $form_data = [
+            'username'  => 'admin',
+            'status'    => 1,
+        ];
+        $resquest = new Request();
+        $query = $resquest->replace($form_data);
+        $expected = $this->paginationOfUsers($perPage);
+        $this->userRepositoryMock->shouldReceive('getByArgs')
+                                 ->once()
+                                 ->withAnyArgs()
+                                 ->andReturn($expected);
+        $this->userTransformerMock->shouldReceive('transform')
+                                  ->once()
+                                  ->withAnyArgs()
+                                  ->andReturn($expected);
+        // act
+        $view = $this->target->search($query);
+        $actual = $view->users;
+        // assert
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * 自定義使用者列表的資料
+     *
+     * @param string $perPage 分頁數量
+     * @return LengthAwarePaginator
+     */
+    protected function paginationOfUsers($perPage) 
+    {
+        $users = [
+            [
+                "id" => "5a8e394f6ac94f2c026ce503",
+                "username" => "test",
+                "name" => "test",
+                "email" => "test@test.test.test",
+                "phone" => "1234567890",
+                "password" => bcrypt('secret'),
+                "status" => 1,
+                "role_id" => "5a8e39146ac94f2c0142cc42",
+                "role_name" => "test",
+                "updated_at" => "2018-02-22 14:48:59"
+            ],
+            [
+                "id" => "5a8cd0ee6ac94f5bbb3afa43",
+                "username" => "mptest",
+                "name" => "mptest",
+                "email" => "mptest@mptest.mptest",
+                "phone" => null,
+                "password" => bcrypt('secret'),
+                "status" => 1,
+                "role_id" => "5a72ad2a33523e00272963d2",
+                "role_name" => "系統管理者",
+                "updated_at" => "2018-02-21 09:52:46",
+            ]
+        ];
+
+        return new LengthAwarePaginator($users, count($users), $perPage);
+    }
+
+    /**
+     * 自定義admin使用者
+     *
+     * @return User
+     */
+    protected function fakeUser() 
+    {
+        return new User([
+            'username'  => 'admin',
+            'name'      => 'admin',
+            'email'     => 'admin@example.com.tw',
+            'password'  => bcrypt('secret'),
+            'status'    => 0,
+            'phone'     => '123456',
+            'role_id'   => '5a72ad2a33523e00272963d2',
+        ]);
     }
 }

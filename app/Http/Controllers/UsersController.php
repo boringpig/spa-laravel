@@ -10,6 +10,7 @@ use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\EditUserRequest;
 use App\Http\Requests\User\ChangePasswordRequest;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class UsersController extends Controller
 {
@@ -34,10 +35,10 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $users = $this->userRepository->getAll(config('website.perPage'));
-        $users = (count($users) > 0)? $this->userTransformer->transform($users)->setPath("/".Route::current()->uri()) : [];
+        $users = (count($users) > 0)? $this->userTransformer->transform($users)->setPath("/{$request->path()}") : [];
         return view('users.index', [
             'users'      => $users,
         ]);
@@ -76,7 +77,7 @@ class UsersController extends Controller
         
         if(is_null($user)) {
             session()->flash('error', __('form.created_fail'));            
-            return redirect()->back();
+            return redirect()->route('users.create');
         }
         
         session()->flash('success', __('form.created_success'));
@@ -95,7 +96,7 @@ class UsersController extends Controller
 
         if(is_null($user)) {
             session()->flash('error', __('form.no_data'));
-            return redirect()->back();
+            return redirect()->route('users.index');
         }
 
         $user = $this->userTransformer->transform($user);
@@ -118,7 +119,7 @@ class UsersController extends Controller
 
         if(is_null($user)) {
             session()->flash('error', __('form.no_data'));
-            return redirect()->back();
+            return redirect()->route('users.edit', ['id' => $id]);
         }
         // 啟用/禁用 是用checkbox有選擇才有回傳值，反之沒有
         $status = $request->has('status')? 1 : 0;
@@ -137,7 +138,7 @@ class UsersController extends Controller
         }
 
         session()->flash('error', __('form.updated_fail'));
-        return redirect()->back();
+        return redirect()->route('users.edit', ['id' => $id]);
     }
 
     /**
@@ -185,7 +186,9 @@ class UsersController extends Controller
     {
         $users = $this->userRepository->getByArgs($request->getQueryString(),$request->all(),config('website.perPage'));
         $users = (count($users) > 0)? $this->userTransformer->transform($users)->appends($request->all())->setPath("/{$request->path()}") : [];
-        $request->flash();
+        if(session()->isStarted()) {
+            $request->flash();
+        }
         return view('users.index', [
             'users'      => $users,
         ]);

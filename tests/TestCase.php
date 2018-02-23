@@ -22,4 +22,26 @@ abstract class TestCase extends BaseTestCase
 
         return $mock;
     }
+
+    /**
+     * 有些方法必須為登入後才可以執行
+     *
+     * @return void
+     */
+    public function userLoggedIn()
+    {
+        $user = new \App\User([
+            "name" => "phpunit", 
+            "username" => "phpunit", 
+            "email" => "phpunit@program.com.tw", 
+            "password" => bcrypt('secret'), 
+            "phone" => "23692699", 
+            "status" => 1, 
+            "role_id" => "5a72ad2a33523e00272963d2", 
+            "role_objectid" => new \MongoDB\BSON\ObjectID("5a72ad2a33523e00272963d2"), 
+            "updated_at" => new \MongoDB\BSON\UTCDateTime(time() * 1000), 
+            "created_at" => new \MongoDB\BSON\UTCDateTime(time() * 1000), 
+        ]);
+        $this->be($user);
+    }
 }
