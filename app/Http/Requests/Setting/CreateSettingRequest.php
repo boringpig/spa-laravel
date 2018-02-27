@@ -26,7 +26,7 @@ class CreateSettingRequest extends FormRequest
         return [
             'customer_service_phone'    => 'nullable|numeric|digits_between:0,20',
             'customer_service_email'    => 'nullable|email|max:255',
-            'kiosk_freetime'            => 'nullable|numeric|min:0|max:60',
+            'kiosk_freetime'            => 'nullable|numeric|min:0',
         ];
     }
 
