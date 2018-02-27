@@ -26,7 +26,7 @@ class EditArticleRequest extends FormRequest
         return [
             'category_no'    => 'required|string',
             'content'        => 'required|string',
-            'language'       => 'required|string|in:zh-CN,zh-TW,en',
+            'language'       => 'required|string|in:cn,tw,en',
             'broadcast_area' => 'required|array',
         ];
     }

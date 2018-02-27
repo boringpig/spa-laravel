@@ -6,9 +6,9 @@ if (!function_exists('getLanguageList')) {
     function getLanguageList() 
     {
         return [
-            'zh-TW' => '繁体中文',
-            'zh-CN' => '简体中文',
-            'en'    => '英文',
+            'tw' => '繁体中文',
+            'cn' => '简体中文',
+            'en' => '英文',
         ];
     }
 }
