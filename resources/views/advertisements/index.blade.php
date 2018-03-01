@@ -100,17 +100,23 @@
                                 </label>
                             </td>
                             <td>
-                                <ul class="ace-thumbnails clearfix">
-                                    <li>
-                                        <a href="{{ $advertisement['path'] }}" data-rel="colorbox" class="cboxElement">
-                                        <img src="{{ $advertisement['path'] }}" width="120" height="100" alt="{{ $advertisement['name'] }}">
-                                        <div class="text">
-                                            <div class="inner">{{ $advertisement['name'] }}</div>
-                                        </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                                
+                                @if(preg_match("/^video/", $advertisement['file_type']))
+                                    <video width="200" controls>
+                                        <source src="{{ $advertisement['path'] }}" type="{{ $advertisement['file_type'] }}">
+                                        Your browser does not support HTML5 video.
+                                    </video>
+                                @else
+                                    <ul class="ace-thumbnails clearfix text-center">
+                                        <li>
+                                            <a href="{{ $advertisement['path'] }}" data-rel="colorbox" class="cboxElement">
+                                            <img src="{{ $advertisement['path'] }}" width="150" height="100" alt="{{ $advertisement['name'] }}">
+                                            <div class="text">
+                                                <div class="inner">{{ $advertisement['name'] }}</div>
+                                            </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                @endif
                             </td>
                             <td>{{ $advertisement['name'] }}</td>
                             <td>{{ $advertisement['round_time'] }}</td>

@@ -55,7 +55,14 @@
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label no-padding-right"><strong>@lang('form.old_image_or_video'):</strong></label>
                             <div class="col-xs-6">
-                                <img src="{{ $advertisement['path'] }}" alt="{{ $advertisement['name'] }}" width="200" height="180">
+                                @if(preg_match("/^video/", $advertisement['file_type']))
+                                    <video width="200" height="150" controls>
+                                        <source src="{{ $advertisement['path'] }}" type="{{ $advertisement['file_type'] }}">
+                                        Your browser does not support HTML5 video.
+                                    </video>
+                                @else
+                                    <img src="{{ $advertisement['path'] }}" alt="{{ $advertisement['name'] }}" width="200" height="180">
+                                @endif
                             </div>
                         </div>
                         <div class="clearfix"></div>  

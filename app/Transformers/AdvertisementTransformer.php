@@ -31,6 +31,7 @@ class AdvertisementTransformer
             'id'                    => $advertisement->_id, 
             'name'                  => $advertisement->name,
             'path'                  => asset($advertisement->path),
+            'file_type'             => $advertisement['format']['mime_type'],
             'round_time'            => $advertisement->round_time,
             'weeks'                 => $advertisement->weeks,
             'status'                => $advertisement->status,

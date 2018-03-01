@@ -118,7 +118,7 @@ class AdvertisementsController extends Controller
     public function update(EditAdvertisementRequest $request, $id)
     {
         $advertisement = $this->advertisementRepository->findOneById($id);
-
+        
         if(is_null($advertisement)) {
             session()->flash('error', __('form.no_data'));
             return redirect()->back();
