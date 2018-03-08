@@ -39,7 +39,7 @@
                     <td>
                         <div class="checkbox checkbox-inline" style="padding-left: 0px;margin-left:0px;">
                             <label>
-                                <input type="checkbox" id="{{ $menu }}_selectAll" name="{{ $menu }}_selectAll" class="ace">
+                                <input type="checkbox" id="{{ $menu }}_selectAll" name="{{ $menu }}_selectAll" class="ace selectAll">
                                 <span class="lbl"> @lang('form.select_all')</span>
                             </label>
                             @foreach($button as $value)

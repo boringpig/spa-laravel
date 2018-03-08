@@ -34,16 +34,7 @@
 <script src="{{ asset('web/js/roles.js') }}"></script>
 <script>
     $(function() {
-        selectAllUsers();
-        selectAllRoles();
-        selectAllArticles();
-        selectAllAdvertisements();
-        selectAllKiosks();
-        selectAllActionlogs();
-        selectAllCategories();
-        selectAllAreaGroups();
-        selectAllSchedules();
-        selectAllSettings();
+        selectAllResource();
     });
 </script>
 @endsection
