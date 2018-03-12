@@ -3,6 +3,7 @@
 namespace App\CPS\Repositories;
 
 use App\CPS\Entities\Station;
+use App\CPS\Entities\KioskStatus;
 
 class StationRepository
 {
@@ -33,6 +34,16 @@ class StationRepository
     public function getByArgs($args, $perPage = null)
     {
         $condition = [];
+        $kioskQuery = new KioskStatus();
+
+        if(array_key_exists('county', $args) && !empty($args['county'])) {
+            $condition['s_no'] = new \MongoDB\BSON\Regex("^01{$args['county']}");
+        }
+
+        if(array_key_exists('version', $args) && !empty($args['version'])) {
+            $snos = $kioskQuery->where('kversion', $args['version'])->pluck('s_no')->toArray();
+            $condition['s_no'] = ['$in' => $snos];
+        }
 
         if(array_key_exists('station', $args) && !empty($args['station'])) {
             $condition['s_no'] = new \MongoDB\BSON\Regex("^{$args['station']}");

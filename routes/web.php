@@ -65,3 +65,6 @@ Route::group(['prefix' => 'setting-manage'], function() {
     Route::get('actionlogs', ['uses' => 'ActionlogsController@index', 'as' => 'actionlogs.index']);
     Route::get('schedules', ['uses' => 'SchedulesController@index', 'as' => 'schedules.index']);
 });
+
+// 下拉式選單用
+Route::get('dropdown/scitys', 'SCitysController@dropdown');

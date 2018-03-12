@@ -17,9 +17,6 @@ class QuanzhouScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        $builder->where('s_no', 'regex', new \MongoDB\BSON\Regex("^0101"))
-                ->orWhere(function($query) {
-                    $query->where('province', '01')->where('country_id', '01');
-                });
+        $builder->where('s_no', 'regex', new \MongoDB\BSON\Regex("^010"));
     }
 }

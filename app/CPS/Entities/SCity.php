@@ -8,4 +8,5 @@ class SCity extends Model
 {
     protected $connection = 'mongo_cps';
     protected $collection = 's_city';
+
 }

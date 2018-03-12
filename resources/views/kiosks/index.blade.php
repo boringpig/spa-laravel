@@ -27,16 +27,33 @@
                         <input type="text" class="form-control" placeholder="@lang('form.station')" id="station" name="station" value="{{ old('station') }}">
                     </div>
                     <div class="col-xs-3">
+                        @lang('form.county')：
+                        <select class="chosen-select width-100" id="county" name="county">
+                            <option value="">@lang('form.all')</option>
+                            @forelse($counties as $key => $value)
+                                <option value="{{ $key }}" @if($key == old('county')) selected @endif>{{ $value }}</option>
+                            @empty
+                            @endforelse
+                        </select>
+                    </div>
+                    <div class="col-xs-3">
                         @lang('form.area')：
                         <select class="chosen-select width-100" id="area" name="area">
                             <option value="">@lang('form.all')</option>
-                            @forelse(getSCityAreaArray() as $key => $value)
+                            @forelse($areas as $key => $value)
                                 <option value="{{ $key }}" @if($key == old('area')) selected @endif>{{ $value }}</option>
                             @empty
                             @endforelse
                         </select>
                     </div>
-                    <div class="col-xs-6" style="text-align:right;margin-top: 22px;">
+                    <div class="col-xs-3">
+                        @lang('form.version')：
+                        <input type="text" class="form-control" placeholder="@lang('form.version')" id="version" name="version" value="{{ old('version') }}">
+                    </div>
+                </div>
+                <div class="space-8"></div>
+                <div class="row">
+                    <div class="col-xs-12" style="text-align:right;margin-top: 22px;">
                         @if(in_array('search', $role_button))
                             <button type="submit" id="search-btn" class="btn btn-white btn-default btn-bold">
                                 <i class="fa fa-fw fa-search"></i>@lang('form.search')
@@ -57,6 +74,7 @@
                     <tr>
                         <th class="detail-col">@lang('form.details')</th>
                         <th>@lang('form.station')</th>
+                        <th>@lang('form.county')</th>
                         <th>@lang('form.area')</th>
                         <th>@lang('form.ip_address')</th>
                         <th>@lang('form.kiosk_identification')</th>
@@ -77,6 +95,7 @@
                                 </div>
                             </td>
                             <td>{{ $kiosk['station_number'] }}&nbsp;{{ $kiosk['station_name'] }}</td>
+                            <td>{{ $kiosk['county_name'] }}</td>
                             <td>{{ $kiosk['station_area'] }}</td>
                             <td>{{ $kiosk['station_ip'] }}</td>
                             <td>{{ $kiosk['identification'] }}</td>
@@ -193,6 +212,7 @@
 @section('script')
 <script src="{{ asset('assets/js/jquery.colorbox.min.js') }}"></script>
 <script>
+    var scitys = [];
     $(function() {
         $('#publish_at').datetimepicker({
             sideBySide: true,
@@ -212,6 +232,29 @@
             $(this).closest('tr').next().toggleClass('open');
             $(this).find(ace.vars['.icon']).toggleClass('fa-angle-double-down').toggleClass('fa-angle-double-up');
         });
+        loadedScitys();
+        changeCountyDropdown();
     });
+
+    function loadedScitys() {
+        $.get('/dropdown/scitys', response => scitys = response.RetVal);
+    }
+
+    function changeCountyDropdown() {
+        $('#county').change(function() {
+            var county = $(this).val();
+            $("#area").chosen("destroy");
+            $('#area').find('option:gt(0)').remove();
+            if($(this).val() != undefined) {
+                scity = scitys.filter(function (item) {
+                    return item.county === county;
+                });
+                $.each(scity['0'].areas, function(key, value) {
+                    $('#area').append(`<option value="${key}">${value}</option>`);
+                });
+                $("#area").chosen();
+            };
+        });
+    }
 </script>
 @endsection

@@ -13,6 +13,7 @@ class StationTransformer
 {
     protected $kiosk_status = [];
     protected $scity_areas = [];
+    protected $scitys = [];
 
     public function __construct(
         KioskStatusRepository $kioskStatusRepository,
@@ -22,6 +23,9 @@ class StationTransformer
         $this->scity_areas = $sCityAreaRepository->getAll()->keyBy(function($item) {
             return "{$item['province']}{$item['country_id']}{$item['area_id']}";
         })->toArray();;
+        $this->scitys = $sCityAreaRepository->getAll()->keyBy(function($item) {
+            return "{$item['province']}{$item['country_id']}";
+        })->toArray();
     }
 
     public function transform($data)
@@ -63,6 +67,7 @@ class StationTransformer
             'station_number'        => array_get($station, 's_no', ""),
             'station_ip'            => array_get($station, "s_ip", ""),
             'station_area'          => array_get($this->scity_areas, substr($station['s_no'],0,4)."{$station['area_id']}.s_area.cn", ""),
+            'county_name'           => array_get($this->scitys, substr($station['s_no'],0,4).".city.cn",""),
             'identification'        => empty($station['s_no'])? '' : hash('sha256', $station->s_no),
             'version'               => array_get($this->kiosk_status, "{$station['s_no']}.kversion", ""),
             'internal_temperature'  => array_get($this->kiosk_status, "{$station['s_no']}.temperatureinsidebox", ""),
