@@ -33,7 +33,7 @@ class AdvertisementsController extends Controller
      */
     public function index()
     {
-        $advertisements = $this->advertisementRepository->getAll(config('website.perPage'));
+        $advertisements = $this->advertisementRepository->getAllWithPermission(config('website.perPage'));
         $advertisements = (count($advertisements) > 0)? $this->advertisementTransformer->transform($advertisements)->setPath("/".Route::current()->uri()) : [];
         return view('advertisements.index', [
             'advertisements'   => $advertisements,

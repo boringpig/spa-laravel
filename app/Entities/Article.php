@@ -12,4 +12,10 @@ class Article extends Model
     {
         return $this->belongsTo('App\Entities\Category', 'category_no', 'no'); // localField, foreignField
     }
+
+    public function scopeAreaPermission($query)
+    {
+        $area_permission = empty(\Auth::user()->role->area_permission)? [] : \Auth::user()->role->area_permission;
+        $query->whereIn('broadcast_area', $area_permission);
+    }
 }

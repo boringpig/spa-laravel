@@ -25,8 +25,9 @@ class EditRoleRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'name'          => 'required|string|max:20|unique:roles',
-            'permission'    => 'required',
+            'name'              => 'required|string|max:20|unique:roles',
+            'permission'        => 'required',
+            'area_permission'   => 'required',
         ];
 
         $role = Role::find($_REQUEST['id']);
@@ -40,8 +41,9 @@ class EditRoleRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name'          => '',
-            'permission'    => '',
+            'name'              => '',
+            'permission'        => '',
+            'area_permission'   => '',
         ];
     }
 }

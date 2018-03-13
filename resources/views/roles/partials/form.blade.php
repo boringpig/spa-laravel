@@ -15,10 +15,6 @@
 <div class="space-4"></div>
 <div class="form-group">
     <label for="role_permission" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" style="{{ $errors->has('permission')? ' color:#D16E6C;' : '' }}"> <span class="text-danger">*</span> @lang('form.role_permission') </label>
-    @if($errors->has('permission'))
-        <i class="ace-icon fa fa-times-circle" style="color:#D16E6C;"></i>
-        <div class="help-block col-xs-12 col-sm-reset inline" style="color:#D16E6C;">{{ $errors->first('permission') }}</div>
-    @endif
     <div class="clearfix"></div>
     <div class="col-xs-offset-2 col-xs-9">
         <table id="simple-table" class="table table-bordered table-hover">
@@ -53,6 +49,50 @@
                                     <span class="lbl"> {{ $button_list[$value] }}</span>
                                 </label>
                                 @endif
+                            @endforeach
+                        </div>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="2" class="text-center">@lang('form.no_data')</td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="space-4"></div>
+<div class="form-group">
+    <label for="area_permission" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" style="{{ $errors->has('area_permission')? ' color:#D16E6C;' : '' }}"> <span class="text-danger">*</span> @lang('form.area_permission') </label>
+    <div class="clearfix"></div>
+    <div class="col-xs-offset-2 col-xs-9">
+        <table id="simple-table" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th class="center" width="8%">@lang('form.category')</th>
+                    <th class="center">@lang('form.county')</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($area_groups as $group_no => $group)
+                <tr>
+                    <td class="center" style="vertical-align: middle;">{{ $group[0]['group_name'] }}</td>
+                    <td>
+                        <div class="checkbox checkbox-inline" style="padding-left: 0px;margin-left:0px;">
+                            <label>
+                            <input type="checkbox" id="{{ $group_no }}_selectAll" name="{{ $group_no }}_selectAll" class="ace selectAll">
+                                <span class="lbl"> @lang('form.select_all')</span>
+                            </label>
+                            @foreach($group as $key => $area)
+                                <label>
+                                    @if(!empty($role['area_permission']) && in_array($area['scity'],$role['area_permission']))
+                                        <input type="checkbox" id="{{ $group_no }}_permission[]" name="area_permission[]" value="{{ $area['scity'] }}" class="ace" checked> 
+                                    @else
+                                        <input type="checkbox" id="{{ $group_no }}_permission[]" name="area_permission[]" value="{{ $area['scity'] }}" class="ace"> 
+                                    @endif
+                                    <span class="lbl"> {{ $area['scity_name'] }}</span>
+                                </label>
                             @endforeach
                         </div>
                     </td>

@@ -20,7 +20,7 @@
             <div class="row">
                 <div class="space-6"></div>
 
-                <div class="col-sm-7 infobox-container">
+                <div class="col-sm-6 infobox-container">
                     <div class="infobox infobox-blue">
                         <div class="infobox-icon">
                             <i class="ace-icon fa fa-users"></i>
@@ -90,19 +90,19 @@
 
                 <div class="vspace-12-sm"></div>
 
-                <div class="col-sm-5">
+                <div class="col-sm-6">
                     <div class="widget-box">
                         <div class="widget-header widget-header-flat widget-header-small">
                             <h5 class="widget-title">
                                 <i class="ace-icon fa fa-signal"></i>
-                                @lang('page.quanzhou_areas_station_count')
+                                @lang('page.quanzhou_counties_station_count')
                             </h5>
                         </div>
 
                         <div class="widget-body">
                             <div class="widget-main">
                                 <div id="piechart-placeholder"></div>
-
+                                <div class="space-10"></div>
                                 <div class="hr hr8 hr-double"></div>
 
                                 <div class="clearfix">
@@ -110,9 +110,9 @@
                                         <div class="grid3">
                                             <span class="grey">
                                                 <i class="ace-icon fa fa-steam-square fa-2x blue"></i>
-                                                {{ $value['area'] }}
+                                                {{ $value['county_name'] }}
                                             </span>
-                                            <h4 class="bigger pull-right">{{ $value['count'] }}</h4>
+                                            <h4 class="pull-right">{{ $value['count'] }}</h4>
                                         </div>
                                     @empty
                                     @endforelse

@@ -24,16 +24,18 @@ class CreateRoleRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'          => 'required|string|max:20|unique:roles',
-            'permission'    => 'required',
+            'name'              => 'required|string|max:20|unique:roles',
+            'permission'        => 'required',
+            'area_permission'   => 'required',
         ];
     }
 
     public function attributes()
     {
         return [
-            'name'          => '',
-            'permission'    => '',
+            'name'              => '',
+            'permission'        => '',
+            'area_permission'   => '',
         ];
     }
 }

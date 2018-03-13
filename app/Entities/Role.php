@@ -6,7 +6,7 @@ use Jenssegers\Mongodb\Eloquent\Model;
 
 class Role extends Model
 {
-    protected $fillable = ['name', 'permission'];
+    protected $fillable = ['name', 'permission', 'area_permission'];
 
     public function users()
     {

@@ -9,6 +9,7 @@ use App\Repositories\AdvertisementRepository;
 use App\Repositories\AreaGroupRepository;
 use App\Repositories\CategoryRepository;
 use App\CPS\Repositories\StationRepository;
+use App\CPS\Repositories\SCityRepository;
 
 class HomeController extends Controller
 {
@@ -18,6 +19,7 @@ class HomeController extends Controller
     protected $stationRepository;
     protected $areaGroupRepository;
     protected $categoryRepository;
+    protected $sCityRepository;
 
     /**
      * Create a new controller instance.
@@ -30,7 +32,8 @@ class HomeController extends Controller
         AdvertisementRepository $advertisementRepository,
         StationRepository $stationRepository,
         AreaGroupRepository $areaGroupRepository,
-        CategoryRepository $categoryRepository
+        CategoryRepository $categoryRepository,
+        SCityRepository $sCityRepository
     ) {
         $this->middleware('auth');
         $this->userRepository = $userRepository;
@@ -39,6 +42,7 @@ class HomeController extends Controller
         $this->stationRepository = $stationRepository;
         $this->areaGroupRepository = $areaGroupRepository;
         $this->categoryRepository = $categoryRepository;
+        $this->sCityRepository = $sCityRepository;
     }
 
     /**
@@ -48,14 +52,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // 取得泉州全部場站的數量
-        $station_count = collect($this->stationRepository->getTotalCount());
-        $areas = getSCityAreaArray();
-        $station_total = $station_count->sum('count');
-        $station_count = $station_count->map(function ($item) use ($areas) {
+        $station_count = $this->stationRepository->getTotalCount()->map(function($item) {
+            $scitys = $this->sCityRepository->getAll()->pluck('city_cn','country_id')->toArray();
             return [
-                'area' => array_get($areas,$item['area'],""),
-                'count' => array_get($item,'count',0),
+                'county_name'   => array_get($scitys, $item['county'],''),
+                'count'         => $item['count'],
             ];
         })->toArray();
 
@@ -65,7 +66,7 @@ class HomeController extends Controller
             'advertisement_total' => $this->advertisementRepository->getAllTotal(),
             'areagroup_total'     => $this->areaGroupRepository->getAllTotal(),
             'category_total'      => $this->categoryRepository->getAllTotal(),
-            'station_total'       => $station_total,
+            'station_total'       => $this->stationRepository->getAllTotal(),
             'station_count'       => $station_count
         ]);
     }

@@ -27,11 +27,12 @@ class RoleTransformer
     private function format(Role $role)
     {
         return [
-            'id'            => $role->_id,
-            'name'          => $role->name,
-            'usernames'     => empty($role->users)? [] : $role->users->pluck('username')->toArray(),
-            'permission'    => empty($role->permission)? [] : $role->permission,
-            'updated_at'    => $role->updated_at->toDateTimeString(),
+            'id'                => $role->_id,
+            'name'              => $role->name,
+            'usernames'         => empty($role->users)? [] : $role->users->pluck('username')->toArray(),
+            'permission'        => empty($role->permission)? [] : $role->permission,
+            'area_permission'   => empty($role->area_permission)? [] : $role->area_permission,
+            'updated_at'        => $role->updated_at->toDateTimeString(),
         ];
     }
 }

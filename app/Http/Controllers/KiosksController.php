@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\CPS\Repositories\StationRepository;
+use App\CPS\Repositories\SCityRepository;
 use App\Transformers\StationTransformer;
 use Illuminate\Support\Facades\Route;
 use PLC;
@@ -12,16 +13,18 @@ class KiosksController extends Controller
 {
     protected $stationRepository;
     protected $stationTransformer;
-    protected $sCityAreaRepository;
+    protected $sCityRepository;
 
     public function __construct(
         StationRepository $stationRepository,
-        StationTransformer $stationTransformer
+        StationTransformer $stationTransformer,
+        SCityRepository $sCityRepository
     ) {
         $this->middleware(['auth','record.actionlog']);
         $this->middleware('role.auth', ['only' => 'index', 'edit', 'search']);
         $this->stationRepository = $stationRepository;
         $this->stationTransformer = $stationTransformer;
+        $this->sCityRepository = $sCityRepository;
     }
 
     /**
@@ -31,7 +34,7 @@ class KiosksController extends Controller
      */
     public function index()
     {
-        $kiosks = $this->stationRepository->getAll(config('website.perPage'));
+        $kiosks = $this->stationRepository->getAllWithPermission(config('website.perPage'));
         $kiosks = (count($kiosks) > 0)? $this->stationTransformer->transform($kiosks)->setPath("/".Route::current()->uri()) : [];
         return view('kiosks.index', [
             'kiosks'     => $kiosks,
@@ -175,18 +178,18 @@ class KiosksController extends Controller
 
     public function calculateStation()
     {
-        $station_count = collect($this->stationRepository->getTotalCount());
-        $total_count = $station_count->sum('count');
-        $areas = getSCityAreaArray();
-        $data = $station_count->map(function($item,$key) use ($areas,$total_count) {
-            $colors = ["#68BC31","#FEE074","#2091CF"];
+        $data = $this->stationRepository->getTotalCount()->map(function($item, $key) {
+            $total_count = $this->stationRepository->getAllTotal();
+            $scitys = $this->sCityRepository->getAll()->pluck('city_cn','country_id')->toArray();
+            $colors = ["#2091CF","#68BC31","#AF4E96","#DA5430","#FEE074"];
+
             return [
-                'label' => array_get($areas, $item['area'], ""),
-                'data' => round($item['count']/$total_count*100,1),
+                'label' => array_get($scitys, $item['county'],''),
+                'data'  => round($item['count']/$total_count*100,2),
                 'color' => array_get($colors,$key,"#AF4E96"),
             ];
         })->toArray();
-
+        
         return response()->json(successOutput($data), 200);
     }
 }

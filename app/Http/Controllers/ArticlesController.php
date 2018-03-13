@@ -30,7 +30,7 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        $articles = $this->articleRepository->getAll(config('website.perPage'), ['category']);
+        $articles = $this->articleRepository->getAllWithPermission(config('website.perPage'), ['category']);
         $articles = (count($articles) > 0)? $this->articleTransformer->transform($articles)->setPath("/".Route::current()->uri()) : [];
         return view('articles.index', [
             'articles'   => $articles,

@@ -1,8 +1,3 @@
-
-.table-center th, td {
-    word-break: keep - all;
-}
-
 .table-center > tbody > tr > td, .table-center > thead > tr > th {
     text-align: center;
     vertical-align: middle;

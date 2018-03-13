@@ -245,15 +245,15 @@
             var county = $(this).val();
             $("#area").chosen("destroy");
             $('#area').find('option:gt(0)').remove();
-            if($(this).val() != undefined) {
+            if($(this).val() != "") {
                 scity = scitys.filter(function (item) {
                     return item.county === county;
                 });
                 $.each(scity['0'].areas, function(key, value) {
                     $('#area').append(`<option value="${key}">${value}</option>`);
                 });
-                $("#area").chosen();
-            };
+            }
+            $("#area").chosen();
         });
     }
 </script>

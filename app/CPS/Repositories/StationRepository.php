@@ -21,7 +21,22 @@ class StationRepository
      */
     public function getAll($perPage = null)
     {
-        return is_null($perPage)? $this->model()->get() : $this->model()->paginate($perPage);
+        $query = $this->model();
+
+        return is_null($perPage)? $query->get() : $query->paginate($perPage);
+    }
+
+    /**
+     * 取得有地區權限的資料
+     *
+     * @param string $perPage 分頁數量
+     * @return Collection/Pagination
+     */
+    public function getAllWithPermission($perPage = null)
+    {
+        $query = $this->model()->areaPermission();
+
+        return is_null($perPage)? $query->get() : $query->paginate($perPage);
     }
 
     /**
@@ -53,7 +68,7 @@ class StationRepository
             $condition['area_id'] = ['$eq' => (int) $args['area']];
         }
 
-        $query = (count($condition) > 0)? $this->model()->whereRaw($condition) : $this->model();
+        $query = (count($condition) > 0)? $this->model()->areaPermission()->whereRaw($condition) : $this->model()->areaPermission();
 
         return is_null($perPage)? $query->get() : $query->paginate($perPage);
     }
@@ -70,6 +85,16 @@ class StationRepository
     }
 
     /**
+     * 取得全部資料的個數
+     *
+     * @return int
+     */
+    public function getAllTotal()
+    {
+        return $this->model()->count();
+    }
+
+    /**
      * 計算泉州各地區的場站數量
      *
      * @return Array
@@ -79,25 +104,27 @@ class StationRepository
         $pipeline = [
             [
                 '$match' => [
-                    's_no' => ['$regex' => new \MongoDB\BSON\Regex("^0101")],
-                    'area_id' => ['$exists' => true]
+                    's_no' => ['$regex' => new \MongoDB\BSON\Regex("^010")],
                 ]
             ],
             [
                 '$project' => [
-                    'area' => '$area_id',
+                    'county' => ['$substr' => ['$s_no', 2, 2]],
                 ]
             ],
             [
                 '$group' => [
-                    '_id' => ['area' => '$area'],
-                    'area' => ['$first' => '$area'],
+                    '_id' => ['county' => '$county'],
+                    'county' => ['$first' => '$county'],
                     'count' => ['$sum' => 1],
                 ]
+            ],
+            [
+                '$sort' => ['county' => 1]
             ]
         ];
         return $this->model()->raw(function($collection) use ($pipeline) {
             return $collection->aggregate($pipeline);
-        })->toArray();
+        });
     }
 }

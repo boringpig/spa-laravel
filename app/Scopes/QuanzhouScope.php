@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class QuanzhouScope implements Scope
 {
+    
     /**
      * Apply the scope to a given Eloquent query builder.
      *
@@ -17,6 +18,9 @@ class QuanzhouScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        $builder->where('s_no', 'regex', new \MongoDB\BSON\Regex("^010"));
+        $builder->where('s_no', 'regex', new \MongoDB\BSON\Regex("^0101"))
+                ->orWhere(function($query) {
+                    $query->where('province','01')->where('country_id','01');
+                });
     }
 }

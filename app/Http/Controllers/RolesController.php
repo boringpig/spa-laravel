@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repositories\RoleRepository;
 use App\Transformers\RoleTransformer;
+use App\CPS\Repositories\SCityRepository;
 use App\Http\Requests\Role\CreateRoleRequest;
 use App\Http\Requests\Role\EditRoleRequest;
 use Illuminate\Support\Facades\Route;
@@ -13,14 +14,17 @@ class RolesController extends Controller
 {
     protected $roleRepository;
     protected $roleTransformer;
+    protected $sCityRepository;
 
     public function __construct(
         RoleRepository $roleRepository, 
-        RoleTransformer $roleTransformer
+        RoleTransformer $roleTransformer,
+        SCityRepository $sCityRepository
     ) {
         $this->middleware(['auth','role.auth','record.actionlog']);
         $this->roleRepository = $roleRepository;
         $this->roleTransformer = $roleTransformer;
+        $this->sCityRepository = $sCityRepository;
     }
 
     /**
@@ -46,6 +50,7 @@ class RolesController extends Controller
     {
         return view('roles.create', [
             'data'          => $this->processPermissionList(),
+            'area_groups'   => $this->getAreaPermissionList(),
         ]);
     }
 
@@ -58,10 +63,10 @@ class RolesController extends Controller
     public function store(CreateRoleRequest $request)
     {
         $args = [
-            'name'          => $request->name,
-            'permission'    => $request->permission,
+            'name'              => $request->name,
+            'permission'        => $request->permission,
+            'area_permission'   => $request->area_permission,
         ];
-
         $role = $this->roleRepository->create($args);
 
         if(is_null($role)) {
@@ -91,7 +96,8 @@ class RolesController extends Controller
 
         return view('roles.edit', [
             'data'          => $this->processPermissionList(),
-            'role'          => $role
+            'role'          => $role,
+            'area_groups'   => $this->getAreaPermissionList(),
         ]);
     }
 
@@ -113,6 +119,7 @@ class RolesController extends Controller
         $args = [
             'name'          => $request->name,
             'permission'    => $request->permission,
+            'area_permission'   => $request->area_permission,
         ];
         if($this->roleRepository->update($id, $args)) {
             session()->flash('success', __('form.updated_success'));
@@ -170,5 +177,19 @@ class RolesController extends Controller
         }
 
         return $data;
+    }
+
+    private function getAreaPermissionList()
+    {
+        return $this->sCityRepository->getAll()->map(function($item) {
+            return [
+                'group_no'      => substr($item['country_id'],0,1),
+                'group_name'    => (substr($item['country_id'],0,1) == '2')? '莆田':'泉州',
+                'scity'         => "{$item['province']}{$item['country_id']}",
+                'scity_name'    => array_get($item,'city_cn',''),
+            ];
+        })->groupBy(function($item) {
+            return $item['group_no'];
+        })->toArray();
     }
 }

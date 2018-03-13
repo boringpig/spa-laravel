@@ -26,6 +26,19 @@ class SCityRepository
     }
 
     /**
+     * 取得有地區權限的資料
+     *
+     * @param string $perPage 分頁數量
+     * @return Collection/Pagination
+     */
+    public function getAllWithPermissin($perPage = null)
+    {
+        $query = $this->model()->areaPermission()->orderBy('province','asc')->orderBy('country_id','asc');
+
+        return is_null($perPage)? $query->get() : $query->paginate($perPage);
+    }
+
+    /**
      * 根據搜尋參數回傳符合條件的縣市別
      *
      * @param array $args 搜尋參數

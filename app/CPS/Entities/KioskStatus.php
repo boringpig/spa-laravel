@@ -9,11 +9,4 @@ class KioskStatus extends Model
 {
     protected $connection = 'mongo_cps';
     protected $collection = 'kiosk_status';
-
-    protected static function boot()
-    {
-        parent::boot();
-        
-        static::addGlobalScope(new QuanzhouScope);
-    }
 }

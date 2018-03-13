@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'quanzhou_areas_station_count' => '泉州各地区场站数量',
+    'quanzhou_counties_station_count' => '大泉州各县市场站数量',
 ];

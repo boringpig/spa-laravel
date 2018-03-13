@@ -40,6 +40,7 @@ return [
     'select_all'                        => '全选',
     'role_name'                         => '角色名称',
     'role_permission'                   => '角色权限',
+    'area_permission'                   => '地区权限',
     'using_username'                    => '使用中的帐号',
     'back'                              => '返回',
     'choose_one_a_role'                 => '选择一个角色',
@@ -151,4 +152,5 @@ return [
     'action'                            => '动作',
     'export'                            => '汇出',
     'county'                            => '县市别',
+    'category'                          => '类别',
 ];

@@ -48,7 +48,7 @@ class AdvertisementRepository extends Repository
         }
 
         return cache()->tags($this->tag())->remember($this->tag().".{$queryString}", 60, function() use ($perPage,$condition) {
-            $query = (count($condition) > 0)? $this->model()->whereRaw($condition)->orderBy('created_at','desc') : $this->model()->orderBy('created_at','desc');
+            $query = (count($condition) > 0)? $this->model()->areaPermission()->whereRaw($condition)->orderBy('created_at','desc') : $this->model()->areaPermission()->orderBy('created_at','desc');
             return is_null($perPage)? $query->get() : $query->paginate($perPage);
         });
     }

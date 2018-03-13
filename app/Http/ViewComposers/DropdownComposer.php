@@ -15,7 +15,7 @@ class DropdownComposer
         SCityRepository $sCityRepository,
         SCityAreaRepository $sCityAreaRepository
     ) {
-        $this->counties = $sCityRepository->getAll()->pluck('city_cn','country_id')->toArray();
+        $this->counties = $sCityRepository->getAllWithPermissin()->pluck('city_cn','country_id')->toArray();
         if(request('county') != '') {
             $this->areas = $sCityAreaRepository->getByArgs(['province' => '01', 'county' => request('county')])
                                                ->pluck('s_area.cn','area_id')->toArray();

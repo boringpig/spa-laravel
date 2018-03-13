@@ -11,4 +11,10 @@ class Advertisement extends Model
     ];
 
     protected $dates = ['publish_at'];
+
+    public function scopeAreaPermission($query)
+    {
+        $area_permission = empty(\Auth::user()->role->area_permission)? [] : \Auth::user()->role->area_permission;
+        $query->whereIn('broadcast_area', $area_permission);
+    }
 }

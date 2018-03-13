@@ -27,10 +27,29 @@ abstract class Repository
     }
 
     /**
+     * 回傳有地區權限限制的資料
+     *
+     * @param string $perPage 分頁
+     * @param array $releation 關聯表
+     * @return collection
+     */
+    public function getAllWithPermission($perPage = null, $releation = [])
+    {
+        return cache()->tags($this->tag())->remember($this->tag().'.permission_all', 60, function() use ($perPage, $releation) {
+            if(!empty($releation)) {
+                $query = $this->model()->areaPermission()->with($releation)->orderBy('created_at','desc');
+            } else {
+                $query = $this->model()->areaPermission()->orderBy('created_at','desc');
+            }
+            return is_null($perPage)? $query->get() : $query->paginate($perPage);
+        });
+    }
+
+    /**
      * 回傳全部資料的總數量
      *
      * @return int 總數量
-     */
+     **/
     public function getAllTotal()
     {
         return cache()->tags($this->tag())->remember($this->tag().'.total', 60, function() {

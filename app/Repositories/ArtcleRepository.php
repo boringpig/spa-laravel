@@ -47,7 +47,7 @@ class ArticleRepository extends Repository
                                         '$lte' => new \MongoDB\BSON\UTCDateTime(strtotime("{$args['updated_at']} 23:59:59") * 1000)];
         }
         return cache()->tags($this->tag())->remember($this->tag().".{$queryString}", 60, function() use ($perPage,$condition) {
-            $query = (count($condition) > 0)? $this->model()->whereRaw($condition)->with(['category'])->orderBy('created_at','desc') : $this->model()->with(['category'])->orderBy('created_at','desc');
+            $query = (count($condition) > 0)? $this->model()->areaPermission()->whereRaw($condition)->with(['category'])->orderBy('created_at','desc') : $this->model()->areaPermission()->with(['category'])->orderBy('created_at','desc');
             return is_null($perPage)? $query->get() : $query->paginate($perPage);
         });
     }
