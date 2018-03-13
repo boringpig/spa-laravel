@@ -42,6 +42,36 @@ class ArticleRepository extends Repository
             $condition['broadcast_area'] = ['$in' => [$args['s_city']]];
         }        
 
+        $query = (count($condition) > 0)? $this->model()->whereRaw($condition)->with(['category'])->orderBy('created_at','desc') : $this->model()->with(['category'])->orderBy('created_at','desc');
+
+        return is_null($perPage)? $query->get() : $query->paginate($perPage);
+    }
+
+    /**
+     * 回傳特定地區權限的搜尋資料
+     *
+     * @param array $args 搜尋參數
+     * @param string $perPage 分頁
+     * @return collection
+     */
+    public function getByArgsWithPermission($args, $perPage = null)
+    {
+        $condition = [];
+
+        foreach(['language', 'category_no'] as $field) {
+            if(array_key_exists($field, $args) && $args[$field] != '') {
+                $condition[$field] = ['$eq' => $args[$field]];
+            }    
+        }
+        
+        if(array_key_exists('type', $args) && !empty($args['type'])) {
+            $condition['category_no'] = ['$eq' => $args['type']];
+        }
+
+        if(array_key_exists('s_city', $args) && !empty($args['s_city'])) {
+            $condition['broadcast_area'] = ['$in' => [$args['s_city']]];
+        }        
+
         if(array_key_exists('updated_at', $args) && !empty($args['updated_at'])) {
             $condition['updated_at'] = ['$gte' => new \MongoDB\BSON\UTCDateTime(strtotime("{$args['updated_at']} 00:00:00") * 1000),
                                         '$lte' => new \MongoDB\BSON\UTCDateTime(strtotime("{$args['updated_at']} 23:59:59") * 1000)];

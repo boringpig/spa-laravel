@@ -42,6 +42,36 @@ class AdvertisementRepository extends Repository
             $condition['broadcast_area'] = ['$in' => [$args['s_city']]];
         }
 
+        $query = (count($condition) > 0)? $this->model()->whereRaw($condition)->orderBy('created_at','desc') : $this->model()->orderBy('created_at','desc');
+
+        return is_null($perPage)? $query->get() : $query->paginate($perPage);
+    }
+
+    /**
+     * 回傳特定地區權限的搜尋資料
+     *
+     * @param array $args 搜尋參數
+     * @param string $perPage 分頁
+     * @return collection
+     */
+    public function getByArgsWithPermission($args, $perPage = null)
+    {
+        $condition = [];
+
+        foreach(['status', 'round_time'] as $field) {
+            if(array_key_exists($field, $args) && $args[$field] != '') {
+                $condition[$field] = ['$eq' => (int) $args[$field]];
+            }    
+        }
+
+        if(array_key_exists('name', $args) && $args['name'] != '') {
+            $condition['name'] = ['$eq' => $args['name']];
+        }
+
+        if(array_key_exists('s_city', $args) && !empty($args['s_city'])) {
+            $condition['broadcast_area'] = ['$in' => [$args['s_city']]];
+        }
+
         if(array_key_exists('publish_at', $args) && !empty($args['publish_at'])) {
             $condition['publish_at'] = ['$gte' => new \MongoDB\BSON\UTCDateTime(strtotime("{$args['publish_at']} 00:00:00") * 1000),
                                         '$lte' => new \MongoDB\BSON\UTCDateTime(strtotime("{$args['publish_at']} 23:59:59") * 1000)];

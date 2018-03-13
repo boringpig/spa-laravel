@@ -21,7 +21,7 @@ class StationRepository
      */
     public function getAll($perPage = null)
     {
-        $query = $this->model();
+        $query = $this->model()->orderBy('s_no');
 
         return is_null($perPage)? $query->get() : $query->paginate($perPage);
     }
@@ -34,7 +34,7 @@ class StationRepository
      */
     public function getAllWithPermission($perPage = null)
     {
-        $query = $this->model()->areaPermission();
+        $query = $this->model()->areaPermission()->orderBy('s_no');
 
         return is_null($perPage)? $query->get() : $query->paginate($perPage);
     }
@@ -70,7 +70,7 @@ class StationRepository
 
         $query = (count($condition) > 0)? $this->model()->areaPermission()->whereRaw($condition) : $this->model()->areaPermission();
 
-        return is_null($perPage)? $query->get() : $query->paginate($perPage);
+        return is_null($perPage)? $query->orderBy('s_no')->get() : $query->orderBy('s_no')->paginate($perPage);
     }
 
     /**

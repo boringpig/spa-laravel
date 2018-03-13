@@ -53,7 +53,9 @@ class AreaGroupRepository extends Repository
             }
         }
         
-        return is_null($perPage)? $this->model()->orderBy('parent_area','asc')->get() : $this->model()->orderBy('parent_area','asc')->paginate($perPage);
+        $query = $this->model()->areaPermission()->orderBy('parent_area','asc');
+
+        return is_null($perPage)? $query->get() : $query->paginate($perPage);
     }
 
     /**

@@ -171,7 +171,7 @@ class AdvertisementsController extends Controller
 
     public function search(Request $request)
     {
-        $advertisements = $this->advertisementRepository->getByArgs($request->getQueryString(),$request->all(),config('website.perPage'));
+        $advertisements = $this->advertisementRepository->getByArgsWithPermission($request->all(),config('website.perPage'));
         $advertisements = (count($advertisements) > 0)? $this->advertisementTransformer->transform($advertisements)->appends($request->all())->setPath("/{$request->path()}") : [];
         $request->flash();
         return view('advertisements.index', [
