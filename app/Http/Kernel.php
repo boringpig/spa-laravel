@@ -43,6 +43,7 @@ class Kernel extends HttpKernel
             'bindings',
             'expectsJson',
             'auth.api',
+            'apiLogger',
         ],
     ];
 
@@ -64,5 +65,6 @@ class Kernel extends HttpKernel
         'record.actionlog' => \App\Http\Middleware\RecordActionlog::class,
         'auth.api' => \App\Http\Middleware\APIAuthenticate::class,
         'expectsJson' => \App\Http\Middleware\ExpectsJson::class,
+        'apiLogger' => \App\Http\Middleware\ApiLogger::class,
     ];
 }
