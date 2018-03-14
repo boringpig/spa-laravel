@@ -32,7 +32,7 @@
     </div>
     <div class="col-sm-5">
         <select name="action_type" id="action_type" class="form-control" disabled>
-            <option value="0" @if($kiosk[$type]=="0" ) selected @endif disabled>@lang('form.close')</option>
+            <option value="0" @if($kiosk[$type]=="0" ) selected @endif @if(!in_array($type, ['show_screen','touch_function'])) disabled @endif>@lang('form.close')</option>
             <option value="1" @if($kiosk[$type]=="1" ) selected @endif>@lang('form.open')</option>
             <option value="2" @if($kiosk[$type]=="2" ) selected @endif>@lang('form.reset')</option>
         </select>
