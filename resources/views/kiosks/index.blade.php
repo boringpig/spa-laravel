@@ -27,24 +27,12 @@
                         <input type="text" class="form-control" placeholder="@lang('form.station')" id="station" name="station" value="{{ old('station') }}">
                     </div>
                     <div class="col-xs-3">
-                        @lang('form.county')：
-                        <select class="chosen-select width-100" id="county" name="county">
-                            <option value="">@lang('form.all')</option>
-                            @forelse($counties as $key => $value)
-                                <option value="{{ $key }}" @if($key == old('county')) selected @endif>{{ $value }}</option>
-                            @empty
-                            @endforelse
-                        </select>
+                        @component('widgets.form.county', ['counties' => $counties])
+                        @endcomponent
                     </div>
                     <div class="col-xs-3">
-                        @lang('form.area')：
-                        <select class="chosen-select width-100" id="area" name="area">
-                            <option value="">@lang('form.all')</option>
-                            @forelse($areas as $key => $value)
-                                <option value="{{ $key }}" @if($key == old('area')) selected @endif>{{ $value }}</option>
-                            @empty
-                            @endforelse
-                        </select>
+                        @component('widgets.form.area', ['areas' => $areas])
+                        @endcomponent
                     </div>
                     <div class="col-xs-3">
                         @lang('form.version')：

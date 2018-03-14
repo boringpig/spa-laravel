@@ -72,9 +72,9 @@ class AdvertisementRepository extends Repository
             $condition['broadcast_area'] = ['$in' => [$args['s_city']]];
         }
 
-        if(array_key_exists('publish_at', $args) && !empty($args['publish_at'])) {
-            $condition['publish_at'] = ['$gte' => new \MongoDB\BSON\UTCDateTime(strtotime("{$args['publish_at']} 00:00:00") * 1000),
-                                        '$lte' => new \MongoDB\BSON\UTCDateTime(strtotime("{$args['publish_at']} 23:59:59") * 1000)];
+        if(array_key_exists('updated_at', $args) && !empty($args['updated_at'])) {
+            $condition['updated_at'] = ['$gte' => new \MongoDB\BSON\UTCDateTime(strtotime("{$args['updated_at']} 00:00:00") * 1000),
+                                        '$lte' => new \MongoDB\BSON\UTCDateTime(strtotime("{$args['updated_at']} 23:59:59") * 1000)];
         }
 
         return cache()->tags($this->tag())->remember($this->tag().".{$queryString}", 60, function() use ($perPage,$condition) {

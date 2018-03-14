@@ -26,13 +26,11 @@
                         <input type="text" class="form-control" placeholder="@lang('form.role_name')" id="name" name="name" value="{{ old('name') }}">
                     </div>
                     <div class="col-xs-3">
-                        @lang('form.updated_at')：
-                        <div class="input-group">
-                            <input id="updated_at" name="updated_at" type="text" class="form-control" placeholder="@lang('form.updated_at')" value="{{ old('updated_at') }}">
-                            <span class="input-group-addon">
-                                <i class="fa fa-clock-o bigger-110"></i>
-                            </span>
-                        </div>
+                        @component('widgets.form.date')
+                            @slot('title')
+                                @lang('form.updated_at')
+                            @endslot
+                        @endcomponent
                     </div>
                     <div class="col-xs-6" style="text-align:right;margin-top: 22px;">
                         @if(in_array('search', $role_button))
@@ -96,10 +94,6 @@
 
 @section('script')
 <script>
-    $('#updated_at').datetimepicker({
-        sideBySide: true,
-        format: 'YYYY-MM-DD',
-    });
     // 刪除角色
     function deleteRole(event,button) {
         event.preventDefault();

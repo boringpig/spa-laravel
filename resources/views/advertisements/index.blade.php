@@ -44,13 +44,11 @@
                             min="0">
                     </div>
                     <div class="col-xs-3">
-                        @lang('form.publish_at')：
-                        <div class="input-group">
-                            <input id="publish_at" name="publish_at" type="text" class="form-control" placeholder="@lang('form.publish_at')" value="{{ old('publish_at') }}">
-                            <span class="input-group-addon">
-                                <i class="fa fa-clock-o bigger-110"></i>
-                            </span>
-                        </div>
+                        @component('widgets.form.date')
+                            @slot('title')
+                                @lang('form.publish_at')
+                            @endslot
+                        @endcomponent
                     </div>
                 </div>
                 <div class="space-8"></div>
@@ -170,10 +168,6 @@
 <script>
     $(function() {
         initialColorBox();
-        $('#publish_at').datetimepicker({
-            sideBySide: true,
-            format: 'YYYY-MM-DD',
-        });
     });
 
     $('input[name="switch-status"]').change(function () {

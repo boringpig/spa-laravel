@@ -127,6 +127,10 @@
 					}
 				});
 			});
+			$('#updated_at').datetimepicker({
+				sideBySide: true,
+				format: 'YYYY-MM-DD',
+			});
 		</script>
 	</body>
 </html>

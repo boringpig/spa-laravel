@@ -49,13 +49,11 @@
                         </select>
                     </div>
                     <div class="col-xs-3">
-                        @lang('form.updated_at')：
-                        <div class="input-group">
-                            <input id="updated_at" name="updated_at" type="text" class="form-control" placeholder="@lang('form.updated_at')" value="{{ old('updated_at') }}">
-                            <span class="input-group-addon">
-                                <i class="fa fa-clock-o bigger-110"></i>
-                            </span>
-                        </div>
+                        @component('widgets.form.date')
+                            @slot('title')
+                                @lang('form.updated_at')
+                            @endslot
+                        @endcomponent
                     </div>
                     
                 </div>
@@ -136,11 +134,6 @@
 
 @section('script')
 <script>
-    $('#updated_at').datetimepicker({
-        sideBySide: true,
-        format: 'YYYY-MM-DD',
-    });
-
 	// 刪除使用者
     function deleteUser(event,button) {
         event.preventDefault();
