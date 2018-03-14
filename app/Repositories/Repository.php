@@ -14,13 +14,18 @@ abstract class Repository
      * @param array $releation 關聯資料表
      * @return Collection/Pagination
      */
-    public function getAll($perPage = null, $releation = [])
+    public function getAll($perPage = null, $releation = [], $sorts = [])
     {
-        return cache()->tags($this->tag())->remember($this->tag().'.all', 60, function() use ($perPage,$releation) {
+        return cache()->tags($this->tag())->remember($this->tag().'.all', 60, function() use ($perPage,$releation,$sorts) {
             if(!empty($releation)) {
-                $query = $this->model()->with($releation)->orderBy('created_at','desc');
+                $query = $this->model()->with($releation);
             } else {
-                $query = $this->model()->orderBy('created_at','desc');
+                $query = $this->model();
+            }
+            if(is_array($sorts) && count($sorts) > 0) {
+                foreach($sorts as $field => $sort) {
+                    $query = $query->orderBy($field, $sort);
+                }
             }
             return is_null($perPage)? $query->get() : $query->paginate($perPage);
         });
@@ -33,13 +38,18 @@ abstract class Repository
      * @param array $releation 關聯表
      * @return collection
      */
-    public function getAllWithPermission($perPage = null, $releation = [])
+    public function getAllWithPermission($perPage = null, $releation = [], $sorts = [])
     {
-        return cache()->tags($this->tag())->remember($this->tag().'.permission_all', 60, function() use ($perPage, $releation) {
+        return cache()->tags($this->tag())->remember($this->tag().'.permission_all', 60, function() use ($perPage, $releation, $sorts) {
             if(!empty($releation)) {
-                $query = $this->model()->areaPermission()->with($releation)->orderBy('created_at','desc');
+                $query = $this->model()->areaPermission()->with($releation);
             } else {
-                $query = $this->model()->areaPermission()->orderBy('created_at','desc');
+                $query = $this->model()->areaPermission();
+            }
+            if(is_array($sorts) && count($sorts) > 0) {
+                foreach($sorts as $field => $sort) {
+                    $query = $query->orderBy($field, $sort);
+                }
             }
             return is_null($perPage)? $query->get() : $query->paginate($perPage);
         });

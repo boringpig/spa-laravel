@@ -24,7 +24,7 @@ class UserRepository extends Repository
      * @param string $perPage 分頁數量
      * @return Collection/Pagination
      */
-    public function getByArgs($queryString = '', $args, $perPage = null)
+    public function getByArgs($queryString = '', $args, $perPage = null, $sorts = [])
     {
         $condition = [];
             
@@ -45,8 +45,13 @@ class UserRepository extends Repository
                                         '$lte' => new \MongoDB\BSON\UTCDateTime(strtotime("{$args['updated_at']} 23:59:59") * 1000)];
         }
 
-        return cache()->tags($this->tag())->remember($this->tag().".{$queryString}", 60, function() use ($perPage, $condition){
-            $query = (count($condition) > 0)? $this->model()->whereRaw($condition)->orderBy('created_at','desc') : $this->model()->orderBy('created_at','desc');
+        return cache()->tags($this->tag())->remember($this->tag().".{$queryString}", 60, function() use ($perPage, $condition, $sorts){
+            $query = (count($condition) > 0)? $this->model()->whereRaw($condition) : $this->model();
+            if(is_array($sorts) && count($sorts) > 0) {
+                foreach($sorts as $field => $sort) {
+                    $query = $query->orderBy($field, $sort);
+                }
+            }
             return is_null($perPage)? $query->get() : $query->paginate($perPage);
         });
     }

@@ -17,6 +17,7 @@ class UsersController extends Controller
     protected $userRepository;
     protected $roleRepository;
     protected $userTransformer;
+    static $sortField = ['updated_at' => 'desc'];
 
     public function __construct(
         UserRepository $userRepository,
@@ -37,7 +38,7 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
-        $users = $this->userRepository->getAll(config('website.perPage'));
+        $users = $this->userRepository->getAll(config('website.perPage'),[],self::$sortField);
         $users = (count($users) > 0)? $this->userTransformer->transform($users)->setPath("/{$request->path()}") : [];
         return view('users.index', [
             'users'      => $users,
@@ -184,7 +185,7 @@ class UsersController extends Controller
 
     public function search(Request $request)
     {
-        $users = $this->userRepository->getByArgs($request->getQueryString(),$request->all(),config('website.perPage'));
+        $users = $this->userRepository->getByArgs($request->getQueryString(),$request->all(),config('website.perPage'),self::$sortField);
         $users = (count($users) > 0)? $this->userTransformer->transform($users)->appends($request->all())->setPath("/{$request->path()}") : [];
         if(session()->isStarted()) {
             $request->flash();

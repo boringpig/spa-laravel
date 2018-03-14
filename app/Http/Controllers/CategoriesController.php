@@ -13,6 +13,7 @@ class CategoriesController extends Controller
 {
     protected $categoryRepository;
     protected $categoryTransformer;
+    static $sortField = ['no' => 'asc'];
 
     public function __construct(
         CategoryRepository $categoryRepository,
@@ -30,7 +31,7 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = $this->categoryRepository->getAll(config('website.perPage'));
+        $categories = $this->categoryRepository->getAll(config('website.perPage'),[],self::$sortField);
         $categories = (count($categories) > 0)? $this->categoryTransformer->transform($categories)->setPath("/".Route::current()->uri()) : [];
         return view('categories.index', [
             'categories' => $categories,

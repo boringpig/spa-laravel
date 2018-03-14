@@ -13,6 +13,7 @@ class ArticlesController extends Controller
 {
     protected $articleRepository;
     protected $articleTransformer;
+    static $sortField = ['language' => 'asc', 'category_no' => 'asc'];
 
     public function __construct(
         ArticleRepository $articleRepository,
@@ -30,7 +31,7 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        $articles = $this->articleRepository->getAllWithPermission(config('website.perPage'), ['category']);
+        $articles = $this->articleRepository->getAllWithPermission(config('website.perPage'), ['category'], self::$sortField);
         $articles = (count($articles) > 0)? $this->articleTransformer->transform($articles)->setPath("/".Route::current()->uri()) : [];
         return view('articles.index', [
             'articles'   => $articles,
@@ -165,7 +166,7 @@ class ArticlesController extends Controller
 
     public function search(Request $request)
     {
-        $articles = $this->articleRepository->getByArgsWithPermission($request->all(),config('website.perPage'));
+        $articles = $this->articleRepository->getByArgsWithPermission($request->all(),config('website.perPage'),self::$sortField);
         $articles = (count($articles) > 0)? $this->articleTransformer->transform($articles)->appends($request->all())->setPath("/{$request->path()}") : [];
         $request->flash();
         return view('articles.index', [

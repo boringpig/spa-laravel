@@ -15,6 +15,7 @@ class AdvertisementsController extends Controller
 
     protected $advertisementRepository;
     protected $advertisementTransformer;
+    static $sortField = ['publish_at' => 'desc'];
 
     public function __construct(
         AdvertisementRepository $advertisementRepository,
@@ -33,7 +34,7 @@ class AdvertisementsController extends Controller
      */
     public function index()
     {
-        $advertisements = $this->advertisementRepository->getAllWithPermission(config('website.perPage'));
+        $advertisements = $this->advertisementRepository->getAllWithPermission(config('website.perPage'),[],self::$sortField);
         $advertisements = (count($advertisements) > 0)? $this->advertisementTransformer->transform($advertisements)->setPath("/".Route::current()->uri()) : [];
         return view('advertisements.index', [
             'advertisements'   => $advertisements,
@@ -171,7 +172,7 @@ class AdvertisementsController extends Controller
 
     public function search(Request $request)
     {
-        $advertisements = $this->advertisementRepository->getByArgsWithPermission($request->all(),config('website.perPage'));
+        $advertisements = $this->advertisementRepository->getByArgsWithPermission($request->all(),config('website.perPage'),self::$sortField);
         $advertisements = (count($advertisements) > 0)? $this->advertisementTransformer->transform($advertisements)->appends($request->all())->setPath("/{$request->path()}") : [];
         $request->flash();
         return view('advertisements.index', [

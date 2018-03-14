@@ -15,6 +15,7 @@ class RolesController extends Controller
     protected $roleRepository;
     protected $roleTransformer;
     protected $sCityRepository;
+    static $sortField = ['updated_at' => 'desc'];
 
     public function __construct(
         RoleRepository $roleRepository, 
@@ -34,7 +35,7 @@ class RolesController extends Controller
      */
     public function index()
     {
-        $roles = $this->roleRepository->getAll(config('website.perPage'), ['users']);
+        $roles = $this->roleRepository->getAll(config('website.perPage'), ['users'], self::$sortField);
         $roles = (count($roles) > 0)? $this->roleTransformer->transform($roles)->setPath("/".Route::current()->uri()) : [];
         return view('roles.index', [
             'roles'      => $roles,
@@ -154,7 +155,7 @@ class RolesController extends Controller
 
     public function search(Request $request)
     {
-        $roles = $this->roleRepository->getByArgs($request->getQueryString(),$request->all(), config('website.perPage'));
+        $roles = $this->roleRepository->getByArgs($request->getQueryString(),$request->all(), config('website.perPage'), self::$sortField);
         $roles = (count($roles) > 0 )? $this->roleTransformer->transform($roles)->appends($request->all())->setPath("/{$request->path()}") : [];
         $request->flash();
         return view('roles.index', [

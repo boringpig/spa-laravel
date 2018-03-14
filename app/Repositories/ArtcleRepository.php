@@ -42,7 +42,7 @@ class ArticleRepository extends Repository
             $condition['broadcast_area'] = ['$in' => [$args['s_city']]];
         }        
 
-        $query = (count($condition) > 0)? $this->model()->whereRaw($condition)->with(['category'])->orderBy('created_at','desc') : $this->model()->with(['category'])->orderBy('created_at','desc');
+        $query = (count($condition) > 0)? $this->model()->whereRaw($condition)->with(['category']) : $this->model()->with(['category']);
 
         return is_null($perPage)? $query->get() : $query->paginate($perPage);
     }
@@ -54,7 +54,7 @@ class ArticleRepository extends Repository
      * @param string $perPage 分頁
      * @return collection
      */
-    public function getByArgsWithPermission($args, $perPage = null)
+    public function getByArgsWithPermission($args, $perPage = null, $sorts = [])
     {
         $condition = [];
 
@@ -76,8 +76,13 @@ class ArticleRepository extends Repository
             $condition['updated_at'] = ['$gte' => new \MongoDB\BSON\UTCDateTime(strtotime("{$args['updated_at']} 00:00:00") * 1000),
                                         '$lte' => new \MongoDB\BSON\UTCDateTime(strtotime("{$args['updated_at']} 23:59:59") * 1000)];
         }
-        return cache()->tags($this->tag())->remember($this->tag().".{$queryString}", 60, function() use ($perPage,$condition) {
-            $query = (count($condition) > 0)? $this->model()->areaPermission()->whereRaw($condition)->with(['category'])->orderBy('created_at','desc') : $this->model()->areaPermission()->with(['category'])->orderBy('created_at','desc');
+        return cache()->tags($this->tag())->remember($this->tag().".{$queryString}", 60, function() use ($perPage,$condition,$sorts) {
+            $query = (count($condition) > 0)? $this->model()->areaPermission()->whereRaw($condition)->with(['category']) : $this->model()->areaPermission()->with(['category']);
+            if(is_array($sorts) && count($sorts) > 0) {
+                foreach($sorts as $field => $sort) {
+                    $query = $query->orderBy($field, $sort);
+                }
+            }
             return is_null($perPage)? $query->get() : $query->paginate($perPage);
         });
     }

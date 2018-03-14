@@ -42,7 +42,7 @@ class AdvertisementRepository extends Repository
             $condition['broadcast_area'] = ['$in' => [$args['s_city']]];
         }
 
-        $query = (count($condition) > 0)? $this->model()->whereRaw($condition)->orderBy('created_at','desc') : $this->model()->orderBy('created_at','desc');
+        $query = (count($condition) > 0)? $this->model()->whereRaw($condition) : $this->model();
 
         return is_null($perPage)? $query->get() : $query->paginate($perPage);
     }
@@ -54,7 +54,7 @@ class AdvertisementRepository extends Repository
      * @param string $perPage 分頁
      * @return collection
      */
-    public function getByArgsWithPermission($args, $perPage = null)
+    public function getByArgsWithPermission($args, $perPage = null, $sorts = [])
     {
         $condition = [];
 
@@ -77,8 +77,13 @@ class AdvertisementRepository extends Repository
                                         '$lte' => new \MongoDB\BSON\UTCDateTime(strtotime("{$args['updated_at']} 23:59:59") * 1000)];
         }
 
-        return cache()->tags($this->tag())->remember($this->tag().".{$queryString}", 60, function() use ($perPage,$condition) {
-            $query = (count($condition) > 0)? $this->model()->areaPermission()->whereRaw($condition)->orderBy('created_at','desc') : $this->model()->areaPermission()->orderBy('created_at','desc');
+        return cache()->tags($this->tag())->remember($this->tag().".{$queryString}", 60, function() use ($perPage,$condition,$sorts) {
+            $query = (count($condition) > 0)? $this->model()->whereRaw($condition)->areaPermission() : $this->model()->areaPermission();
+            if(is_array($sorts) && count($sorts) > 0) {
+                foreach($sorts as $field => $sort) {
+                    $query = $query->orderBy($field, $sort);
+                }
+            }
             return is_null($perPage)? $query->get() : $query->paginate($perPage);
         });
     }
