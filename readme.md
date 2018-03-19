@@ -42,3 +42,15 @@ DB_DATABASE=xxx
 DB_USERNAME=xxx
 DB_PASSWORD=xxx
 ```
+
+# API壓力測試
+
+## 新增post_data.txt
+```
+token=1d7ed42da49d98a14ff3634d7cfaa15838d7307416f5f342bf22d42dfcc2f93c
+```
+## 指令
+-n 請求數、 -c 同時連線數、 -T Content-type的header內容、-p form_data內容、Api的url
+```
+ab -n 10 -c 5 -T application/json -T application/x-www-form-urlencoded -p post_data.txt  http://localhost:81/api/setting/customer
+```

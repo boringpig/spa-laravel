@@ -15,7 +15,7 @@ class ExpectsJson
      */
     public function handle($request, Closure $next)
     {
-        if ($request->expectsJson()) {
+        if ($request->accepts('application/json')) {
             return $next($request);
         }
 
