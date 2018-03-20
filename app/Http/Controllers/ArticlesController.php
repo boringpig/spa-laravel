@@ -166,7 +166,7 @@ class ArticlesController extends Controller
 
     public function search(Request $request)
     {
-        $articles = $this->articleRepository->getByArgsWithPermission($request->all(),config('website.perPage'),self::$sortField);
+        $articles = $this->articleRepository->getByArgsWithPermission($request->getQueryString(),$request->all(),config('website.perPage'),self::$sortField);
         $articles = (count($articles) > 0)? $this->articleTransformer->transform($articles)->appends($request->all())->setPath("/{$request->path()}") : [];
         $request->flash();
         return view('articles.index', [

@@ -54,7 +54,7 @@ class ArticleRepository extends Repository
      * @param string $perPage 分頁
      * @return collection
      */
-    public function getByArgsWithPermission($args, $perPage = null, $sorts = [])
+    public function getByArgsWithPermission($queryString = '', $args, $perPage = null, $sorts = [])
     {
         $condition = [];
 
