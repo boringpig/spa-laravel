@@ -24,8 +24,8 @@ class CreateSettingRequest extends FormRequest
     public function rules()
     {
         return [
-            'customer_service_phone'    => 'nullable|numeric|digits_between:0,20',
-            'customer_service_email'    => 'nullable|email|max:255',
+            'customer_service_phone'    => 'nullable',
+            'customer_service_email'    => 'nullable',
             'kiosk_freetime'            => 'nullable|numeric|min:0',
         ];
     }
