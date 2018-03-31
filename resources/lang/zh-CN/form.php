@@ -153,4 +153,6 @@ return [
     'export'                            => '汇出',
     'county'                            => '县市别',
     'category'                          => '类别',
+    'station_number'                    => '场站代号',
+    'station_name'                      => '场站名称',
 ];

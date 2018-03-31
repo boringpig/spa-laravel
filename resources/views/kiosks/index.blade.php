@@ -23,8 +23,12 @@
             <form id="search-form" method="get">
                 <div class="row">
                     <div class="col-xs-3">
-                        @lang('form.station')：
-                        <input type="text" class="form-control" placeholder="@lang('form.station')" id="station" name="station" value="{{ old('station') }}">
+                        @lang('form.station_number')：
+                        <input type="text" class="form-control" placeholder="@lang('form.station_number')" id="sno" name="sno" value="{{ old('sno') }}">
+                    </div>
+                    <div class="col-xs-3">
+                        @lang('form.station_name')：
+                        <input type="text" class="form-control" placeholder="@lang('form.station_name')" id="sname" name="sname" value="{{ old('sname') }}">
                     </div>
                     <div class="col-xs-3">
                         @component('widgets.form.county', ['counties' => $counties])
@@ -34,14 +38,14 @@
                         @component('widgets.form.area', ['areas' => $areas])
                         @endcomponent
                     </div>
+                </div>
+                <div class="space-8"></div>
+                <div class="row">
                     <div class="col-xs-3">
                         @lang('form.version')：
                         <input type="text" class="form-control" placeholder="@lang('form.version')" id="version" name="version" value="{{ old('version') }}">
                     </div>
-                </div>
-                <div class="space-8"></div>
-                <div class="row">
-                    <div class="col-xs-12" style="text-align:right;margin-top: 22px;">
+                    <div class="col-xs-9" style="text-align:right;margin-top: 22px;">
                         @if(in_array('search', $role_button))
                             <button type="submit" id="search-btn" class="btn btn-white btn-default btn-bold">
                                 <i class="fa fa-fw fa-search"></i>@lang('form.search')

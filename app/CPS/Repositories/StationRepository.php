@@ -59,15 +59,19 @@ class StationRepository
             $snos = $kioskQuery->where('kversion', $args['version'])->pluck('s_no')->toArray();
             $condition['s_no'] = ['$in' => $snos];
         }
+        
+        if(array_key_exists('sno', $args) && !empty($args['sno'])) {
+            $condition['$or'][] = ['s_no' => new \MongoDB\BSON\Regex("{$args['sno']}")];
+        }
 
-        if(array_key_exists('station', $args) && !empty($args['station'])) {
-            $condition['s_no'] = new \MongoDB\BSON\Regex("^{$args['station']}");
+        if(array_key_exists('sname', $args) && !empty($args['sname'])) {
+            $condition['$or'][] = ['s_name.cn' => new \MongoDB\BSON\Regex("{$args['sname']}")];
         }
 
         if(array_key_exists('area', $args) && $args['area'] != '') {
             $condition['area_id'] = ['$eq' => (int) $args['area']];
         }
-
+        
         $query = (count($condition) > 0)? $this->model()->areaPermission()->whereRaw($condition) : $this->model()->areaPermission();
 
         return is_null($perPage)? $query->orderBy('s_no')->get() : $query->orderBy('s_no')->paginate($perPage);
