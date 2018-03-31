@@ -76,6 +76,8 @@ class KiosksController extends Controller
         $kiosk['camera'] = $plc->searchPowerStatus('camera');
         $kiosk['show_screen'] = $plc->searchPowerStatus('screen');
         $kiosk['touch_function'] = $plc->searchPowerStatus('touch');
+        $kiosk['ac_sockets'] = $plc->searchPowerStatus('ac_sockets');
+        $kiosk['fot'] = $plc->searchPowerStatus('fot');
         // 取得各類型的風扇狀態
         $kiosk['into_fan1'] = $plc->searchFanStatus('into1');
         $kiosk['into_fan2'] = $plc->searchFanStatus('into2');

@@ -4,9 +4,9 @@ class PLC
 {
     private $ip;
 
-    const LIGHTTYPE = ['stoboard' => 112, 'card_reader' => 113, 'collision_warning' => 114];
-    const POWERTYPE = ['xps1' => 311, 'xps2' => 312, 'card_reader' => 313, 'camera' => 314, 'screen' => 315, 'touch' => 316, 'router' => 317, 'atur' => 318];
-    const FANTYPE = ['into1' => 410, 'into2' => 411, 'exhaust1' => 412, 'exhaust2' => 413, 'exhaust3' => 414];
+    const LIGHTTYPE = ['stoboard' => '112', 'card_reader' => '113', 'collision_warning' => '114'];
+    const POWERTYPE = ['xps1' => '311', 'xps2' => '312', 'card_reader' => '313', 'camera' => '314', 'screen' => '315', 'touch' => '316', 'router' => '317', 'atur' => '318', 'ac_sockets' => '319', 'fot' => '31A'];
+    const FANTYPE = ['into1' => '410', 'into2' => '411', 'exhaust1' => '412', 'exhaust2' => '413', 'exhaust3' => '414'];
 
     public function __construct($ip)
     {
@@ -21,7 +21,7 @@ class PLC
      */
     public function searchLightStatus($type)
     {
-        $cmd = array_get(self::LIGHTTYPE, $type, 113);
+        $cmd = array_get(self::LIGHTTYPE, $type, '113');
         $url = sprintf("{$this->ip}%s",$cmd);
         $response = $this->sendGetRequest($url);
         if($response[$cmd]['_res']) {
@@ -87,7 +87,7 @@ class PLC
      */
     public function searchPowerStatus($type)
     {
-        $cmd = array_get(self::POWERTYPE, $type, 311);
+        $cmd = array_get(self::POWERTYPE, $type, '311');
         $url = sprintf("{$this->ip}%s",$cmd);
         $response = $this->sendGetRequest($url);
         if($response[$cmd]['_res']) {
@@ -113,7 +113,7 @@ class PLC
      */
     public function searchFanStatus($type)
     {
-        $cmd = array_get(self::FANTYPE, $type, 410);
+        $cmd = array_get(self::FANTYPE, $type, '410');
         $url = sprintf("{$this->ip}%s",$cmd);
         $response = $this->sendGetRequest($url);
         if($response[$cmd]['_res']) {

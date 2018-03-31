@@ -89,6 +89,16 @@
                     </form>
                     <form class="form-horizontal" role="form" onsubmit="submitForm(event,this)" action="{{ route('kiosks.control-power', ['station' => $kiosk['station_number']]) }}">
                         {{ csrf_field() }}
+                        <input type="hidden" id="power_type" name="power_type" value="9"> 
+                        @include('kiosks.partials.power', ['type' => 'ac_sockets'])
+                    </form>
+                    <form class="form-horizontal" role="form" onsubmit="submitForm(event,this)" action="{{ route('kiosks.control-power', ['station' => $kiosk['station_number']]) }}">
+                        {{ csrf_field() }}
+                        <input type="hidden" id="power_type" name="power_type" value="A"> 
+                        @include('kiosks.partials.power', ['type' => 'fot'])
+                    </form>
+                    <form class="form-horizontal" role="form" onsubmit="submitForm(event,this)" action="{{ route('kiosks.control-power', ['station' => $kiosk['station_number']]) }}">
+                        {{ csrf_field() }}
                         <input type="hidden" id="power_type" name="power_type" value="3"> 
                         @include('kiosks.partials.power', ['type' => 'card_reader'])
                     </form>
@@ -107,6 +117,7 @@
                         <input type="hidden" id="power_type" name="power_type" value="4"> 
                         @include('kiosks.partials.power', ['type' => 'camera'])
                     </form>
+                   
                 </div>
             </div>
         </div><!-- /.電源控制 -->

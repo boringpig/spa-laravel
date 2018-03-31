@@ -155,4 +155,6 @@ return [
     'category'                          => '类别',
     'station_number'                    => '场站代号',
     'station_name'                      => '场站名称',
+    'ac_sockets'                        => 'AC sockets',
+    'fot'                               => 'FOT',
 ];

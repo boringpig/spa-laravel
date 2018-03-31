@@ -13,6 +13,12 @@
             @case('router')
                 <label for="name" class="editable editable-click switch-editable-power" style="margin-top:4%;margin-left:4%"> @lang('form.ROUTER') </label>
                 @break
+            @case('ac_sockets')
+                <label for="name" class="editable editable-click switch-editable-power" style="margin-top:4%;margin-left:4%"> @lang('form.ac_sockets') </label>
+                @break
+            @case('fot')
+                <label for="name" class="editable editable-click switch-editable-power" style="margin-top:4%;margin-left:4%"> @lang('form.fot') </label>
+                @break
             @case('card_reader')
                 <label for="name" class="editable editable-click switch-editable-power" style="margin-top:4%;margin-left:4%"> @lang('form.card_reader') </label>
                 @break
