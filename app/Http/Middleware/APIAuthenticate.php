@@ -25,6 +25,7 @@ class APIAuthenticate
      */
     public function handle($request, Closure $next)
     {
+        // $request->bearerToken() 取得Bearer後面的token
         // 驗證表頭
         $header_token = $request->header('Authorization');
         $token = $request->token;
