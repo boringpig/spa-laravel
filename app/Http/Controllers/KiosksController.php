@@ -103,18 +103,37 @@ class KiosksController extends Controller
     {
         ini_set('memory_limit','32G');
 		set_time_limit(0);
+        // $kiosks = \DB::connection('mongo_cps')->collection('member_cards')
+        //             ->get()->toArray();
         $kiosks = $this->stationRepository->getByArgs($request->all());
         $kiosks = (count($kiosks) > 0)? $this->stationTransformer->transform($kiosks) : [];
+        /** 方法一 */
         $title = implode(',', [__('form.station'),__('form.area'),__('form.ip_address'),__('form.kiosk_identification'),__('form.version'),__('form.connection_status')]);
-		$content = "{$title}\r\n";
+        $content = "{$title}\r\n";
 		foreach ($kiosks as $key => $value) {
-			$content = $content. "{$value['station_number']} {$value['station_name']},{$value['station_area']},{$value['station_ip']},";
-			$content = $content. "{$value['identification']},{$value['version']},{$value['connection_status_name']}\r\n";
+			$content = $content. "{$value['card_total']},{$value['mem_id']},";
+			$content = $content. "{$value['c_id']},{$value['register_type']},{$value['register_date']},{$value['name']},{$value['phone']},{$value['inactive']}\r\n";
         }
+        $content = "\xEF\xBB\xBF".$content; //輸出 BOM 避免 Excel 讀取時會亂碼
+        /** 方法二 */
+        // $title = [__('form.station'),__('form.area'),__('form.ip_address'),__('form.kiosk_identification'),__('form.version'),__('form.connection_status')];
+        // print(chr(0xEF).chr(0xBB).chr(0xBF)); //設置utf-8 + bom ，處理漢字顯示的亂碼 
+        // ob_start(); 
+        // $file = fopen("php://output", 'w'); 
+        // fputcsv($file, $title); 
+        // foreach ($kiosks as $row) { 
+        //     fputcsv($file, $row); 
+        // } 
+        // fclose($file);
+        // $content = ob_get_clean();
+        $file_name = __('pageTitle.kiosks_page').'.csv';
 		return response($content, 200, [
-            "Content-Type" => 'application/force-download',
-            "Content-Type" => 'text/csv',
-            'Content-Disposition' => "attachment; filename=\"". __('pageTitle.kiosks_page').".csv\""
+            'Cache-Control' => 'public',
+            'Pragma' => 'cache',
+            'Content-Type' => 'application/force-download',
+            'Content-Type' => 'application/octet-stream',
+            'Content-Type' => 'text/csv; charset: UTF-8',
+            'Content-Disposition' => "attachment;filename={$file_name}",
         ]);
     }
 
