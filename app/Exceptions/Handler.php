@@ -51,20 +51,14 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        switch ($exception) {
-            case $exception instanceof ForbiddenException:
-                return response()->view('errors.403', [], 403);
-                break;
-            // case $exception instanceof ValidationException:
-            //     return response()->json([[
-            //             "retCode"   => 0, 
-            //             "retMsg"    => "Validation Failed", 
-            //             "retVal"    => [
-            //                 "invalidFields" => array_keys($exception->validator->errors()->toArray())
-            //             ]
-            //         ]]);
-            //     break;
-
+        if ($exception instanceof ValidationException) {
+            return response()->json([
+                    "retCode"   => 0, 
+                    "retMsg"    => "Validation Failed", 
+                    "retVal"    => [
+                        "invalidFields" => array_keys($exception->validator->errors()->toArray())
+                    ]
+                ]);
         }
 
         return parent::render($request, $exception);
