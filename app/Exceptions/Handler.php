@@ -51,15 +51,22 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        // if ($exception instanceof ValidationException) {
-        //     return response()->json([
-        //             "retCode"   => 0, 
-        //             "retMsg"    => "Validation Failed", 
-        //             "retVal"    => [
-        //                 "invalidFields" => array_keys($exception->validator->errors()->toArray())
-        //             ]
-        //         ]);
-        // }
+        if ($exception instanceof ValidationException) {
+            foreach($exception->validator->errors()->toArray() as $key => $error) {
+                $errors = [$key => $error[0]];
+            }
+            return response()->json([
+                    "retCode"   => 0, 
+                    "retMsg"    => "取得token失敗", 
+                    "retVal"    => $errors
+                ]);
+        } else if ($exception instanceOf AuthenticationException) {
+            return response()->json([
+                "retCode" => 0,
+                "retMsg" => "未帶入token或是無效的token"
+            ]);
+        }
+
 
         return parent::render($request, $exception);
     }

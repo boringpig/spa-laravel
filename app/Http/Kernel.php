@@ -41,9 +41,9 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:60,1',
             'bindings',
-            'expectsJson',
-            'auth.api',
-            'apiLogger',
+            // 'expectsJson',
+            // 'auth.api',
+            // 'apiLogger',
         ],
     ];
 
