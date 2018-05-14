@@ -51,15 +51,15 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if ($exception instanceof ValidationException) {
-            return response()->json([
-                    "retCode"   => 0, 
-                    "retMsg"    => "Validation Failed", 
-                    "retVal"    => [
-                        "invalidFields" => array_keys($exception->validator->errors()->toArray())
-                    ]
-                ]);
-        }
+        // if ($exception instanceof ValidationException) {
+        //     return response()->json([
+        //             "retCode"   => 0, 
+        //             "retMsg"    => "Validation Failed", 
+        //             "retVal"    => [
+        //                 "invalidFields" => array_keys($exception->validator->errors()->toArray())
+        //             ]
+        //         ]);
+        // }
 
         return parent::render($request, $exception);
     }

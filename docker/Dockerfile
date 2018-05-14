@@ -18,6 +18,15 @@ RUN apt-get install -qqy software-properties-common && \
     sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5 && \
     echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.6 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.6.list && \
     apt-get update
+    
+# 安裝 node & npm
+RUN curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+RUN apt-get install -y nodejs
+
+# 安裝 yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get update && apt-get install yarn
 
 # 安裝 apache2
 RUN apt-get install -y apache2
