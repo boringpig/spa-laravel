@@ -1,5 +1,24 @@
 {
     "login": "登入",
-    "register": "注册"
+    "admin-login": "管理者登入",
+    "username": "帐号",
+    "password": "密码",
+    "register": "注册",
+    "dashboard": "后台首页",
+    "user-manage": "使用者管理",
+    "user-data": "使用者资料",
+    "role-data": "角色资料",
+    "advertisement-manage": "广告管理",
+    "advertisement-data": "广告资料",
+    "kiosk-manage": "KIOSK管理",
+    "kiosk-data": "KIOSK资料",
+    "kiosk-areagroup": "KIOSK地区群组",
+    "article-manage": "文章管理",
+    "article-data": "文章资料",
+    "category-date": "标题分类资料",
+    "system-manage": "系统管理",
+    "system-actionlog": "系统操作纪录",
+    "system-schedule": "系统排程监控",
+    "system-setting": "系统参数设定"
 }
   

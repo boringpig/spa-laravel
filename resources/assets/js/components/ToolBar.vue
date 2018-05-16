@@ -24,17 +24,6 @@
       <template v-else>
         <v-btn flat :to="{ name: 'login' }">{{ $t('login') }}</v-btn>
         <v-btn flat :to="{ name: 'register' }">{{ $t('register') }}</v-btn>
-        <v-btn icon>
-          <v-icon>notifications</v-icon>
-        </v-btn>
-        <v-btn icon large>
-          <v-avatar size="32px" tile>
-            <img
-              src="https://vuetifyjs.com/static/doc-images/logo.svg"
-              alt="Vuetify"
-            >
-          </v-avatar>
-        </v-btn>
       </template>
     </v-toolbar>
 </template>
