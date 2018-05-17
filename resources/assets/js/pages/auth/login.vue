@@ -3,12 +3,12 @@
 <v-layout align-center justify-center>
   <v-flex xs12 sm10 md6>
     <v-card class="elevation-12">
-      <v-toolbar dark color="primary">
-        <v-toolbar-title>{{ $t('admin-login') }}</v-toolbar-title>
-        <v-spacer></v-spacer>
-      </v-toolbar>
-      <v-card-text>
-        <form>
+      <form @submit.prevent="login">
+        <v-toolbar dark color="primary">
+          <v-toolbar-title>{{ $t('admin-login') }}</v-toolbar-title>
+          <v-spacer></v-spacer>
+        </v-toolbar>
+        <v-card-text>
           <v-text-field prepend-icon="person" name="username" 
             :label="$t('username')" 
             type="text" 
@@ -27,17 +27,19 @@
             :error-messages="errors.collect('password')"
           >
           </v-text-field>
-        </form>
-      </v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="primary" 
-          class="submit__button"
-          @click="submit"
-        >
-          {{ $t('login') }}
-        </v-btn>
-      </v-card-actions>
+          <v-btn block class="submit__button" color="primary" type="submit">
+            {{ $t('login') }}
+          </v-btn>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <!-- <v-btn color="primary" 
+            class="submit__button"
+          >
+            {{ $t('login') }}
+          </v-btn> -->
+        </v-card-actions>
+      </form>
     </v-card>
   </v-flex>
 </v-layout>
@@ -45,22 +47,29 @@
 </template>
 
 <script>
-    export default {
-      data() {
-        return {
-          valid: false,
-          form: {
-            username: '',
-            password: ''
-          },
-        };
-      },
-      methods: {
-        submit() {
-          this.$validator.validateAll()
-        }
+import axios from 'axios';
+  export default {
+    data() {
+      return {
+        valid: false,
+        form: {
+          username: '',
+          password: ''
+        },
+      };
+    },
+    methods: {
+      login() {
+        this.$validator.validate().then(result => {
+          if(result) {
+            axios.post('/api/login', this.form).then(response => {
+              console.log(response);
+            });
+          }
+        });
       }
     }
+  }
 </script>
 
 <style scoped>

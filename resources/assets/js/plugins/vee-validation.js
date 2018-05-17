@@ -1,21 +1,9 @@
 import Vue from 'vue'
-import VeeValidate from 'vee-validate'
+import cn from '../validate-locales/cn';
+import VeeValidate, { Validator } from 'vee-validate';
 
-Vue.use(VeeValidate, {
-    
-})
+const { locale } = window.config;
 
-const { locale } = window.config
+Validator.localize(locale, cn);
 
-const dictionary = {
-    cn: {
-        attributes: {
-            username: '帐号'
-        },
-        messages: {
-            required: '不能為空'
-        }
-    }
-};
-
-Validator.localize(locale, dictionary);
+Vue.use(VeeValidate);

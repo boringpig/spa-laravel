@@ -44,7 +44,6 @@ class LoginController extends Controller
         // $token = $this->guard()->claims(['foo' => 'bar'])->attempt($this->credentials($request));
         // 如果User的Model設定claims就不用在token自定義內容
         $token = $this->guard()->attempt($this->credentials($request));
-
         if ($token) {
             $this->guard()->setToken($token);
             return true;
