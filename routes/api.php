@@ -27,7 +27,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/user', function (Request $request) {
         // return $request->user()->getJWTCustomClaims();
         // return auth()->payload();
-        return $request->user();
+        return response()->json($request->user());
     });
 });
 

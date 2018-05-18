@@ -38,17 +38,17 @@ export const mutations = {
 
 // actions
 export const actions = {
-  saveToken ({ commit, dispatch }, payload) {
-    commit(types.SAVE_TOKEN, payload)
+  async saveToken ({ commit }, payload) {
+    commit(types.SAVE_TOKEN, payload);  
   },
 
   async fetchUser ({ commit }) {
     try {
-      const { data } = await axios.get('/api/user')
-
-      commit(types.FETCH_USER_SUCCESS, { user: data })
+      const { data } = await axios.get('/api/user');
+      
+      commit (types.FETCH_USER_SUCCESS, { user: data })
     } catch (e) {
-      commit(types.FETCH_USER_FAILURE)
+      commit (types.FETCH_USER_FAILURE)
     }
   },
 

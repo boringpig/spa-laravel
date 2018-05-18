@@ -1,17 +1,17 @@
 import axios from 'axios'
-// import store from '~/store'
+import store from '../stores'
 // import router from '~/router'
 // import i18n from './vue-i18n'
 
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 
 // 請求攔截器
-// axios.interceptors.request.use(request => {
-//     if (store.getters.authToken) {
-//         request.headers.common['Authorization'] = `Bearer ${store.getters.authToken}`
-//     }
-//     return request
-// })
+axios.interceptors.request.use(request => {
+    if (store.getters.authToken) {
+        request.headers.common['Authorization'] = `Bearer ${store.getters.authToken}`
+    }
+    return request
+})
 
 // 回應攔截器
 // axios.interceptors.response.use(response => response, error => {

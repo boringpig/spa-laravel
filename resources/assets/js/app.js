@@ -7,6 +7,7 @@ import App from './components/App'
 import './plugins/vee-validation'
 import './plugins/axios'
 import i18n from './plugins/vue-i18n'
+import store from './stores'
 
 Vue.use(Vuetify)
 
@@ -16,6 +17,7 @@ new Vue({
   el: '#app',
   router,
   i18n,
+  store,
   ...App
 })
 
