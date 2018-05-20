@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import routes from './routes'
 import Router from 'vue-router'
-// import { sync } from 'vuex-router-sync'
+import store from '../stores'
+import { sync } from 'vuex-router-sync'
 
 Vue.use(Router)
 
@@ -9,7 +10,7 @@ const router = make(
     routes({ authGuard, guestGuard })
 )
 
-// sync(store, router)
+sync(store, router)
 
 export default router
 
@@ -55,14 +56,13 @@ function make(routes) {
  */
 function authGuard(routes) {
     return beforeEnter(routes, (to, from, next) => {
-        // if (!store.getters.authCheck) {
-        //     next({
-        //         name: 'login',
-        //         query: { redirect: to.fullPath }
-        //     })
-        // } else {
-            next()
-        // }
+        if(!store.getters.authCheck) {
+            next({
+                name: 'login',
+            })
+        } else {
+            next();
+        }
     })
 }
 
@@ -74,11 +74,11 @@ function authGuard(routes) {
  */
 function guestGuard(routes) {
     return beforeEnter(routes, (to, from, next) => {
-        // if (store.getters.authCheck) {
-        //     next({ name: 'home' })
-        // } else {
+        if (store.getters.authCheck) {
+            next({ name: 'home' })
+        } else {
             next()
-        // }
+        }
     })
 }
 

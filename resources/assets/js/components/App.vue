@@ -19,6 +19,8 @@
     </v-content>
     <!-- 頁尾 -->
     <page-footer></page-footer>
+    <!-- 訊息框 -->
+    <feed-back-message></feed-back-message>
   </v-app>
 </template>
 
@@ -26,12 +28,14 @@
 import NavMenu from './NavMenu'
 import ToolBar from './ToolBar'
 import PageFooter from './PageFooter'
+import FeedBackMessage from './FeedBackMessage'
 
 export default {
   components: {
     'nav-menu': NavMenu,
     'tool-bar': ToolBar,
-    'page-footer': PageFooter
+    'page-footer': PageFooter,
+    'feed-back-message': FeedBackMessage
   },
 
   // computed: mapGetters({

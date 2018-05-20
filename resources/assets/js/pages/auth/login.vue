@@ -48,47 +48,48 @@
 </template>
 
 <script>
-import axios from 'axios';
-  export default {
-    data() {
-      return {
-        valid: false,
-        form: {
-          username: '',
-          password: ''
-        },
-        remember: false,
-        busy: false,
-      };
-    },
-    methods: {
-      async login() {
-        if(await this.$validator.validate()) {
-          this.busy = true;
+export default {
+  data() {
+    return {
+      form: {
+        username: '',
+        password: ''
+      },
+      remember: false,
+      busy: false,
+    };
+  },
+  methods: {
+    async login() {
+      if(await this.$validator.validate()) {
+        this.busy = true;
+        // 登入取得token
+        const { data } = await this.axios.post('/api/login', this.form);
 
-          // 登入取得token
-          const { data } = await axios.post('/api/login', this.form);
+        // 存token到vuex
+        this.$store.dispatch('saveToken', {
+          token: data.token,
+          remember: this.remember
+        });
 
-          // 存token到vuex
-          this.$store.dispatch('saveToken', {
-            token: data.token,
-            remember: this.remember
-          });
-
-          // 取得該使用者
-          await this.$store.dispatch('fetchUser');
-          this.busy = false;
-          // 導入後台首頁
-          // this.$router.push({ name: 'home'});
-        }
+        // 取得該使用者
+        await this.$store.dispatch('fetchUser');
+        this.busy = false;
+        // 導入後台首頁
+        this.$router.push({ name: 'home'});
       }
     }
   }
+}
 </script>
 
 <style scoped>
   .submit__button {
     padding-top: 0px;
     font-size: 16px;
+  }
+  .snack__content {
+    max-width: 30px;
+    min-width: 30px;
   }
 </style>

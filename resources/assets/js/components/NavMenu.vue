@@ -62,37 +62,37 @@ export default {
           model: false,
           children: [
             { icon: 'arrow_right', title: 'user-data', route: { name: 'users' } },
-            { icon: 'arrow_right', title: 'role-data' , route: { name: 'roles' } },
+            // { icon: 'arrow_right', title: 'role-data' , route: { name: 'roles' } },
           ]
         },
-        { title: 'advertisement-manage', icon: 'image', icon_alt: 'keyboard_arrow_down',
-          model: false,
-          children: [
-            { icon: 'arrow_right', title: 'advertisement-data', route: { name: 'advertisements' } },
-          ]
-        },
-        { title: 'kiosk-manage', icon: 'personal_video', icon_alt: 'keyboard_arrow_down',
-          model: false,
-          children: [
-            { icon: 'arrow_right', title: 'kiosk-data', route: { name: 'kiosks' } },
-            { icon: 'arrow_right', title: 'kiosk-areagroup', route: { name: 'kiosks-areagroup' } },
-          ]
-        },
-        { title: 'article-manage', icon: 'insert_drive_file', icon_alt: 'keyboard_arrow_down',
-          model: false,
-          children: [
-            { icon: 'arrow_right', title: 'article-data', route: { name: 'articles' } },
-            { icon: 'arrow_right', title: 'category-areagroup', route: { name: 'categories' } },
-          ]
-        },
-        { title: 'system-manage', icon: 'settings', icon_alt: 'keyboard_arrow_down',
-          model: false,
-          children: [
-            { icon: 'arrow_right', title: 'system-actionlog', route: { name: 'actionlog' } },
-            { icon: 'arrow_right', title: 'system-schedule', route: { name: 'schedule' } },
-            { icon: 'arrow_right', title: 'system-setting', route: { name: 'setting' } },
-          ]
-        },
+        // { title: 'advertisement-manage', icon: 'image', icon_alt: 'keyboard_arrow_down',
+        //   model: false,
+        //   children: [
+        //     { icon: 'arrow_right', title: 'advertisement-data', route: { name: 'advertisements' } },
+        //   ]
+        // },
+        // { title: 'kiosk-manage', icon: 'personal_video', icon_alt: 'keyboard_arrow_down',
+        //   model: false,
+        //   children: [
+        //     { icon: 'arrow_right', title: 'kiosk-data', route: { name: 'kiosks' } },
+        //     { icon: 'arrow_right', title: 'kiosk-areagroup', route: { name: 'kiosks-areagroup' } },
+        //   ]
+        // },
+        // { title: 'article-manage', icon: 'insert_drive_file', icon_alt: 'keyboard_arrow_down',
+        //   model: false,
+        //   children: [
+        //     { icon: 'arrow_right', title: 'article-data', route: { name: 'articles' } },
+        //     { icon: 'arrow_right', title: 'category-areagroup', route: { name: 'categories' } },
+        //   ]
+        // },
+        // { title: 'system-manage', icon: 'settings', icon_alt: 'keyboard_arrow_down',
+        //   model: false,
+        //   children: [
+        //     { icon: 'arrow_right', title: 'system-actionlog', route: { name: 'actionlog' } },
+        //     { icon: 'arrow_right', title: 'system-schedule', route: { name: 'schedule' } },
+        //     { icon: 'arrow_right', title: 'system-setting', route: { name: 'setting' } },
+        //   ]
+        // },
       ]
     }
   }

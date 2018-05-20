@@ -29,5 +29,14 @@ Route::group(['middleware' => 'auth:api'], function () {
         // return auth()->payload();
         return response()->json($request->user());
     });
+
+    // 使用者管理(users,roles)
+    Route::group(['prefix' => 'user-manage'], function() {
+        // Route::post('users/change-password/{id}', ['uses' => 'UsersController@changePassword','as' => 'users.change-password']);
+        // Route::get('users/search', ['uses' => 'UsersController@search','as' => 'users.search']);
+        Route::resource('users', 'UsersController');
+        // Route::get('roles/search', ['uses' => 'RolesController@search','as' => 'roles.search']);
+        Route::resource('roles', 'RolesController');
+    });
 });
 

@@ -10,7 +10,7 @@
       <v-flex xs5 offset-xs3>
         <v-card>
           <v-card-title primary-title class="grey lighten-4">
-            <h3 class="headline mb-0">Hello</h3>
+            <h3 class="headline mb-0">後台首頁</h3>
           </v-card-title>
           <v-divider></v-divider>
           <v-card-text>

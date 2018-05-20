@@ -8,7 +8,7 @@
     >
       <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
         <v-toolbar-side-icon @click.stop="toggleDrawer"></v-toolbar-side-icon>
-        <router-link :to="{ name: 'welcome' }" class="white-text">
+        <router-link :to="{ name: 'home' }" class="white-text">
           {{ appName }}
         </router-link>
       </v-toolbar-title>

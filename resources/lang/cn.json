@@ -20,6 +20,13 @@
     "system-actionlog": "系统操作纪录",
     "system-schedule": "系统排程监控",
     "system-setting": "系统参数设定",
-    "remember-me": "记住我"
+    "remember-me": "记住我",
+    "ok": "確定",
+    "close": "取消",
+    "login-fail": "登入失敗",
+    "no-username": "無此帳號",
+    "admin-register": "管理者註冊",
+    "email": "信箱",
+    "password-confirm": "確認密碼"
 }
   

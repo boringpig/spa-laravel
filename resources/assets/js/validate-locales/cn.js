@@ -7,14 +7,14 @@ const messages = {
     alpha: (field) => `The ${field} may only contain alphabetic characters.`,
     before: (field, [target]) => `The ${field} must be before ${target}.`,
     between: (field, [min, max]) => `The ${field} must be between ${min} and ${max}.`,
-    confirmed: (field) => `The ${field} confirmation does not match.`,
+    confirmed: (field) => `與 ${field} 該欄位不相符合`,
     credit_card: (field) => `The ${field} is invalid.`,
     date_between: (field, [min, max]) => `The ${field} must be between ${min} and ${max}.`,
     date_format: (field, [format]) => `The ${field} must be in the format ${format}.`,
     decimal: (field, [decimals] = ['*']) => `The ${field} must be numeric and may contain ${decimals === '*' ? '' : decimals} decimal points.`,
     digits: (field, [length]) => `The ${field} must be numeric and exactly contain ${length} digits.`,
     dimensions: (field, [width, height]) => `The ${field} must be ${width} pixels by ${height} pixels.`,
-    email: (field) => `Pole ${field} musí být platnou emailovou adresou.`,
+    email: (field) => `${field} 格式錯誤`,
     ext: (field) => `The ${field} must be a valid file.`,
     image: (field) => `The ${field} must be an image.`,
     in: (field) => `The ${field} must be a valid value.`,
@@ -34,7 +34,9 @@ const messages = {
 
 const attributes = {
     username: "帳號",
-    password: "密碼"
+    password: "密碼",
+    email: "信箱",
+    password_confirm: "確認密碼"
 };
 
 const locale = {

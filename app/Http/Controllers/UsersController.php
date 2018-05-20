@@ -24,8 +24,8 @@ class UsersController extends Controller
         RoleRepository $roleRepository, 
         UserTransformer $userTransformer
     ) {
-        $this->middleware(['auth','record.actionlog']);
-        $this->middleware('role.auth', ['except' => 'changePassword']);
+        // $this->middleware(['auth','record.actionlog']);
+        // $this->middleware('role.auth', ['except' => 'changePassword']);
         $this->userRepository = $userRepository;
         $this->roleRepository = $roleRepository;
         $this->userTransformer = $userTransformer;
@@ -40,9 +40,8 @@ class UsersController extends Controller
     {
         $users = $this->userRepository->getAll(config('website.perPage'),[],self::$sortField);
         $users = (count($users) > 0)? $this->userTransformer->transform($users)->setPath("/{$request->path()}") : [];
-        return view('users.index', [
-            'users'      => $users,
-        ]);
+        
+        return response()->json(['retCode' => 1, 'retVal' => $users], 200); 
     }
 
     /**

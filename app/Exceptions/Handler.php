@@ -59,12 +59,12 @@ class Handler extends ExceptionHandler
                     "retCode"   => 0, 
                     "retMsg"    => "取得token失敗", 
                     "retVal"    => $errors
-                ]);
+            ],401);
         } else if ($exception instanceOf AuthenticationException) {
             return response()->json([
                 "retCode" => 0,
                 "retMsg" => "未帶入token或是無效的token"
-            ]);
+            ],401);
         }
 
 

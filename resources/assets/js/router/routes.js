@@ -1,16 +1,17 @@
 export default ({ authGuard, guestGuard }) => [
-    { path: '/', name: 'welcome', component: require('../pages/welcome.vue') },
   
     // Authenticated routes.
     ...authGuard([
-        { path: '/home', name: 'home', component: require('../pages/welcome.vue') },
-    //   { path: '/settings',
-    //     component: require('~/pages/settings/index.vue'),
-    //     children: [
-    //     { path: '', redirect: { name: 'settings.profile' } },
-    //     { path: 'profile', name: 'settings.profile', component: require('~/pages/settings/profile.vue') },
-    //     { path: 'password', name: 'settings.password', component: require('~/pages/settings/password.vue') }
-    //     ] }
+        { path: '/', name: 'home', component: require('../pages/home.vue') },
+        { path: '/user-manage', 
+            // component: require('../pages/users.vue'), 
+            // name: 'users',
+            children: [
+                { path: '', redirect: {name: 'users'}},
+                { path: 'users', name: 'users', component: require('../pages/user-manage/users.vue') },
+                { path: 'roles', name: 'roles', component: require('../pages/user-manage/roles.vue') },
+            ]
+        },
     ]),
   
     // Guest routes.
