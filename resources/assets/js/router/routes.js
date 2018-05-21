@@ -4,8 +4,7 @@ export default ({ authGuard, guestGuard }) => [
     ...authGuard([
         { path: '/', name: 'home', component: require('../pages/home.vue') },
         { path: '/user-manage', 
-            // component: require('../pages/users.vue'), 
-            // name: 'users',
+            component: require('../pages/user-manage/users.vue'),
             children: [
                 { path: '', redirect: {name: 'users'}},
                 { path: 'users', name: 'users', component: require('../pages/user-manage/users.vue') },

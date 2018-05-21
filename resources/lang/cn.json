@@ -27,6 +27,7 @@
     "no-username": "無此帳號",
     "admin-register": "管理者註冊",
     "email": "信箱",
-    "password-confirm": "確認密碼"
+    "password-confirm": "確認密碼",
+    "logout": "登出"
 }
   

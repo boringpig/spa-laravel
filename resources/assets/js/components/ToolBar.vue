@@ -7,7 +7,7 @@
       fixed
     >
       <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
-        <v-toolbar-side-icon @click.stop="toggleDrawer"></v-toolbar-side-icon>
+        <v-toolbar-side-icon v-if="authenticated" @click.stop="toggleDrawer"></v-toolbar-side-icon>
         <router-link :to="{ name: 'home' }" class="white-text">
           {{ appName }}
         </router-link>
@@ -16,8 +16,8 @@
 
       <!-- Authenticated -->
       <template v-if="authenticated">
-        <v-btn flat :to="{ name: 'settings.profile' }">{{ user.name }}</v-btn>
-        <v-btn flat @click.prevent="logout">登出</v-btn>
+        <v-btn flat :to="{ name: 'users' }">{{ user.name }}</v-btn>
+        <v-btn flat @click.prevent="logout" class="btn__icon">{{ $t('logout') }}</v-btn>
       </template>
 
       <!-- Guest -->
@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   props: {
     drawer: {
@@ -39,12 +41,27 @@ export default {
   data() {
     return {
       appName: window.config.appName,  
-      authenticated: false,
+      busy: false,
     };
   },
+  computed: mapGetters({
+    user: 'authUser',
+    authenticated: 'authCheck'
+  }),
   methods: {
     toggleDrawer() {
       this.$emit('toggleDrawer')  
+    },
+    async logout() {
+      this.busy = true
+      if (this.drawer) {
+        this.toggleDrawer()
+      }
+      // 登出使用者
+      await this.$store.dispatch('logout');
+      this.busy = false
+      // 導入到登入頁面
+      this.$router.push({ name: 'login' })
     }
   }
 }
@@ -55,7 +72,7 @@ export default {
     color: #ffffff;
     text-decoration: none;
   }
-  .btn--icon {
+  .btn__icon {
     padding-top: 0px;
   }
 </style>

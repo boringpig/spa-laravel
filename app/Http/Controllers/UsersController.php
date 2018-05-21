@@ -38,9 +38,11 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
-        $users = $this->userRepository->getAll(config('website.perPage'),[],self::$sortField);
-        $users = (count($users) > 0)? $this->userTransformer->transform($users)->setPath("/{$request->path()}") : [];
-        
+        // $users = $this->userRepository->getAll(config('website.perPage'),[],self::$sortField);
+        // $users = (count($users) > 0)? $this->userTransformer->transform($users)->setPath("/{$request->path()}") : [];
+        $users = $this->userRepository->getAll(null,[],self::$sortField);
+        $users = (count($users) > 0)? $this->userTransformer->transform($users) : [];
+
         return response()->json(['retCode' => 1, 'retVal' => $users], 200); 
     }
 

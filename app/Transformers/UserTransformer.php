@@ -33,7 +33,7 @@ class UserTransformer
             'email'         => $user->email,
             'phone'         => $user->phone,
             'password'      => $user->password,
-            'status'        => $user->status,
+            'status'        => ($user->status)? '啟用':'禁用',
             'role_id'       => $user->role_id,
             'role_name'     => empty($user->role->name)? "" : $user->role->name, 
             'updated_at'    => $user->updated_at->toDateTimeString(),

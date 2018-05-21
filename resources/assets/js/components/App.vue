@@ -2,6 +2,7 @@
   <v-app light>
     <!-- 左側選單 -->
     <v-navigation-drawer
+      v-if="authenticated"
       fixed
       :clipped="$vuetify.breakpoint.mdAndUp"
       app
@@ -29,6 +30,7 @@ import NavMenu from './NavMenu'
 import ToolBar from './ToolBar'
 import PageFooter from './PageFooter'
 import FeedBackMessage from './FeedBackMessage'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -38,9 +40,9 @@ export default {
     'feed-back-message': FeedBackMessage
   },
 
-  // computed: mapGetters({
-  //   authenticated: 'authCheck'
-  // }),
+  computed: mapGetters({
+    authenticated: 'authCheck'
+  }),
 
   data () {
     return {
